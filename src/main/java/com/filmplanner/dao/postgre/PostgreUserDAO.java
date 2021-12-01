@@ -5,6 +5,9 @@ import com.filmplanner.dao.UserDAO;
 
 public class PostgreUserDAO implements UserDAO {
 
+    // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
+    PostgreUserDAO() {}
+
     @Override
     public User find(String email) {
         return null;
