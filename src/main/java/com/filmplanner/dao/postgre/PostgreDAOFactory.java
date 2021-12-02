@@ -5,7 +5,21 @@ import com.filmplanner.dao.UserDAO;
 
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
+    private static PostgreDAOFactory instance;
     private UserDAO userDAO;
+
+    private PostgreDAOFactory() {}
+
+    /**
+     * Gets the PostgreDAOFactory single instance.
+     * @return the PostgreDAOFactory single instance.
+     */
+    public static PostgreDAOFactory getInstance() {
+        if (instance == null) {
+            instance = new PostgreDAOFactory();
+        }
+        return instance;
+    }
 
     /**
      * Gets the PostgreUserDAO. This function makes sure only one instance

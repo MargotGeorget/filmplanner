@@ -3,6 +3,7 @@ package com.filmplanner.facades;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.postgre.PostgreUserDAO;
 import com.filmplanner.models.User;
 
 public class LoginFacade {
@@ -14,7 +15,7 @@ public class LoginFacade {
      * Instantiates a Facade which gives the UI access to the business logic.
      */
     public LoginFacade() {
-        this.daoFactory = new PostgreDAOFactory();
+        this.daoFactory = PostgreDAOFactory.getInstance();
         this.userDAO = this.daoFactory.getUserDAO();
     }
 
