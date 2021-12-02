@@ -4,7 +4,6 @@ import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.UserDAO;
 import io.github.cdimascio.dotenv.Dotenv;
 
-
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private static PostgreDAOFactory instance;
@@ -15,9 +14,9 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private PostgreDAOFactory() {
         Dotenv dotenv = Dotenv.load();
-        this.user = dotenv.get("USER");
-        this.url = dotenv.get("URL");
-        this.password = dotenv.get("PASSWORD");
+        this.user = dotenv.get("DB_USER");
+        this.url = dotenv.get("DB_URL");
+        this.password = dotenv.get("DB_PASSWORD");
     }
 
 
@@ -40,8 +39,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     @Override
     public UserDAO getUserDAO() {
         if (userDAO == null) {
-            this.userDAO = new PostgreUserDAO(this.url,
-                    this.user, this.password);
+            this.userDAO = new PostgreUserDAO(this.url, this.user, this.password);
         }
         return this.userDAO;
     }

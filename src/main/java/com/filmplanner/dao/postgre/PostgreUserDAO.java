@@ -14,14 +14,14 @@ public class PostgreUserDAO implements UserDAO {
     private Statement stmt = null;
 
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
-    public PostgreUserDAO(String url, String user, String password) {
+    PostgreUserDAO(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
     }
 
     // TODO move method into a class accessible for all DAOs
-    private Connection openConnection(){
+    private Connection openConnection() {
         try {
             this.c = DriverManager.getConnection(this.url, this.user, this.password);
             this.c.setAutoCommit(false);
@@ -35,7 +35,7 @@ public class PostgreUserDAO implements UserDAO {
     }
 
     // TODO move method into a class accessible for all DAOs
-    private void closeConnection(){
+    private void closeConnection() {
         try {
             this.stmt.close();
             this.c.close();
@@ -54,7 +54,7 @@ public class PostgreUserDAO implements UserDAO {
             this.stmt = this.c.createStatement();
             ResultSet rs = this.stmt.executeQuery( "SELECT * FROM public.\"USER\" WHERE EMAIL='"+email+"';" );
             rs.next();
-            newUser = new User(rs.getString("NAME"),rs.getString("EMAIL"),rs.getString("PHONENUMBER"));
+            newUser = new User(rs.getString("NAME"),rs.getString("EMAIL"),rs.getString("PASSWORD"));
             rs.close();
 
         } catch (SQLException e) {
