@@ -9,15 +9,18 @@
 
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.HomeControllers">
-    <AnchorPane prefHeight="223.0" prefWidth="213.0">
+
       <children>
-         <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="140.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="140.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+             <Image url="@../assets/logo1.png"/>
+         </ImageView>
          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="85.0" prefHeight="53.0" prefWidth="340.0" text="FilmPlanner is a shooting, gear and clients bills &#10;management software for filmmaking companies.">
             <cursor>
                <Cursor fx:constant="TEXT" />
             </cursor>
          </Label>
          <Button layoutX="148.0" layoutY="158.0" mnemonicParsing="false" text="Login" onAction="#login"/>
-      </children></AnchorPane>
+      </children>
 </VBox>

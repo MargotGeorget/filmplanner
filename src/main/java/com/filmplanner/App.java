@@ -17,6 +17,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setWidth(800);
+        stage.setHeight(500);
         scene = new Scene(loadFXML("views/home"), stage.getWidth(),stage.getHeight());
         stage.setScene(scene);
 
