@@ -7,18 +7,20 @@ import java.sql.*;
 
 public class PostgreUserDAO implements UserDAO {
 
-    // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
     private String url;
     private String user;
     private String password;
     private Connection c = null;
     private Statement stmt = null;
 
+    // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
     public PostgreUserDAO(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
     }
+
+    // TODO move method into a class accessible for all DAOs
     private Connection openConnection(){
         try {
 
@@ -33,6 +35,8 @@ public class PostgreUserDAO implements UserDAO {
         }
         return this.c;
     }
+
+    // TODO move method into a class accessible for all DAOs
     private void closeConnection(){
         try {
             this.stmt.close();
@@ -43,8 +47,6 @@ public class PostgreUserDAO implements UserDAO {
         }
 
     }
-
-
 
     @Override
     public User find(String email) {
@@ -75,7 +77,6 @@ public class PostgreUserDAO implements UserDAO {
             rs.next();
             password = rs.getString("PASSWORD");
             rs.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,7 +85,8 @@ public class PostgreUserDAO implements UserDAO {
         return password;
 
     }
-    public void insert(){
+
+    public void insert() {
         this.openConnection();
         try {
             this.stmt = this.c.createStatement();
@@ -98,7 +100,5 @@ public class PostgreUserDAO implements UserDAO {
         }
         this.closeConnection();
         System.out.println("Operation done successfully");
-
     }
-
 }

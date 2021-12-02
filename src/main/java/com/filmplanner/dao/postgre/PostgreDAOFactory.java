@@ -14,19 +14,14 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private String user;
 
     private PostgreDAOFactory() {
-    Dotenv dotenv = Dotenv.load();
-    dotenv.get("MY_ENV_VAR1");
-
-    this.user =dotenv.get("USER");
-
-    this.url =dotenv.get("URL");
-
-    this.password =dotenv.get("PASSWORD");
-
+        Dotenv dotenv = Dotenv.load();
+        this.user = dotenv.get("USER");
+        this.url = dotenv.get("URL");
+        this.password = dotenv.get("PASSWORD");
     }
 
 
-        /**
+    /**
      * Gets the PostgreDAOFactory single instance.
      * @return the PostgreDAOFactory single instance.
      */

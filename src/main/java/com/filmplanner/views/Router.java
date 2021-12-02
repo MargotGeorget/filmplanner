@@ -26,5 +26,4 @@ public class Router {
         this.stage.setScene(new Scene(new FXMLLoader(App.class.getResource(viewPath + ".fxml")).load(), stage.getWidth(),stage.getHeight()));
         this.stage.centerOnScreen();
     }
-
 }
