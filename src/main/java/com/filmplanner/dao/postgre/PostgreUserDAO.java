@@ -3,18 +3,102 @@ package com.filmplanner.dao.postgre;
 import com.filmplanner.models.User;
 import com.filmplanner.dao.UserDAO;
 
+import java.sql.*;
+
 public class PostgreUserDAO implements UserDAO {
 
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
-    PostgreUserDAO() {}
+    private String url;
+    private String user;
+    private String password;
+    private Connection c = null;
+    private Statement stmt = null;
+
+    public PostgreUserDAO(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
+    private Connection openConnection(){
+        try {
+
+            this.c = DriverManager
+                    .getConnection(this.url,
+                            this.user, this.password);
+            this.c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+        }catch ( Exception e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+        return this.c;
+    }
+    private void closeConnection(){
+        try {
+            this.stmt.close();
+            this.c.close();
+            System.out.println("Close database successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     @Override
     public User find(String email) {
-        return null;
+        User newUser = null;
+        this.openConnection();
+        try {
+            this.stmt = this.c.createStatement();
+            ResultSet rs = this.stmt.executeQuery( "SELECT * FROM public.\"USER\" WHERE EMAIL='"+email+"';" );
+            rs.next();
+            newUser = new User(rs.getString("NAME"),rs.getString("EMAIL"),rs.getString("PHONENUMBER"));
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.closeConnection();
+        System.out.println("Operation done successfully");
+        return newUser;
     }
 
     @Override
     public String getPassword(String email) {
-        return null;
+        String password = null;
+        this.openConnection();
+        try {
+            this.stmt = this.c.createStatement();
+            ResultSet rs = this.stmt.executeQuery( "SELECT * FROM public.\"USER\" WHERE EMAIL='"+email+"';" );
+            rs.next();
+            password = rs.getString("PASSWORD");
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.closeConnection();
+        System.out.println("Operation done successfully");
+        return password;
+
     }
+    public void insert(){
+        this.openConnection();
+        try {
+            this.stmt = this.c.createStatement();
+            ResultSet rs = this.stmt.executeQuery("INSERT INTO public.\"USER\" (email, password, name, phonenumber) VALUES ('aaaaas', 'sdgg', 'gdgsg', null);");
+            rs.next();//
+            //insert into public."USER" (email, password, name, phonenumber)  VALUES ("nathan@se.com","ruby","nathan","06666666");
+            rs.close();//
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.closeConnection();
+        System.out.println("Operation done successfully");
+
+    }
+
 }
