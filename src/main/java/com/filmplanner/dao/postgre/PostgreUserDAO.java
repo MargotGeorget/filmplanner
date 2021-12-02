@@ -23,15 +23,13 @@ public class PostgreUserDAO implements UserDAO {
     // TODO move method into a class accessible for all DAOs
     private Connection openConnection(){
         try {
-
-            this.c = DriverManager
-                    .getConnection(this.url,
-                            this.user, this.password);
+            this.c = DriverManager.getConnection(this.url, this.user, this.password);
             this.c.setAutoCommit(false);
             System.out.println("Opened database successfully");
-        }catch ( Exception e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(1);
         }
         return this.c;
     }
@@ -86,6 +84,8 @@ public class PostgreUserDAO implements UserDAO {
 
     }
 
+    // TODO add the method into the UserDAO abstract class
+    // TODO let the method take a User as a parameter so it can really insert a user in the DB
     public void insert() {
         this.openConnection();
         try {

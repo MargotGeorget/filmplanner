@@ -4,6 +4,7 @@ import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreUserDAO;
+import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.models.User;
 
 public class LoginFacade {
@@ -24,12 +25,13 @@ public class LoginFacade {
      * @param email the user's email
      * @param password the user's password
      * @return the corresponding user instance if the credentials are correct; otherwise throws a RuntimeException
+     * @throws InvalidCredentialsException if the password doesn't match the email
      */
-    public User login(String email, String password) {
+    public User login(String email, String password) throws InvalidCredentialsException {
         User user = this.userDAO.find(email);
         if (user.getPassword().equals(password)) {
             return user;
         }
-        throw new RuntimeException("Incorrect password.");
+        throw new InvalidCredentialsException("Incorrect password.");
     }
 }

@@ -1,16 +1,14 @@
 package com.filmplanner.controllers;
 
 import com.filmplanner.App;
+import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.facades.LoginFacade;
-import com.filmplanner.views.Router;
-import com.filmplanner.views.Views;
+import com.filmplanner.models.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginControllers {
 
@@ -20,34 +18,37 @@ public class LoginControllers {
     @FXML
     private TextField passwordField;
 
-    @FXML
-    private Button validate;
-
-    // location and resources will be automatically injected by the FXML loader
-    @FXML
-    private URL location;
-
-    @FXML
-    private ResourceBundle resources;
-
     private LoginFacade loginFacade;
-
-    private Router router;
 
     public LoginControllers() {}
 
+    /**
+     * Called when the "validate" button is pressed.
+     * @return ???
+     */
+    // TODO specify return
     @FXML
     private boolean validateCredentials() {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
 
         System.out.println("Email: " + email + " Password: " + password);
-        //loginFacade.login(email, password);
 
-        try{
+        try {
+            this.loginFacade = new LoginFacade(); // TODO convert LoginFacade to Singleton ???
+            User loggedUser = this.loginFacade.login(email, password);
+            System.out.println("Logged in " + loggedUser.getName());
+
+        } catch (InvalidCredentialsException e) {
+            System.out.println("Invalid credentials");
+            Alert invalidCrendentials = new Alert(Alert.AlertType.ERROR);
+            invalidCrendentials.setContentText("Invalid credentials");
+            invalidCrendentials.show();
+        }
+
+        try {
             App.setRoot("views/home");
-            //router.navigateTo(Views.ACCUEIL);
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
 
