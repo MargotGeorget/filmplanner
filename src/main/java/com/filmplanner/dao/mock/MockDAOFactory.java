@@ -8,7 +8,8 @@ public class MockDAOFactory extends AbstractDAOFactory {
     private static MockDAOFactory instance;
     private UserDAO userDAO;
 
-    private MockDAOFactory() {}
+    private MockDAOFactory() {
+    }
 
     /**
      * Gets the MockDAOFactory single instance.
