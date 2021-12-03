@@ -42,30 +42,34 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.image.Image?>
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.LoginControllers">
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+<?import javafx.scene.shape.Box?>
+<VBox spacing="5" alignment="CENTER" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.LoginController">
+
       <children>
-          <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="140.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+          <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
               <Image url="@../assets/logo1.png"/>
           </ImageView>
-          <Button alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="273.0"
-                  mnemonicParsing="false" style="-fx-background-color: #1b3b6f;" text="Validate"
-                  textAlignment="CENTER" textFill="#feffff" fx:id="validate"
-                  onAction="#validateCredentials">
-              <font>
-                  <Font name="System Bold" size="12.0" />
-              </font>
-          </Button>
-          <TextField alignment="CENTER" layoutX="245.0" layoutY="159.0" fx:id="emailField" />
-          <PasswordField alignment="CENTER" layoutX="245.0" layoutY="219.0" fx:id="passwordField"/>
-          <Label alignment="CENTER" layoutX="285.0" layoutY="90.0" text="Login" textFill="#1b3b6e">
+
+
+          <Label alignment="CENTER" layoutX="320.0" layoutY="90.0" text="Login" textFill="#1b3b6e">
               <font>
                   <Font name="Verdana" size="24.0" />
               </font>
           </Label>
-          <Label layoutX="245.0" layoutY="141.0" prefHeight="17.0" prefWidth="81.0" text="Your email" textFill="#1b3b6f" />
-          <Label layoutX="245.0" layoutY="202.0" text="Your Password" textFill="#1b3b6f" />
+          <Label text="Your email" textFill="#1b3b6f" />
+          <TextField style="-fx-max-width: 150;" fx:id="emailField" />
+          <Label text="Your Password" textFill="#1b3b6f" />
+          <PasswordField style="-fx-max-width: 150;" fx:id="passwordField"/>
+
+          <Button style="-fx-background-color: #1b3b6f; " alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="273.0"
+                  mnemonicParsing="false" text="Validate"
+                  textAlignment="CENTER" textFill="#feffff" fx:id="validate"
+                  onAction="#login">
+              <font>
+                  <Font name="System Bold" size="12.0" />
+              </font>
+          </Button>
           <ImageView fitHeight="61.0" fitWidth="65.0" layoutX="287.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
       </children>
-    </AnchorPane>
+
 </VBox>
