@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UserDAOTest {
 
     @Test
-    void passwordValidationTest() {
+    void loginTest() {
         UserDAO userDAO = MockDAOFactory.getInstance().getUserDAO();
         User user = userDAO.find("margot-georget@gmail.com");
         assertEquals(user.getPassword(), userDAO.getPassword(user.getEmail()));
