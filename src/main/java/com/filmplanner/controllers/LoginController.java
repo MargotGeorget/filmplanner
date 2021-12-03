@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class LoginControllers {
+public class LoginController {
 
     @FXML
     private TextField emailField;
@@ -19,6 +19,9 @@ public class LoginControllers {
     @FXML
     private TextField passwordField;
 
+    private LoginFacade loginFacade;
+
+    public LoginController() {}
     public LoginControllers() {
     }
 
@@ -28,7 +31,7 @@ public class LoginControllers {
      */
     // TODO specify return
     @FXML
-    private boolean validateCredentials() {
+    private void login() {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
 
@@ -56,8 +59,6 @@ public class LoginControllers {
         }
 
          */
-
-        return true;
     }
 
 }
