@@ -10,15 +10,27 @@ import com.filmplanner.models.User;
 
 public class LoginFacade {
 
+    private static LoginFacade instance;
     private AbstractDAOFactory daoFactory;
     private UserDAO userDAO;
 
     /**
-     * Instantiates a Facade which gives the UI access to the business logic.
+     * Instantiates a LoginFacade. This facades gives the UI access to the login business logic.
      */
-    public LoginFacade() {
+    private LoginFacade() {
         this.daoFactory = PostgreDAOFactory.getInstance();
         this.userDAO = this.daoFactory.getUserDAO();
+    }
+
+    /**
+     * Gets the single LoginFacade instance.
+     * @return the single LoginFacade instance.
+     */
+    public static LoginFacade getInstance() {
+        if (instance == null) {
+            instance = new LoginFacade();
+        }
+        return instance;
     }
 
     /**

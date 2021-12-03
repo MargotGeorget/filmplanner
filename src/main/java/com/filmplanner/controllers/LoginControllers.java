@@ -19,9 +19,8 @@ public class LoginControllers {
     @FXML
     private TextField passwordField;
 
-    private LoginFacade loginFacade;
-
-    public LoginControllers() {}
+    public LoginControllers() {
+    }
 
     /**
      * Called when the "validate" button is pressed.
@@ -34,8 +33,8 @@ public class LoginControllers {
         String password = passwordField.getText();
 
         try {
-            this.loginFacade = new LoginFacade(); // TODO convert LoginFacade to Singleton ???
-            User loggedUser = this.loginFacade.login(email, password);
+            User loggedUser = LoginFacade.getInstance().login(email, password);
+            // TODO create a method to display alerts
             Alert invalidCredentials = new Alert(Alert.AlertType.INFORMATION);
             invalidCredentials.setContentText("Logged in!\nWelcome " + loggedUser.getName());
             invalidCredentials.show();
