@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.setWidth(800);
         stage.setHeight(500);
-        scene = new Scene(loadFXML("views/home"), stage.getWidth(),stage.getHeight());
+        scene = new Scene(loadFXML("views/home"), stage.getWidth(), stage.getHeight());
         stage.setScene(scene);
 
         stage.show();
@@ -27,6 +27,7 @@ public class App extends Application {
 
     /**
      * Sets the App scene root as the Parent loaded from the given FXML file.
+     *
      * @param fxml the FXML file to load the Parent from
      * @throws IOException
      */
@@ -36,6 +37,7 @@ public class App extends Application {
 
     /**
      * Loads a FXML file.
+     *
      * @param fxml the FXML file to load.
      * @return the parent node of the scene loaded from the FXML file
      * @throws IOException

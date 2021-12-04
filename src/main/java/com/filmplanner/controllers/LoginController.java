@@ -1,6 +1,5 @@
 package com.filmplanner.controllers;
 
-import com.filmplanner.App;
 import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.exceptions.UserNotFoundException;
 import com.filmplanner.facades.LoginFacade;
@@ -8,8 +7,6 @@ import com.filmplanner.models.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-
-import java.io.IOException;
 
 public class LoginController {
 
@@ -19,17 +16,12 @@ public class LoginController {
     @FXML
     private TextField passwordField;
 
-    private LoginFacade loginFacade;
-
-    public LoginController() {}
-    public LoginControllers() {
+    public LoginController() {
     }
 
     /**
      * Called when the "validate" button is pressed.
-     * @return ???
      */
-    // TODO specify return
     @FXML
     private void login() {
         String email = emailField.getText().trim();
@@ -41,24 +33,10 @@ public class LoginController {
             Alert invalidCredentials = new Alert(Alert.AlertType.INFORMATION);
             invalidCredentials.setContentText("Logged in!\nWelcome " + loggedUser.getName());
             invalidCredentials.show();
-        } catch (InvalidCredentialsException e) {
-            Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
-            invalidCredentials.setContentText(e.getMessage());
-            invalidCredentials.show();
-        } catch (UserNotFoundException e) {
+        } catch (InvalidCredentialsException | UserNotFoundException e) {
             Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
             invalidCredentials.setContentText(e.getMessage());
             invalidCredentials.show();
         }
-
-        /*
-        try {
-            App.setRoot("views/home");
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-
-         */
     }
-
 }

@@ -8,7 +8,8 @@ public class User {
 
     /**
      * Instantiates a User.
-     * @param name the user's name
+     *
+     * @param name  the user's name
      * @param email the user's email
      */
     public User(String name, String email, String phoneNumber) {
@@ -19,8 +20,9 @@ public class User {
 
     /**
      * Instantiates a User.
-     * @param name the user's name
-     * @param email the user's email
+     *
+     * @param name     the user's name
+     * @param email    the user's email
      * @param password the user's password
      */
     public User(String name, String email, String password, String phoneNumber) {
@@ -45,7 +47,9 @@ public class User {
         return password;
     }
 
-    public String getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
 
     /*

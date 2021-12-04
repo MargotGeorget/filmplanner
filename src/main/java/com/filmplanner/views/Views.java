@@ -6,7 +6,8 @@ public class Views {
 
     public static final String LOGIN = "login.fxml";
 
-    private Views(){}
+    private Views() {
+    }
 
 
 }

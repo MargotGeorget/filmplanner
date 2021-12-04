@@ -1,16 +1,14 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.models.User;
 import com.filmplanner.dao.UserDAO;
+import com.filmplanner.models.User;
 
 import java.sql.*;
 
 public class PostgreUserDAO implements UserDAO {
 
-    private String url;
-    private String user;
-    private String password;
-    private Connection c = null;
+
+    private Connection connection = null;
     private Statement stmt = null;
     private final PostgreConnection postgreConnection;
 
@@ -19,16 +17,23 @@ public class PostgreUserDAO implements UserDAO {
         this.postgreConnection = new PostgreConnection(url, user, password);
     }
 
-
+    /**
+     * Finds a user based on its email address.
+     *
+     * @param email the user's email address
+     * @return the user if the email exists; null otherwise
+     */
     @Override
     public User find(String email) {
+        // TODO write a generic method which can execute a SQL statement
+        // TODO use the generic method to query the database
         User newUser = null;
-        this.c = this.postgreConnection.openConnection();
+        this.connection = this.postgreConnection.openConnection();
         try {
-            this.stmt = this.c.createStatement();
-            ResultSet rs = this.stmt.executeQuery( "SELECT * FROM public.\"USER\" WHERE EMAIL='"+email+"';" );
+            this.stmt = this.connection.createStatement();
+            ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.\"USER\" WHERE EMAIL='" + email + "';");
             rs.next();
-            newUser = new User(rs.getString("NAME"),rs.getString("EMAIL"),rs.getString("PASSWORD"), rs.getString("PHONENUMBER")); //TODO : Gérer l'erreur quand le login est pas bon
+            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER")); //TODO : Gérer l'erreur quand le login est pas bon
             rs.close();
             this.stmt.close();
         } catch (SQLException e) {
@@ -40,13 +45,20 @@ public class PostgreUserDAO implements UserDAO {
 
     }
 
+    /**
+     * Finds a user's password based on its email address.
+     *
+     * @param email the user's email address
+     * @return the user's password if the email exists; null otherwise
+     */
     @Override
     public String getPassword(String email) {
+        // TODO use the generic method to query the database
         String password = null;
-        this.c = this.postgreConnection.openConnection();
+        this.connection = this.postgreConnection.openConnection();
         try {
-            this.stmt = this.c.createStatement();
-            ResultSet rs = this.stmt.executeQuery( "SELECT * FROM public.\"USER\" WHERE EMAIL='"+email+"';" );
+            this.stmt = this.connection.createStatement();
+            ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.\"USER\" WHERE EMAIL='" + email + "';");
             rs.next();
             password = rs.getString("PASSWORD");
             rs.close();
@@ -60,24 +72,23 @@ public class PostgreUserDAO implements UserDAO {
         return password;
 
     }
-    // TODO add the method into the UserDAO abstract class /IMPOSSIBLE
-    // TODO let the method take a User as a parameter so it can really insert a user in the DB / DONE
+
+    /**
+     * Inserts a user in the database.
+     *
+     * @param user the user to insert
+     */
+    // TODO add the method into the UserDAO interface
     public void insert(User user) {
+        // TODO use the generic method to query the database
         this.postgreConnection.openConnection();
         try {
-
-            //this.stmt = this.c.createStatement();
-            //ResultSet rs = this.stmt.executeQuery("INSERT INTO public.\"USER\" (email, password, name, phonenumber) VALUES ('aaaaas', 'sdgg', 'gdgsg', );");
-            //rs.next();//
-            //insert into public."USER" (email, password, name, phonenumber)  VALUES ("nathan@se.com","ruby","nathan","06666666");
-            //rs.close();//
-
             String sql = "INSERT INTO public.\"USER\" (email, password, name, phonenumber) VALUES (?, ?, ?, ?);";
-            PreparedStatement preparedStatement = this.c.prepareStatement(sql);
-            preparedStatement.setString(1,user.getEmail());
-            preparedStatement.setString(2,user.getPassword());
-            preparedStatement.setString(3,user.getName());
-            preparedStatement.setString(4,user.getPhoneNumber());
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getName());
+            preparedStatement.setString(4, user.getPhoneNumber());
             preparedStatement.executeQuery();
             this.stmt.close();
         } catch (SQLException e) {
@@ -86,6 +97,4 @@ public class PostgreUserDAO implements UserDAO {
         this.postgreConnection.closeConnection();
         System.out.println("Operation done successfully");
     }
-
-
 }

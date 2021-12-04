@@ -8,9 +8,9 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private static PostgreDAOFactory instance;
     private UserDAO userDAO;
-    private String url;
-    private String password;
-    private String user;
+    private final String url;
+    private final String password;
+    private final String user;
 
     private PostgreDAOFactory() {
         Dotenv dotenv = Dotenv.load();
@@ -22,6 +22,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     /**
      * Gets the PostgreDAOFactory single instance.
+     *
      * @return the PostgreDAOFactory single instance.
      */
     public static PostgreDAOFactory getInstance() {
@@ -34,6 +35,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     /**
      * Gets the PostgreUserDAO. This function makes sure only one instance
      * of PostgreUserDAO can exist at the same time.
+     *
      * @return the PostgreUserDAO instance
      */
     @Override

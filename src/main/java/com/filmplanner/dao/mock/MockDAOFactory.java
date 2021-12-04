@@ -13,6 +13,7 @@ public class MockDAOFactory extends AbstractDAOFactory {
 
     /**
      * Gets the MockDAOFactory single instance.
+     *
      * @return the MockDAOFactory single instance.
      */
     public static MockDAOFactory getInstance() {
@@ -23,8 +24,9 @@ public class MockDAOFactory extends AbstractDAOFactory {
     }
 
     /**
-     * Gets the MockUserDAO. This function makes sure only one instance
+     * Gets the MockUserDAO instance. This function makes sure only one instance
      * of MockUserDAO can exist at the same time.
+     *
      * @return the MockUserDAO instance
      */
     @Override
