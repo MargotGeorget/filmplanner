@@ -1,40 +1,53 @@
 package com.filmplanner.dao.postgre;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class PostgreConnection {
 
-    private Connection connection = null;
-    private final Statement stmt = null;
+    private Connection connection;
     private final String url;
     private final String password;
     private final String user;
+    private static PostgreConnection instance;
 
 
-    public PostgreConnection(String url, String user, String password) {
-        this.url = url;
-        this.user = user;
-        this.password = password;
+    public PostgreConnection() {
+        Dotenv dotenv = Dotenv.load();
+        this.user = dotenv.get("DB_USER");
+        this.url = dotenv.get("DB_URL");
+        this.password = dotenv.get("DB_PASSWORD");
     }
 
     /**
-     * Opens the connection to the database and returns it.
+     * Gets the single PostgreConnection instance.
+     *
+     * @return the single PostgreConnection instance
+     */
+    public static PostgreConnection getInstance() {
+        if (instance == null) {
+            instance = new PostgreConnection();
+        }
+        return instance;
+    }
+
+    /**
+     * Gets the connection to the database.
      *
      * @return the connection to the database
      */
-    protected Connection openConnection() {
+    public Connection getConnection() {
         try {
-            this.connection = DriverManager.getConnection(this.url, this.user, this.password);
-            this.connection.setAutoCommit(false);
-            System.out.println("Opened database successfully");
-        } catch (Exception e) {
+            if (this.connection == null || this.connection.isClosed()) {
+                // opens connection
+                this.connection = DriverManager.getConnection(this.url, this.user, this.password);
+                this.connection.setAutoCommit(false);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-            // TODO manage error more elegantly
-            //System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(1);
         }
         return this.connection;
     }
@@ -45,7 +58,6 @@ public class PostgreConnection {
     protected void closeConnection() {
         try {
             this.connection.close();
-            System.out.println("Close database successfully");
         } catch (SQLException e) {
             e.printStackTrace();
         }

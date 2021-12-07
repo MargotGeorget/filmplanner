@@ -1,5 +1,7 @@
 package com.filmplanner.dao;
 
+import java.sql.SQLException;
+
 public abstract class AbstractDAOFactory {
 
     /**

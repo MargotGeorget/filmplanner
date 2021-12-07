@@ -7,11 +7,13 @@ import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.exceptions.UserNotFoundException;
 import com.filmplanner.models.User;
 
+import java.sql.SQLException;
+
 public class LoginFacade {
 
     private static LoginFacade instance;
     private final AbstractDAOFactory daoFactory;
-    private final UserDAO userDAO;
+    private UserDAO userDAO;
 
     /**
      * Instantiates a LoginFacade. This facades gives the UI access to the login business logic.

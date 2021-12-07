@@ -8,13 +8,14 @@ import java.sql.*;
 public class PostgreUserDAO implements UserDAO {
 
 
-    private Connection connection = null;
-    private Statement stmt = null;
-    private final PostgreConnection postgreConnection;
+    private Connection connection;
+    private Statement stmt;
 
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
-    PostgreUserDAO(String url, String user, String password) {
-        this.postgreConnection = new PostgreConnection(url, user, password);
+    // TODO pass the connection as a parameter
+    // TODO remove useless parameters
+    PostgreUserDAO(Connection connection) {
+        this.connection = connection;
     }
 
     /**
@@ -25,10 +26,7 @@ public class PostgreUserDAO implements UserDAO {
      */
     @Override
     public User find(String email) {
-        // TODO write a generic method which can execute a SQL statement
-        // TODO use the generic method to query the database
         User newUser = null;
-        this.connection = this.postgreConnection.openConnection();
         try {
             this.stmt = this.connection.createStatement();
             ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.\"USER\" WHERE EMAIL='" + email + "';");
@@ -39,7 +37,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.postgreConnection.closeConnection();
         System.out.println("Operation done successfully");
         return newUser;
 
@@ -53,9 +50,7 @@ public class PostgreUserDAO implements UserDAO {
      */
     @Override
     public String getPassword(String email) {
-        // TODO use the generic method to query the database
         String password = null;
-        this.connection = this.postgreConnection.openConnection();
         try {
             this.stmt = this.connection.createStatement();
             ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.\"USER\" WHERE EMAIL='" + email + "';");
@@ -66,8 +61,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        this.postgreConnection.closeConnection();
         System.out.println("Operation done successfully");
         return password;
 
@@ -78,10 +71,7 @@ public class PostgreUserDAO implements UserDAO {
      *
      * @param user the user to insert
      */
-    // TODO add the method into the UserDAO interface
     public void insert(User user) {
-        // TODO use the generic method to query the database
-        this.postgreConnection.openConnection();
         try {
             String sql = "INSERT INTO public.\"USER\" (email, password, name, phonenumber) VALUES (?, ?, ?, ?);";
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
@@ -94,7 +84,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.postgreConnection.closeConnection();
         System.out.println("Operation done successfully");
     }
 }

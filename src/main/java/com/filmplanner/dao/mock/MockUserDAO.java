@@ -31,4 +31,9 @@ public class MockUserDAO implements UserDAO {
     public String getPassword(String email) {
         return this.users.get(email).getPassword();
     }
+
+    @Override
+    public void insert(User user) {
+        this.users.put(user.getEmail(), user);
+    }
 }
