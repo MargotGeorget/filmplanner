@@ -72,7 +72,7 @@
             <Insets left="100.0" right="100.0" />
          </GridPane.margin>
       </ListView>
-      <Button mnemonicParsing="false" style="-fx-background-color: #1b3b6f;" text="Add a new client" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <Button mnemonicParsing="false" style="-fx-background-color: #1b3b6f;" text="Add a new client" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" onAction="#moveToCreateClient">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -1,5 +1,6 @@
 package com.filmplanner.controllers;
 
+import com.filmplanner.App;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,10 @@ public class ClientController implements Initializable {
             }
 
         });
+    }
+
+    public void moveToCreateClient() throws IOException {
+        App.setRoot("views/clientForm");
     }
 
 
