@@ -1,5 +1,7 @@
 package com.filmplanner.controllers;
 
+import com.filmplanner.facades.ClientFacade;
+import com.filmplanner.models.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
@@ -12,6 +14,7 @@ import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -22,16 +25,20 @@ public class ClientController implements Initializable {
     @FXML
     private ListView<Pair<String, String>> clientsList;
 
+    private ClientFacade clientFacade;
+
     public ClientController() {
+        this.clientFacade = ClientFacade.getInstance();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO: Récupérer les clients à partir de la base de données avec Facade
 
-        ArrayList<Pair<String, String>> pairs = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            pairs.add(new Pair<>("Client "+ i, "Adress client"));
+        List<Pair<String, String>> pairs = new ArrayList<>();
+        List<Client> clients = clientFacade.findAll();
+        for (Client c : clients) {
+            pairs.add(new Pair<>(c.getCompanyName(), c.getRefereeEmail()));
         }
         this.clientsList.setItems(new FilteredList<>(FXCollections.observableList(pairs)));
         this.clientsList.setOnMouseClicked(new EventHandler<MouseEvent>(){

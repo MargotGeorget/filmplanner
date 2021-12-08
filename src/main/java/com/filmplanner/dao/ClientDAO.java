@@ -10,7 +10,7 @@ public interface ClientDAO {
 
     abstract Client findById(String id);
 
-    abstract List<Client> findAll(String id);
+    abstract List<Client> findAll();
 
     abstract Client update(String id, Client clientUpdated);
 

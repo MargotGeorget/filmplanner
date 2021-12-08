@@ -4,6 +4,7 @@ import com.filmplanner.dao.ClientDAO;
 import com.filmplanner.models.Client;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostgreClientDAO implements ClientDAO {
@@ -25,8 +26,13 @@ public class PostgreClientDAO implements ClientDAO {
     }
 
     @Override
-    public List<Client> findAll(String id) {
-        return null;
+    public List<Client> findAll() {
+        //TODO: connection data base
+        List<Client> clients = new ArrayList<>();
+        for(int i = 0; i < 8; i++){
+            clients.add( new Client("Company " + i, "desc", "Bernard", "Dumont", "bernard.dumont@gmail.com", "0203785412" ));
+        }
+        return clients;
     }
 
     @Override

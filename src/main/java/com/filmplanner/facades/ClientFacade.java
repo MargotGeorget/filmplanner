@@ -30,18 +30,22 @@ public class ClientFacade {
 
     //Functions:
     public Client create(Client newClient){
-        return null;
+        Client client = clientDAO.create(newClient);
+        return client;
     }
 
     public Client findById(String id){
-        return null;
+        Client client = clientDAO.findById(id);
+        return client;
     }
 
-    public List<Client> findAll(String id){
-        return null;
+    public List<Client> findAll(){
+        List<Client> clients = clientDAO.findAll();
+        return clients;
     }
 
     public Client update(String id, Client clientUpdated){
-        return null;
+        Client client = clientDAO.update(id, clientUpdated);
+        return client;
     }
 }

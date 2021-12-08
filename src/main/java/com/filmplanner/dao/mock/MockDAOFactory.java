@@ -1,6 +1,7 @@
 package com.filmplanner.dao.mock;
 
 import com.filmplanner.dao.AbstractDAOFactory;
+import com.filmplanner.dao.ClientDAO;
 import com.filmplanner.dao.UserDAO;
 
 public class MockDAOFactory extends AbstractDAOFactory {
@@ -35,5 +36,11 @@ public class MockDAOFactory extends AbstractDAOFactory {
             this.userDAO = new MockUserDAO();
         }
         return this.userDAO;
+    }
+
+    //TODO : implement method for unitary test
+    @Override
+    public ClientDAO getClientDAO() {
+        return null;
     }
 }
