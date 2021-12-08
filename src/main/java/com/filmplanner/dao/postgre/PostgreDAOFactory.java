@@ -1,6 +1,7 @@
 package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.AbstractDAOFactory;
+import com.filmplanner.dao.ClientDAO;
 import com.filmplanner.dao.UserDAO;
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -10,6 +11,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private static PostgreDAOFactory instance;
     private UserDAO userDAO;
+    private ClientDAO clientDAO;
 
     private PostgreDAOFactory() {
     }
@@ -38,5 +40,12 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.userDAO = new PostgreUserDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.userDAO;
+    }
+
+    public ClientDAO getClientDAO() {
+        if (clientDAO == null) {
+            this.clientDAO = new PostgreClientDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.clientDAO;
     }
 }
