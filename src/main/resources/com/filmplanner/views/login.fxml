@@ -32,42 +32,44 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox spacing="5" alignment="CENTER" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.filmplanner.controllers.LoginController">
 
-    <children>
-        <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true"
-                   preserveRatio="true">
-            <Image url="@../assets/logo1.png"/>
-        </ImageView>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Box?>
+<VBox spacing="5" alignment="CENTER" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.LoginController">
+
+      <children>
+          <ImageView fitHeight="63.0" fitWidth="62.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+              <Image url="@../assets/logo1.png"/>
+          </ImageView>
 
 
-        <Label alignment="CENTER" layoutX="320.0" layoutY="90.0" text="Login" textFill="#1b3b6e">
-            <font>
-                <Font name="Verdana" size="24.0"/>
-            </font>
-        </Label>
-        <Label text="Your email" textFill="#1b3b6f"/>
-        <TextField style="-fx-max-width: 150;" fx:id="emailField"/>
-        <Label text="Your Password" textFill="#1b3b6f"/>
-        <PasswordField style="-fx-max-width: 150;" fx:id="passwordField"/>
+          <Label alignment="CENTER" layoutX="320.0" layoutY="150.0" text="Login" textFill="#1b3b6e">
+              <font>
+                  <Font name="Verdana" size="24.0" />
+              </font>
+          </Label>
+          <Label text="Your email" textFill="#1b3b6f" />
+          <TextField style="-fx-max-width: 150;" fx:id="emailField" />
+          <Label text="Your Password" textFill="#1b3b6f" />
+          <PasswordField style="-fx-max-width: 150;" fx:id="passwordField"/>
 
-        <Button style="-fx-background-color: #1b3b6f; " alignment="CENTER" contentDisplay="CENTER" layoutX="340.0"
-                layoutY="273.0"
-                mnemonicParsing="false" text="Validate"
-                textAlignment="CENTER" textFill="#feffff" fx:id="validate"
-                onAction="#login">
-            <font>
-                <Font name="System Bold" size="12.0"/>
-            </font>
-        </Button>
-        <ImageView fitHeight="61.0" fitWidth="65.0" layoutX="287.0" layoutY="29.0" pickOnBounds="true"
-                   preserveRatio="true"/>
-    </children>
+          <Button style="-fx-background-color: #1b3b6f; " alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="273.0"
+                  mnemonicParsing="false" text="Validate"
+                  textAlignment="CENTER" textFill="#feffff" fx:id="validate"
+                  onAction="#login">
+              <font>
+                  <Font name="System Bold" size="12.0" />
+              </font>
+          </Button>
+          <ImageView fitHeight="61.0" fitWidth="65.0" layoutX="287.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+      </children>
 
 </VBox>
