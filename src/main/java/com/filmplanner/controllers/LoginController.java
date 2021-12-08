@@ -1,5 +1,6 @@
 package com.filmplanner.controllers;
 
+import com.filmplanner.App;
 import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.exceptions.UserNotFoundException;
 import com.filmplanner.facades.LoginFacade;
