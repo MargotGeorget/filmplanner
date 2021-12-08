@@ -30,7 +30,7 @@ public class PostgreClientDAO implements ClientDAO {
         //TODO: connection data base
         List<Client> clients = new ArrayList<>();
         for(int i = 0; i < 8; i++){
-            clients.add( new Client("Company " + i, "desc", "Bernard", "Dumont", "bernard.dumont@gmail.com", "0203785412" ));
+            clients.add( new Client("Company " + i, "desc", "Bernard", "bernard.dumont@gmail.com", "0203785412" ));
         }
         return clients;
     }
