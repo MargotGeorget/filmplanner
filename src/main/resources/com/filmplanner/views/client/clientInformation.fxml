@@ -23,7 +23,7 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/user.png" />
+                     <Image url="@../../assets/user.png" />
                   </ImageView>
                   <Label text="Label" />
                </children>
@@ -31,7 +31,7 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/email.png" />
+                     <Image url="@../../assets/email.png" />
                   </ImageView>
                   <Label text="Label" />
                </children>
@@ -39,7 +39,7 @@
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/call.png" />
+                     <Image url="@../../assets/call.png" />
                   </ImageView>
                   <Label text="Label" />
                </children>
