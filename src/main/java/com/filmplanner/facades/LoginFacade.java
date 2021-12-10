@@ -7,8 +7,6 @@ import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.exceptions.UserNotFoundException;
 import com.filmplanner.models.User;
 
-import java.sql.SQLException;
-
 public class LoginFacade {
 
     private static LoginFacade instance;

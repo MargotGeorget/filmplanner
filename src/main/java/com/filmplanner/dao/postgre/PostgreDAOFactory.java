@@ -1,15 +1,14 @@
 package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.AbstractDAOFactory;
+import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.UserDAO;
-import io.github.cdimascio.dotenv.Dotenv;
-
-import java.sql.SQLException;
 
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private static PostgreDAOFactory instance;
     private UserDAO userDAO;
+    private ProjectDAO projectDAO;
 
     private PostgreDAOFactory() {
     }
@@ -34,9 +33,23 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
      */
     @Override
     public UserDAO getUserDAO() {
-        if (userDAO == null) {
+        if (this.userDAO == null) {
             this.userDAO = new PostgreUserDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.userDAO;
+    }
+
+    /**
+     * Gets the PostgreProjectDAO. This function makes sure only one instance
+     * of PostgreUserDAO can exist at the same time.
+     *
+     * @return the PostgreUserDAO instance
+     */
+    @Override
+    public ProjectDAO getProjectDAO() {
+        if (this.projectDAO == null) {
+            this.projectDAO = new PostgreProjectDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.projectDAO;
     }
 }
