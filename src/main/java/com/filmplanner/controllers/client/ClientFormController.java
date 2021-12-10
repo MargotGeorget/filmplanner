@@ -1,10 +1,13 @@
 package com.filmplanner.controllers.client;
 
+import com.filmplanner.App;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class ClientFormController {
 
@@ -50,6 +53,10 @@ public class ClientFormController {
 
         System.out.println(newClient.getCompanyName() + " - " + newClient.getRefereeName() + " - " + newClient.getRefereeEmail() + " - " + newClient.getRefereeTel() + " - " + newClient.getDescription());
 
+    }
+
+    public void cancelCreation() throws IOException {
+        App.setRoot("views/client/clientView");
     }
 
 }
