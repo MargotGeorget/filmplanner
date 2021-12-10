@@ -7,12 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ClientController implements Initializable {
+public class ClientViewController implements Initializable {
 
     @FXML
     private TextField searchInput;
@@ -31,7 +34,7 @@ public class ClientController implements Initializable {
 
     private ClientFacade clientFacade;
 
-    public ClientController() {
+    public ClientViewController() {
         this.clientFacade = ClientFacade.getInstance();
     }
 
@@ -49,9 +52,25 @@ public class ClientController implements Initializable {
 
             @Override
             public void handle (MouseEvent event){
-                //TODO: ouvrir une nouvelle fenêtre
-                //TODO: appeler facade avec findClintById() et afficher les informations du client dans la nouvelle fenêtre
                 System.out.println("clicked on " + clientsList.getSelectionModel().getSelectedItem());
+
+                //TODO: appeler facade avec findClintById() et afficher les informations du client dans la nouvelle fenêtre
+                Client client = new Client("ndmvisuals", "Une super company pour faire des vidéos", "Nathan Djian-Martin", "nathan.djianmartin@gmail.com", "0203785412" );
+
+                //Create new stage
+                Stage stage = new Stage();
+                stage.setHeight(300);
+                stage.setWidth(610);
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientInformation.fxml"));
+                try {
+                    ClientInformationController controller = new ClientInformationController(client);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.show();
             }
 
         });

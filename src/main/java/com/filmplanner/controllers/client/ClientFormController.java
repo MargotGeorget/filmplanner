@@ -21,7 +21,7 @@ public class ClientFormController {
     private TextField refereeTelInput;
 
     @FXML
-    private TextArea desciptionInput;
+    private TextArea descriptionInput;
 
     private ClientFacade clientFacade;
 
@@ -37,7 +37,7 @@ public class ClientFormController {
         String refereeName = refereeNameInput.getText();
         String refereeEmail = refereeEmailInput.getText().trim();
         String refereeTel = refereeTelInput.getText();
-        String description = desciptionInput.getText();
+        String description = descriptionInput.getText();
 
         //Create client variable
         Client newClient = new Client(companyName, description, refereeName, refereeEmail, refereeTel);
