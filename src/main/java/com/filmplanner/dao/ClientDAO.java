@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ClientDAO {
 
-    abstract Client create(Client newClient);
+    abstract long create(Client newClient);
 
     abstract Client findById(String id);
 

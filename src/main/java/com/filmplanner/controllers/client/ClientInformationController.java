@@ -4,7 +4,6 @@ import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,8 +30,6 @@ public class ClientInformationController implements Initializable {
     public ClientInformationController(Client client) {
         this.client = client;
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

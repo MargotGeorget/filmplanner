@@ -3,6 +3,7 @@ package com.filmplanner.models;
 public class Client {
 
     //Attributes:
+    private long idClient;
     private String companyName;
     private String description;
     private String refereeName;
@@ -10,7 +11,8 @@ public class Client {
     private String refereeTel;
 
     //Constructor:
-    public Client(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) {
+    public Client(long idClient, String companyName, String description, String refereeName, String refereeEmail, String refereeTel) {
+        this.idClient = idClient;
         this.companyName = companyName;
         this.description = description;
         this.refereeName = refereeName;
@@ -18,7 +20,19 @@ public class Client {
         this.refereeTel = refereeTel;
     }
 
+    public Client(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) {
+        this(-1, companyName, description, refereeName, refereeEmail, refereeTel);
+    }
+
     //Getters and Setters:
+    public long getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(long idClient) {
+        this.idClient = idClient;
+    }
+
     public String getCompanyName() {
         return companyName;
     }

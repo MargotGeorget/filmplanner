@@ -29,9 +29,9 @@ public class ClientFacade {
     }
 
     //Functions:
-    public Client create(Client newClient){
-        Client client = clientDAO.create(newClient);
-        return client;
+    public long create(Client newClient){
+        long idClient = clientDAO.create(newClient);
+        return idClient;
     }
 
     public Client findById(String id){

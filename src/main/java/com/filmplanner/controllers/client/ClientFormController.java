@@ -4,6 +4,7 @@ import com.filmplanner.App;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -32,7 +33,7 @@ public class ClientFormController {
         this.clientFacade = ClientFacade.getInstance();
     }
 
-    public void createClient(){
+    public void createClient() throws IOException {
         //TODO: Manage empty input
 
         //Recovery of data entered
@@ -47,11 +48,16 @@ public class ClientFormController {
 
         //Sends customer to create to facade
         //TODO: gérer création avec data base
-        Client client = clientFacade.create(newClient);
+        long idClient = clientFacade.create(newClient);
 
         //TODO: add verif
-
         System.out.println(newClient.getCompanyName() + " - " + newClient.getRefereeName() + " - " + newClient.getRefereeEmail() + " - " + newClient.getRefereeTel() + " - " + newClient.getDescription());
+        if(idClient!=-1){
+            Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
+            addedClient.setContentText("Operation done successfully\nClient " + newClient.getCompanyName() + " added!");
+            addedClient.show();
+            App.setRoot("views/client/clientView");
+        }
 
     }
 

@@ -1,5 +1,6 @@
 package com.filmplanner;
 
+import com.filmplanner.dao.postgre.PostgreConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * JavaFX App
@@ -51,8 +53,10 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch();
+        System.out.println("Application fermée!");
+        PostgreConnection.getInstance().getConnection().close();
     }
 
 }
