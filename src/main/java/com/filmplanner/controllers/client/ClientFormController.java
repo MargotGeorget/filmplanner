@@ -46,8 +46,7 @@ public class ClientFormController {
         //Create client variable
         Client newClient = new Client(companyName, description, refereeName, refereeEmail, refereeTel);
 
-        //Sends customer to create to facade
-        //TODO: gérer création avec data base
+        //Sends client to create to facade
         long idClient = clientFacade.create(newClient);
 
         //TODO: add verif

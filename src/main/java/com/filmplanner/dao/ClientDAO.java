@@ -8,7 +8,7 @@ public interface ClientDAO {
 
     abstract long create(Client newClient);
 
-    abstract Client findById(String id);
+    abstract Client findById(long id);
 
     abstract List<Client> findAll();
 

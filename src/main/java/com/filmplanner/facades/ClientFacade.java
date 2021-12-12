@@ -34,7 +34,7 @@ public class ClientFacade {
         return idClient;
     }
 
-    public Client findById(String id){
+    public Client findById(long id){
         Client client = clientDAO.findById(id);
         return client;
     }

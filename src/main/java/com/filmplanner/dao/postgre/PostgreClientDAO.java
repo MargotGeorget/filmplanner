@@ -18,8 +18,7 @@ public class PostgreClientDAO implements ClientDAO {
     @Override
     public long create(Client client) {
 
-        String sql = "INSERT INTO client(company_name,description,referee_name, referee_email,referee_tel) " +
-                "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO client (company_name,description,referee_name, referee_email,referee_tel) VALUES(?,?,?,?,?)";
         long id = 0;
 
         try {
@@ -52,11 +51,33 @@ public class PostgreClientDAO implements ClientDAO {
     }
 
     @Override
-    public Client findById(String id) {
-        return null;
-    }
+    public Client findById(long id) {
+        Client client = null;
+        String sql = "SELECT * FROM client WHERE client_id=" + id;
 
-    @Override
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                long idClient = rs.getLong("client_id");
+                String companyName = rs.getString("company_name");
+                String refereeName = rs.getString("referee_name");
+                String refereeEmail = rs.getString("referee_email");
+                String refereeTel = rs.getString("referee_tel");
+                String description = rs.getString("description");
+
+                client = new Client(idClient, companyName, description, refereeName, refereeEmail, refereeTel);
+            }
+            System.out.println(client);
+
+            } catch(SQLException e){
+                e.printStackTrace();
+            }
+            return client;
+        }
+
+        @Override
     public List<Client> findAll() {
         //Création de la liste de client
         List<Client> clients = new ArrayList<>();

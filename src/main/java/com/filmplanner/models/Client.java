@@ -72,4 +72,9 @@ public class Client {
     public void setRefereeTel(String refereeTel) {
         this.refereeTel = refereeTel;
     }
+
+    @Override
+    public String toString() {
+        return companyName + " -- " + "Referee: " + refereeName + " ";
+    }
 }

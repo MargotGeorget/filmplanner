@@ -28,7 +28,7 @@ public class ClientViewController implements Initializable {
     private TextField searchInput;
 
     @FXML
-    private ListView<Pair<String, String>> clientsList;
+    private ListView<Client> clientsList;
 
     private ClientFacade clientFacade;
 
@@ -40,37 +40,31 @@ public class ClientViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO: Récupérer les clients à partir de la base de données avec Facade
 
-        List<Pair<String, String>> pairs = new ArrayList<>();
+
         List<Client> clients = clientFacade.findAll();
-        for (Client c : clients) {
-            pairs.add(new Pair<>(c.getCompanyName(), c.getRefereeEmail()));
-        }
-        this.clientsList.setItems(new FilteredList<>(FXCollections.observableList(pairs)));
-        this.clientsList.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
-            @Override
-            public void handle (MouseEvent event){
-                System.out.println("clicked on " + clientsList.getSelectionModel().getSelectedItem());
+        this.clientsList.setItems(new FilteredList<>(FXCollections.observableList(clients)));
+        this.clientsList.setOnMouseClicked(event -> {
 
-                //TODO: appeler facade avec findClintById() et afficher les informations du client dans la nouvelle fenêtre
-                Client client = new Client("ndmvisuals", "Une super company pour faire des vidéos", "Nathan Djian-Martin", "nathan.djianmartin@gmail.com", "0203785412" );
+            System.out.println("clicked on " + clientsList.getSelectionModel().getSelectedItem());
+            Client client = clientsList.getSelectionModel().getSelectedItem();
 
-                //Create new stage
-                Stage stage = new Stage();
-                stage.setHeight(300);
-                stage.setWidth(610);
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientInformation.fxml"));
-                try {
-                    ClientInformationController controller = new ClientInformationController(client);
-                    fxmlLoader.setController(controller);
-                    Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
-                    stage.setScene(scene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                stage.show();
+            //Client client = clientFacade.findById(clientSelected.getIdClient());
+
+            //Create new stage
+            Stage stage = new Stage();
+            stage.setHeight(300);
+            stage.setWidth(610);
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientInformation.fxml"));
+            try {
+                ClientInformationController controller = new ClientInformationController(client);
+                fxmlLoader.setController(controller);
+                Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
+            stage.show();
         });
     }
 
