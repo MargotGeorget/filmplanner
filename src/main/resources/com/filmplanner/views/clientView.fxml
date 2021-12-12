@@ -47,7 +47,7 @@
             <Menu mnemonicParsing="false" text="Gear">
               <items>
                 <MenuItem mnemonicParsing="false" text="Add a gear" />
-                  <MenuItem mnemonicParsing="false" text="View all gears" />
+                  <MenuItem mnemonicParsing="false" text="View all gears" onAction="#gear" />
               </items>
             </Menu>
         </menus>

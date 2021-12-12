@@ -1,5 +1,6 @@
 package com.filmplanner.controllers;
 
+import com.filmplanner.App;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -44,6 +46,10 @@ public class ClientController implements Initializable {
             }
 
         });
+    }
+    @FXML
+    void gear() throws IOException {
+        App.setRoot("views/gearView");
     }
 
 

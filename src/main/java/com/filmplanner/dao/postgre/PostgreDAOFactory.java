@@ -1,6 +1,7 @@
 package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.AbstractDAOFactory;
+import com.filmplanner.dao.GearDAO;
 import com.filmplanner.dao.UserDAO;
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -10,6 +11,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     private static PostgreDAOFactory instance;
     private UserDAO userDAO;
+    private GearDAO gearDAO;
 
     private PostgreDAOFactory() {
     }
@@ -38,5 +40,11 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.userDAO = new PostgreUserDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.userDAO;
+    }
+    public GearDAO getGearDAO() {
+        if (gearDAO == null) {
+            this.gearDAO = new PostgreGearDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.gearDAO;
     }
 }
