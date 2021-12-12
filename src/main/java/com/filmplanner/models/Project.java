@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class Project {
 
+    private int id;
     private String name;
     private String description;
     private Set<User> managers;
@@ -20,6 +21,11 @@ public class Project {
     public Project(String name, String description, Set<User> managers) {
         this(name, description);
         this.managers = managers;
+    }
+
+    public Project(int id, String name, String description) {
+        this(name, description);
+        this.id = id;
     }
 
 
@@ -39,6 +45,9 @@ public class Project {
         return managers;
     }
 
+    public int getId() {
+        return id;
+    }
 
     /*
     Setters
@@ -54,5 +63,15 @@ public class Project {
 
     public void setManagers(Set<User> managers) {
         this.managers = managers;
+    }
+
+
+    /*
+    Methods
+     */
+
+    @Override
+    public String toString() {
+        return this.id + ": " + this.name + "\n" + this.description;
     }
 }

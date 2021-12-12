@@ -12,8 +12,6 @@ public class PostgreUserDAO implements UserDAO {
     private Statement stmt;
 
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
-    // TODO pass the connection as a parameter
-    // TODO remove useless parameters
     PostgreUserDAO(Connection connection) {
         this.connection = connection;
     }
@@ -39,7 +37,6 @@ public class PostgreUserDAO implements UserDAO {
         }
         System.out.println("Operation done successfully");
         return newUser;
-
     }
 
     /**
@@ -63,7 +60,6 @@ public class PostgreUserDAO implements UserDAO {
         }
         System.out.println("Operation done successfully");
         return password;
-
     }
 
     /**

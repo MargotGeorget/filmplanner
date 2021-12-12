@@ -45,7 +45,7 @@ public class PostgreConnection {
             if (this.connection == null || this.connection.isClosed()) {
                 // opens connection
                 this.connection = DriverManager.getConnection(this.url, this.user, this.password);
-                this.connection.setAutoCommit(false);
+                this.connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             e.printStackTrace();
