@@ -25,4 +25,4 @@ target/
 hs_err_pid*
 
 # environment files
-.env
+target/classes/com/filmplanner/.env
