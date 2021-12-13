@@ -73,8 +73,9 @@ public class PostgreProjectDAO implements ProjectDAO {
             String query = "SELECT * FROM project WHERE id=" + id;
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            foundProject = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+            if (resultSet.next()) {
+                foundProject = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+            }
             resultSet.close();
             statement.close();
         } catch (SQLException e) {

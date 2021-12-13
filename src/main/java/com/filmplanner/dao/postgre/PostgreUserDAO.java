@@ -29,8 +29,9 @@ public class PostgreUserDAO implements UserDAO {
             String query = "SELECT * FROM fp_user WHERE email='" + email + "'";
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
-            rs.next();
-            newUser = new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("phonenumber")); //TODO : Gérer l'erreur quand le login est pas bon
+            if (rs.next()) {
+                newUser = new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("phonenumber")); //TODO : Gérer l'erreur quand le login est pas bon
+            }
             rs.close();
             statement.close();
         } catch (SQLException e) {
