@@ -101,12 +101,12 @@ public class Client {
         this.setRefereeTel(refereeTel);
     }
 
-    private boolean isValidString(String str, InputVerification verificator){
-        return verificator.isStringWithoutSpecialSymbol(str);
+    private boolean isValidString(String str, InputVerification validator){
+        return validator.isStringWithoutSpecialSymbol(str);
     }
 
-    private boolean isPhoneNumber(String str, InputVerification verificator){
-        return verificator.isPhoneNumber(str);
+    private boolean isPhoneNumber(String str, InputVerification validator){
+        return validator.isPhoneNumber(str);
     }
 
     @Override

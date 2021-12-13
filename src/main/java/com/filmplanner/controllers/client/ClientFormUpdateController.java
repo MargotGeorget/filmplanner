@@ -64,22 +64,25 @@ public class ClientFormUpdateController implements Initializable {
         String refereeTel = this.refereeTel.getText();
         String description = this.companyDescription.getText();
 
-        try{
+        try {
             client.setAllInformation(companyName, description, refereeName, refereeEmail, refereeTel);
             clientFacade.update(this.client.getIdClient(), this.client);
-        }catch (InvalidValuesClientException e){
-            System.out.println(e.getMessage());
+
+            //Display alert
+            Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
+            addedClient.setContentText("Operation done successfully\nClient " + this.client.getCompanyName() + " updated!");
+            addedClient.show();
+
+            //Reload listView and close update stage
+            App.setRoot("views/client/clientView");
+            this.stage.close();
+        } catch (InvalidValuesClientException e) {
+            Alert message = new Alert(Alert.AlertType.ERROR);
+            message.setContentText("Modification cancelled\nError in client input: " + e.getMessage() + "!");
+            message.show();
         }
 
-        //Display alert
-        Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
-        addedClient.setContentText("Operation done successfully\nClient " + this.client.getCompanyName() + " updated!");
-        addedClient.show();
-
-        //Reload listView and close update stage
-        App.setRoot("views/client/clientView");
-        this.stage.close();
-    }
+}
 
     public void cancelAction() throws IOException {
         App.setRoot("views/client/clientView");

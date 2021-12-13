@@ -38,9 +38,9 @@ public class ClientInformationController implements Initializable {
 
     private Stage stage;
 
-    public ClientInformationController(Client client, ClientFacade clientFacade, Stage stage) {
+    public ClientInformationController(Client client, Stage stage) {
         this.client = client;
-        this.clientFacade = clientFacade;
+        this.clientFacade = ClientFacade.getInstance();
         this.stage = stage;
     }
 

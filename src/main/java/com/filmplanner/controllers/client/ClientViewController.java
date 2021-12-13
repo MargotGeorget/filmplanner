@@ -51,13 +51,13 @@ public class ClientViewController implements Initializable {
 
             //Client client = clientFacade.findById(clientSelected.getIdClient());
 
-            //Create new stage
+            //Create new stage to show client information
             Stage stage = new Stage();
             stage.setHeight(280);
             stage.setWidth(610);
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientInformation.fxml"));
             try {
-                ClientInformationController controller = new ClientInformationController(client,this.clientFacade, stage);
+                ClientInformationController controller = new ClientInformationController(client, stage);
                 fxmlLoader.setController(controller);
                 Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
                 stage.setScene(scene);

@@ -40,6 +40,7 @@ public class ClientFormController {
     /**
      * Retrieves the information entered by the user and creates the associated client
      * If the creation is completed, display an alert and return to the home page of the client view
+     *
      * @throws IOException
      */
     public void createClient() throws IOException {
@@ -59,21 +60,27 @@ public class ClientFormController {
             long idClient = clientFacade.create(newClient);
             newClient.setIdClient(idClient);
 
-            if(idClient!=-1){
-                Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
-                addedClient.setContentText("Operation done successfully\nClient " + newClient.getCompanyName() + " added!");
-                addedClient.show();
+            if (idClient != -1) {
+                Alert message = new Alert(Alert.AlertType.CONFIRMATION);
+                message.setContentText("Operation done successfully\nClient " + newClient.getCompanyName() + " added!");
+                message.show();
                 App.setRoot("views/client/clientView");
+            } else {
+                Alert message = new Alert(Alert.AlertType.ERROR);
+                message.setContentText("Error in client creation\nClient " + newClient.getCompanyName() + "not added!\nError with database");
+                message.show();
             }
-        }catch (InvalidValuesClientException e){
-            //TODO: gérer exception
-            System.out.println(e.getMessage());
+        } catch (InvalidValuesClientException e) {
+            Alert message = new Alert(Alert.AlertType.ERROR);
+            message.setContentText("Creation cancelled\nError in client input: " + e.getMessage() + "!");
+            message.show();
         }
 
     }
 
     /**
      * Return to the home page of the client view
+     *
      * @throws IOException
      */
     public void cancelCreation() throws IOException {
