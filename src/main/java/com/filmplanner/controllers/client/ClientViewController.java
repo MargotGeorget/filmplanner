@@ -53,7 +53,7 @@ public class ClientViewController implements Initializable {
 
             //Create new stage
             Stage stage = new Stage();
-            stage.setHeight(300);
+            stage.setHeight(280);
             stage.setWidth(610);
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientInformation.fxml"));
             try {

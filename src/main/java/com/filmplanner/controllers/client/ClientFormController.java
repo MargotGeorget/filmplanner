@@ -48,6 +48,7 @@ public class ClientFormController {
 
         //Sends client to create to facade
         long idClient = clientFacade.create(newClient);
+        newClient.setIdClient(idClient);
 
         //TODO: add verif
         System.out.println(newClient.getCompanyName() + " - " + newClient.getRefereeName() + " - " + newClient.getRefereeEmail() + " - " + newClient.getRefereeTel() + " - " + newClient.getDescription());
