@@ -1,6 +1,7 @@
 package com.filmplanner.controllers.client;
 
 import com.filmplanner.App;
+import com.filmplanner.exceptions.InvalidValuesClientException;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+//TODO: add JavaDoc
 public class ClientFormController {
 
     @FXML
@@ -27,14 +29,20 @@ public class ClientFormController {
     @FXML
     private TextArea descriptionInput;
 
+    //Client façade pour gérer lien avec la business logic
     private ClientFacade clientFacade;
 
     public ClientFormController() {
         this.clientFacade = ClientFacade.getInstance();
     }
 
+
+    /**
+     * Retrieves the information entered by the user and creates the associated client
+     * If the creation is completed, display an alert and return to the home page of the client view
+     * @throws IOException
+     */
     public void createClient() throws IOException {
-        //TODO: Manage empty input
 
         //Recovery of data entered
         String companyName = companyNameInput.getText().trim();
@@ -43,24 +51,31 @@ public class ClientFormController {
         String refereeTel = refereeTelInput.getText();
         String description = descriptionInput.getText();
 
-        //Create client variable
-        Client newClient = new Client(companyName, description, refereeName, refereeEmail, refereeTel);
+        try {
+            //Create client variable
+            Client newClient = new Client(companyName, description, refereeName, refereeEmail, refereeTel);
 
-        //Sends client to create to facade
-        long idClient = clientFacade.create(newClient);
-        newClient.setIdClient(idClient);
+            //Sends client to create to facade
+            long idClient = clientFacade.create(newClient);
+            newClient.setIdClient(idClient);
 
-        //TODO: add verif
-        System.out.println(newClient.getCompanyName() + " - " + newClient.getRefereeName() + " - " + newClient.getRefereeEmail() + " - " + newClient.getRefereeTel() + " - " + newClient.getDescription());
-        if(idClient!=-1){
-            Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
-            addedClient.setContentText("Operation done successfully\nClient " + newClient.getCompanyName() + " added!");
-            addedClient.show();
-            App.setRoot("views/client/clientView");
+            if(idClient!=-1){
+                Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
+                addedClient.setContentText("Operation done successfully\nClient " + newClient.getCompanyName() + " added!");
+                addedClient.show();
+                App.setRoot("views/client/clientView");
+            }
+        }catch (InvalidValuesClientException e){
+            //TODO: gérer exception
+            System.out.println(e.getMessage());
         }
 
     }
 
+    /**
+     * Return to the home page of the client view
+     * @throws IOException
+     */
     public void cancelCreation() throws IOException {
         App.setRoot("views/client/clientView");
     }

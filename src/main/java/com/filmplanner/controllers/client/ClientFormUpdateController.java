@@ -1,6 +1,7 @@
 package com.filmplanner.controllers.client;
 
 import com.filmplanner.App;
+import com.filmplanner.exceptions.InvalidValuesClientException;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
@@ -63,8 +64,12 @@ public class ClientFormUpdateController implements Initializable {
         String refereeTel = this.refereeTel.getText();
         String description = this.companyDescription.getText();
 
-        client.setAllInformation(companyName, description, refereeName, refereeEmail, refereeTel);
-        clientFacade.update(this.client.getIdClient(), this.client);
+        try{
+            client.setAllInformation(companyName, description, refereeName, refereeEmail, refereeTel);
+            clientFacade.update(this.client.getIdClient(), this.client);
+        }catch (InvalidValuesClientException e){
+            System.out.println(e.getMessage());
+        }
 
         //Display alert
         Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);

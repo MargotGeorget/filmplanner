@@ -1,6 +1,7 @@
 package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.ClientDAO;
+import com.filmplanner.exceptions.InvalidValuesClientException;
 import com.filmplanner.models.Client;
 
 import java.sql.*;
@@ -71,10 +72,13 @@ public class PostgreClientDAO implements ClientDAO {
             }
             System.out.println(client);
 
-            } catch(SQLException e){
-                e.printStackTrace();
-            }
-            return client;
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch(InvalidValuesClientException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return client;
         }
 
         @Override
@@ -104,6 +108,8 @@ public class PostgreClientDAO implements ClientDAO {
             //TODO: est ce qu'il faut fermer statement aussi?
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (InvalidValuesClientException e){
+            System.out.println(e.getMessage());
         }
         System.out.println("Operation done successfully");
         return clients;
