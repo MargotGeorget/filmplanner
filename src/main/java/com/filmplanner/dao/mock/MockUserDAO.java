@@ -23,17 +23,12 @@ public class MockUserDAO implements UserDAO {
      * @return
      */
     @Override
-    public User find(String email) {
+    public User findByEmail(String email) {
         return this.users.get(email);
     }
 
     @Override
-    public String getPassword(String email) {
-        return this.users.get(email).getPassword();
-    }
-
-    @Override
-    public void insert(User user) {
+    public void create(User user) {
         this.users.put(user.getEmail(), user);
     }
 }

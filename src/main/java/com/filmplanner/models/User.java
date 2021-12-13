@@ -1,21 +1,23 @@
 package com.filmplanner.models;
 
 public class User {
+
+    private int id;
     private String name;
     private String email;
     private String password;
     private String phoneNumber;
 
-    /**
-     * Instantiates a User.
-     *
-     * @param name  the user's name
-     * @param email the user's email
-     */
+
     public User(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(int id, String name, String email, String phoneNumber) {
+        this(name, email, phoneNumber);
+        this.id = id;
     }
 
     /**
@@ -51,6 +53,9 @@ public class User {
         return phoneNumber;
     }
 
+    public int getId() {
+        return id;
+    }
 
     /*
     Setters
@@ -73,4 +78,12 @@ public class User {
     }
 
 
+    /*
+    Methods
+     */
+
+    @Override
+    public String toString() {
+        return this.id + ": " + this.email + " " + this.name + " " + this.phoneNumber;
+    }
 }

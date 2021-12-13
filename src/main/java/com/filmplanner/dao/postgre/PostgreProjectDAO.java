@@ -30,25 +30,34 @@ public class PostgreProjectDAO implements ProjectDAO {
      */
     @Override
     public Project create(Project project) {
+        Project createdProject = null;
         try {
             String query = "INSERT INTO project (name, description, client_id) VALUES (?, ?, ?)";
 
             PreparedStatement statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
-            statement.setInt(3, 1);
-            // statement.setString(3, client.getId());
-            statement.executeUpdate(); // TODO check altered rows number
+            statement.setInt(3, 1); // statement.setString(3, client.getId());
 
-            ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            Project createdProject = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+            if (statement.executeUpdate() > 0) { // if no rows were altered the request did nothing
+                ResultSet resultSet = statement.getGeneratedKeys();
+                resultSet.next();
+                createdProject = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+            }
+
+            for (User manager : project.getManagers()) {
+                query = "INSERT INTO project_manager (project_id, user_id) VALUES (?, ?)";
+                statement = this.connection.prepareStatement(query);
+                statement.setInt(1, project.getId());
+                statement.setInt(2, manager.getId());
+                statement.executeUpdate();
+            }
+
             statement.close();
-            return createdProject;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return createdProject;
     }
 
     /**
@@ -59,19 +68,19 @@ public class PostgreProjectDAO implements ProjectDAO {
      */
     @Override
     public Project findById(int id) {
+        Project foundProject = null;
         try {
             String query = "SELECT * FROM project WHERE id=" + id;
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            Project project = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
+            foundProject = new Project(resultSet.getInt("id"), resultSet.getString("name"), resultSet.getString("description"));
             resultSet.close();
             statement.close();
-            return project;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return foundProject;
     }
 
     /**
@@ -85,7 +94,7 @@ public class PostgreProjectDAO implements ProjectDAO {
     public Project[] findManyByManager(User manager) {
         try {
             List<Project> projects = new ArrayList<>();
-            String query = "SELECT * FROM project_manager, project WHERE project_id=id AND user_email=" + manager.getEmail();
+            String query = "SELECT * FROM project_manager, project WHERE project_id=id AND id=" + manager.getEmail();
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -161,6 +170,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         }
     }
 
+    /*
     public static void main(String[] args) {
         AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
         ProjectDAO projectDAO = factory.getProjectDAO();
@@ -169,6 +179,6 @@ public class PostgreProjectDAO implements ProjectDAO {
         for (Project project : projectDAO.findAll()) {
             System.out.println(project);
         }
-
     }
+     */
 }

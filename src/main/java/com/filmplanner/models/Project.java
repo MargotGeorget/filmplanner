@@ -70,6 +70,15 @@ public class Project {
     Methods
      */
 
+    /**
+     * Adds a manager to the project.
+     *
+     * @param manager an instance of User to add as a manager
+     */
+    public void addManager(User manager) {
+        this.managers.add(manager);
+    }
+
     @Override
     public String toString() {
         return this.id + ": " + this.name + "\n" + this.description;

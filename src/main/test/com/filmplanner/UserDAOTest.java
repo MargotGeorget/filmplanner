@@ -13,7 +13,7 @@ public class UserDAOTest {
     @Test
     void loginTest() {
         UserDAO userDAO = MockDAOFactory.getInstance().getUserDAO();
-        User user = userDAO.find("margot-georget@gmail.com");
-        assertEquals(user.getPassword(), userDAO.getPassword(user.getEmail()));
+        User user = userDAO.findByEmail("margot-georget@gmail.com");
+        assertEquals(user.getPassword(), userDAO.findByEmail(user.getEmail()).getPassword());
     }
 }
