@@ -1,10 +1,16 @@
 package com.filmplanner.controllers.client;
 
+import com.filmplanner.App;
+import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,8 +33,14 @@ public class ClientInformationController implements Initializable {
 
     private Client client;
 
-    public ClientInformationController(Client client) {
+    private ClientFacade clientFacade;
+
+    private Stage stage;
+
+    public ClientInformationController(Client client, ClientFacade clientFacade, Stage stage) {
         this.client = client;
+        this.clientFacade = clientFacade;
+        this.stage = stage;
     }
 
     @Override
@@ -38,5 +50,20 @@ public class ClientInformationController implements Initializable {
         this.refereeName.setText(client.getRefereeName());
         this.refereeEmail.setText(client.getRefereeEmail());
         this.refereeTel.setText(client.getRefereeTel());
+    }
+
+    public void editClientAction() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientFormUpdate.fxml"));
+        try {
+            ClientFormUpdateController controller = new ClientFormUpdateController(client,this.clientFacade, this.stage);
+            fxmlLoader.setController(controller);
+            stage.setScene(new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteClientAction() throws IOException {
+        //TODO
     }
 }

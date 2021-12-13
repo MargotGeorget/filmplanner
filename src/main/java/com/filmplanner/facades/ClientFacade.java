@@ -44,7 +44,7 @@ public class ClientFacade {
         return clients;
     }
 
-    public Client update(String id, Client clientUpdated){
+    public Client update(long id, Client clientUpdated){
         Client client = clientDAO.update(id, clientUpdated);
         return client;
     }

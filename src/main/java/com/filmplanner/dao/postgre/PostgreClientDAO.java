@@ -107,18 +107,39 @@ public class PostgreClientDAO implements ClientDAO {
         }
         System.out.println("Operation done successfully");
         return clients;
-        /*
-        //TODO: connection data base
-        List<Client> clients = new ArrayList<>();
-        for(int i = 0; i < 8; i++){
-            clients.add( new Client("Company " + i, "desc", "Bernard", "bernard.dumont@gmail.com", "0203785412" ));
-        }
-        return clients;
-        */
     }
 
     @Override
-    public Client update(String id, Client clientUpdated) {
+    public Client update(long id, Client client) {
+        //TODO: modifier fonction pour faire update
+        String sql = "INSERT INTO client (company_name,description,referee_name, referee_email,referee_tel) VALUES(?,?,?,?,?)";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, client.getCompanyName());
+            stmt.setString(2, client.getDescription());
+            stmt.setString(3, client.getRefereeName());
+            stmt.setString(4, client.getRefereeEmail());
+            stmt.setString(5, client.getRefereeTel());
+
+            ResultSet rs = stmt.executeQuery();
+            //check the affected rows
+            if(rs != null ){
+                //get the ID back
+                if(rs.next()){
+                    id = rs.getLong(1);
+                }
+            }else {
+                id = -1;
+            }
+            System.out.println("Operation done successfully");
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

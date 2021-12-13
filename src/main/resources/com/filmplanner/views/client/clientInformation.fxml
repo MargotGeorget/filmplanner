@@ -51,7 +51,7 @@
             <Insets top="30.0" />
          </opaqueInsets>
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #1B3B6F;" text="Edit" textFill="WHITE">
+            <Button mnemonicParsing="false" style="-fx-background-color: #1B3B6F;" text="Edit" textFill="WHITE" onAction="#editClientAction">
                <TilePane.margin>
                   <Insets right="10.0" />
                </TilePane.margin>

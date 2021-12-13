@@ -73,6 +73,15 @@ public class Client {
         this.refereeTel = refereeTel;
     }
 
+    //Function:
+    public void setAllInformation(String companyName, String description, String refereeName, String refereeEmail, String refereeTel){
+        this.setCompanyName(companyName);
+        this.setDescription(description);
+        this.setRefereeName(refereeName);
+        this.setRefereeEmail(refereeEmail);
+        this.setRefereeTel(refereeTel);
+    }
+
     @Override
     public String toString() {
         return companyName + " -- " + "Referee: " + refereeName + " ";

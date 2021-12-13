@@ -12,7 +12,7 @@ public interface ClientDAO {
 
     abstract List<Client> findAll();
 
-    abstract Client update(String id, Client clientUpdated);
+    abstract Client update(long id, Client clientUpdated);
 
 
 }
