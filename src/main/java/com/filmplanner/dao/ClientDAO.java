@@ -14,5 +14,7 @@ public interface ClientDAO {
 
     abstract Client update(long id, Client clientUpdated);
 
+    abstract boolean delete(long id);
+
 
 }

@@ -112,34 +112,40 @@ public class PostgreClientDAO implements ClientDAO {
     @Override
     public Client update(long id, Client client) {
         //TODO: modifier fonction pour faire update
-        String sql = "INSERT INTO client (company_name,description,referee_name, referee_email,referee_tel) VALUES(?,?,?,?,?)";
+        String sql = "UPDATE client SET company_name=?, description=?, referee_name=?, referee_email=?, referee_tel=? WHERE client_id=?;";
 
         try {
-            PreparedStatement stmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
 
             stmt.setString(1, client.getCompanyName());
             stmt.setString(2, client.getDescription());
             stmt.setString(3, client.getRefereeName());
             stmt.setString(4, client.getRefereeEmail());
             stmt.setString(5, client.getRefereeTel());
+            stmt.setLong(6, client.getIdClient());
 
-            ResultSet rs = stmt.executeQuery();
-            //check the affected rows
-            if(rs != null ){
-                //get the ID back
-                if(rs.next()){
-                    id = rs.getLong(1);
-                }
-            }else {
-                id = -1;
-            }
+            stmt.executeQuery();
             System.out.println("Operation done successfully");
 
-            rs.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public boolean delete(long id) {
+        String sql = "DELETE FROM client WHERE client_id=" + id + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return true;
     }
 }

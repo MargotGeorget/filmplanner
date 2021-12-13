@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -64,6 +65,15 @@ public class ClientInformationController implements Initializable {
     }
 
     public void deleteClientAction() throws IOException {
-        //TODO
+        this.clientFacade.delete(client.getIdClient());
+        //TODO: verif
+        //Display alert
+        Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
+        addedClient.setContentText("Operation done successfully\nClient " + this.client.getCompanyName() + " deleted!");
+        addedClient.show();
+
+        //Reload listView and close update stage
+        App.setRoot("views/client/clientView");
+        this.stage.close();
     }
 }

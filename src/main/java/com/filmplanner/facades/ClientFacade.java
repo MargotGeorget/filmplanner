@@ -48,4 +48,9 @@ public class ClientFacade {
         Client client = clientDAO.update(id, clientUpdated);
         return client;
     }
+
+    public boolean delete(long id) {
+        boolean res = clientDAO.delete(id);
+        return res;
+    }
 }
