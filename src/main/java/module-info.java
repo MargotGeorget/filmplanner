@@ -12,4 +12,6 @@ module com.filmplanner {
     opens com.filmplanner.facades to javafx.fxml;
     exports com.filmplanner.controllers;
     opens com.filmplanner.controllers to javafx.fxml;
+    exports com.filmplanner.controllers.user;
+    opens com.filmplanner.controllers.user to javafx.fxml;
 }

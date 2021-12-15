@@ -4,6 +4,7 @@ import com.filmplanner.dao.UserDAO;
 import com.filmplanner.models.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class MockUserDAO implements UserDAO {
 
@@ -12,7 +13,7 @@ public class MockUserDAO implements UserDAO {
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
     MockUserDAO() {
         this.users = new HashMap<>();
-        users.put("toto@gmail.com", new User("Toto", "toto@gmail.com", "toto"));
+        users.put("toto@gmail.com", new User("Toto", "toto@gmail.com", "toto", "06888888"));
         users.put("margot-georget@gmail.com", new User("Georgette", "margot-georget@gmail.com", "ruby"));
     }
 
@@ -22,18 +23,34 @@ public class MockUserDAO implements UserDAO {
      * @param email
      * @return
      */
+    //TODO DO MOCK USER METHODS
     @Override
-    public User find(String email) {
+    public User findByEmail(String email) {
         return this.users.get(email);
     }
 
     @Override
-    public String getPassword(String email) {
-        return this.users.get(email).getPassword();
+    public long update(int id, User updatedUser) {
+        return -1;
     }
 
     @Override
-    public void insert(User user) {
-        this.users.put(user.getEmail(), user);
+    public List<User> findAll() {
+        return null;
+    }
+
+    @Override
+    public User findById(int id) {
+        return null;
+    }
+
+    @Override
+    public int create(User newUser) {
+        return 0;
+    }
+
+    @Override
+    public int deleteById(int id) {
+        return 0;
     }
 }

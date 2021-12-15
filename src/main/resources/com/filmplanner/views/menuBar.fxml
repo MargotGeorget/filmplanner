@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" style="-fx-background-color: #9EB3C2;"
+         xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.MenuBarController" >
+    <menus>
+        <Menu mnemonicParsing="false" text="Accueil">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Project">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Create a project" />
+                <MenuItem mnemonicParsing="false" text="View all projects" />
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Client">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Create a client" onAction="#addClientAction"/>
+                <MenuItem mnemonicParsing="false" text="View all clients" onAction="#viewClientsAction"/>
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Gear">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Add a gear" />
+                <MenuItem mnemonicParsing="false" text="View all gears" />
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>
