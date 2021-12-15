@@ -9,41 +9,46 @@ import java.util.ArrayList;
 
 public class PostgreGearDAO implements GearDAO {
     private Connection connection;
-    private Statement stmt;
 
     public PostgreGearDAO(Connection connection) {
+
         this.connection = connection;
     }
 
     @Override
-    public void createGear(Gear newGear) {
+    public boolean createGear(Gear newGear) {
         try {
-            String sql = "INSERT INTO public.\"GEAR\" (serialnumber, model, category) VALUES (?, ?, ?);";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-            preparedStatement.setString(1, newGear.getSerialNumber());
-            preparedStatement.setString(2, newGear.getModel());
-            preparedStatement.setString(3, newGear.getCategory());
+            String sql = "INSERT INTO gear (serialnumber, model, category) VALUES (?,?, ?);";
+            PreparedStatement smt = this.connection.prepareStatement(sql);
+            smt.setString(1, newGear.getSerialNumber());
+            smt.setString(2, newGear.getModel());
+            smt.setString(3, newGear.getCategory());
+            smt.executeUpdate();
+            System.out.println("Operation done successfully");
+            smt.close();
+            return true;
 
-            preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        System.out.println("Operation done successfully");
+
     }
 
 
 
     @Override
-    public Gear findGearById(int id) {
+    public Gear findGearById(String id) {
         try {
-            String sql = "SELECT * FROM public.\"GEAR\" WHERE serialnumber = ? ;";
+            String sql = "SELECT * FROM public.gear WHERE serialnumber = ? ;";
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-            preparedStatement.setString(1, String.valueOf(id));
+            preparedStatement.setString(1,id);
 
             ResultSet res=preparedStatement.executeQuery();
             res.next();
             Gear gear=new Gear(res.getString("SERIALNBUMBER"),res.getString("MODEL"),res.getString("CATEGORY")  );
             res.close();
+            preparedStatement.close();
             return gear;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +60,7 @@ public class PostgreGearDAO implements GearDAO {
     @Override
     public ArrayList<Gear> findManyGearByShooting(Shooting shooting) {
         try {
-            String sql = "SELECT * FROM public.\"GEAR\" WHERE serialnumber = ? ;";
+            String sql = "SELECT * FROM public.gear WHERE serialnumber = ? ;";
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
             preparedStatement.setString(1, String.valueOf(shooting));
 
@@ -67,6 +72,7 @@ public class PostgreGearDAO implements GearDAO {
 
             }
             res.close();
+            preparedStatement.close();
             return gearList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,6 +93,7 @@ public class PostgreGearDAO implements GearDAO {
                 gearList.add(new Gear(res.getString("SERIALNUMBER"), res.getString("MODEL"), res.getString("CATEGORY")));
             }
             res.close();
+            preparedStatement.close();
             return gearList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,35 +102,41 @@ public class PostgreGearDAO implements GearDAO {
     }
 
     @Override
-    public void deleteGear(int id) {
+    public boolean deleteGear(String id) {
         try {
-            String sql = "DELET FROM public.\"gear\" WHERE serialnumber = ? ;";
+            String sql = "DELETE FROM public.gear WHERE serialnumber = ? ;";
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-            preparedStatement.setString(1, String.valueOf(id));
+            preparedStatement.setString(1, id);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
     }
 
     @Override
-    public void updateGear(int id, Gear gear) {
+    public boolean updateGear(String id, Gear gear) {
         try {
-            String sql = "UPDATE public.\"GEAR\" SET serialnumber = ?, model= ? , category= ? WHERE serialnumber = ?;";
+            String sql = "UPDATE public.gear SET serialnumber = ?, model= ? , category= ? WHERE serialnumber = ?;";
 
-            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, gear.getSerialNumber());
             preparedStatement.setString(2, gear.getModel());
             preparedStatement.setString(3, gear.getCategory());
-            preparedStatement.setString(4, String.valueOf(id));
+            preparedStatement.setString(4, id);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        System.out.println("Operation done successfully");
+
     }
 }

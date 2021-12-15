@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.gear.GearController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.66668701171875" minWidth="10.0" prefWidth="298.0" />
+        <ColumnConstraints />
+      <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="332.0" minHeight="10.0" prefHeight="332.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="160.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+
+        <Label text="Your Gear" textFill="#1b3b6f" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Label>
+        <TableView fx:id="gearList" layoutX="75.0" layoutY="81.0" prefHeight="167.0" prefWidth="827.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <columns>
+                <TableColumn fx:id="colSerialNumber" prefWidth="259.0" text="Serial Number" />
+                <TableColumn fx:id="colModel" prefWidth="279.0" text="Modèle" />
+                <TableColumn fx:id="colCategory" minWidth="7.0" prefWidth="261.0" text="Catégorie" />
+            </columns>
+        </TableView>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <buttons>
+          <Button mnemonicParsing="false" text="Add" onAction="#add"/>
+            <Button mnemonicParsing="false" text="Edit" onAction="#edit"/>
+            <Button mnemonicParsing="false" text="Delete" onAction="#delete" />
+        </buttons>
+      </ButtonBar>
+    </children>
+</GridPane>

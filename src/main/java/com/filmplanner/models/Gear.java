@@ -1,5 +1,8 @@
 package com.filmplanner.models;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Gear {
     private String model;
     private String category;
@@ -7,8 +10,8 @@ public class Gear {
 
     public Gear(String serialNumber, String model, String category) {
         this.model = model;
-        this.category = category;
-        this.serialNumber = serialNumber;
+        this.category = category;;
+        this.serialNumber = serialNumber;;
     }
 
     public String getModel() {

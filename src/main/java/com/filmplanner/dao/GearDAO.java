@@ -6,17 +6,17 @@ import com.filmplanner.models.Shooting;
 import java.util.ArrayList;
 
 public interface GearDAO {
-    void createGear(Gear newGear);
+    boolean createGear(Gear newGear);
 
-    Gear findGearById(int id);
+    Gear findGearById(String id);
 
     ArrayList<Gear> findManyGearByShooting(Shooting shooting);
 
     ArrayList<Gear> findAllGear();
 
-    void deleteGear(int id);
+    boolean deleteGear(String id);
 
-    void updateGear(int id, Gear gear);
+    boolean updateGear(String id, Gear gear);
 
 
 }
