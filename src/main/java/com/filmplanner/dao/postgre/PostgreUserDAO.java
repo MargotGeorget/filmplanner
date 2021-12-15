@@ -1,6 +1,5 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.models.User;
 
@@ -30,7 +29,7 @@ public class PostgreUserDAO implements UserDAO {
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                newUser = new User(rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("phonenumber")); //TODO : Gérer l'erreur quand le login est pas bon
+                newUser = new User(rs.getLong("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"));
             }
             rs.close();
             statement.close();
@@ -42,7 +41,7 @@ public class PostgreUserDAO implements UserDAO {
 
 
     /**
-     * Inserts a user in the database.
+     * Creates a user in the database.
      *
      * @param user the user to insert
      */
@@ -60,13 +59,4 @@ public class PostgreUserDAO implements UserDAO {
             e.printStackTrace();
         }
     }
-
-    /*
-    public static void main(String[] args) {
-        AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
-        System.out.println(userDAO.findByEmail("nathan@ndmvisuals.com"));
-        userDAO.create(new User("Merouan", "merouan@awi.awi", "secret", "1234567890"));
-    }
-     */
 }

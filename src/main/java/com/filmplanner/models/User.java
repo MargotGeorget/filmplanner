@@ -2,7 +2,7 @@ package com.filmplanner.models;
 
 public class User {
 
-    private int id;
+    private Long id;
     private String name;
     private String email;
     private String password;
@@ -15,7 +15,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(int id, String name, String email, String phoneNumber) {
+    public User(Long id, String name, String email, String phoneNumber) {
         this(name, email, phoneNumber);
         this.id = id;
     }
@@ -53,7 +53,7 @@ public class User {
         return phoneNumber;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

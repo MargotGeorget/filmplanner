@@ -1,10 +1,11 @@
 package com.filmplanner.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Project {
 
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private Set<User> managers;
@@ -13,19 +14,26 @@ public class Project {
     //private Set<Shoot> shoots;
 
 
-    public Project(String name, String description) {
+    public Project(String name, String description, User manager) {
         this.name = name;
         this.description = description;
+        this.managers = new HashSet<>();
+        this.managers.add(manager);
     }
 
     public Project(String name, String description, Set<User> managers) {
-        this(name, description);
+        this.name = name;
+        this.description = description;
         this.managers = managers;
     }
 
-    public Project(int id, String name, String description) {
-        this(name, description);
+    public Project(Long id, String name, String description, Set<User> managers) {
+        this(name, description, managers);
         this.id = id;
+    }
+
+    public Project(Long id, Project project) {
+        this(id, project.getName(), project.getDescription(), project.getManagers());
     }
 
 
@@ -45,7 +53,7 @@ public class Project {
         return managers;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -81,6 +89,10 @@ public class Project {
 
     @Override
     public String toString() {
-        return this.id + ": " + this.name + "\n" + this.description;
+        String result = "id: " + this.id + "\nname: " + this.name + "\ndesc: " + this.description;
+        for (User manager : this.managers) {
+            result += "\n" + manager.toString();
+        }
+        return result;
     }
 }

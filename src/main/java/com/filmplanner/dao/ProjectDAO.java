@@ -7,13 +7,13 @@ public interface ProjectDAO {
 
     Project create(Project project);
 
-    Project findById(int id);
+    Project findById(Long id);
 
     Project[] findManyByManager(User manager);
 
     Project[] findAll();
 
-    void deleteById(int id);
+    void deleteById(Long id);
 
-    void updateById(int id, Project project);
+    void updateById(Long id, Project project);
 }
