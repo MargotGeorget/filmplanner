@@ -33,6 +33,15 @@ public class InputVerification {
             return false;
         }
     }
+
+    public boolean isEmail(String str){
+        String regex = "^(.+)@(.+)\\.(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
+    }
+
     //TODO: Test unitaire pour les fonctions
 
     public static void main(String[] args) {

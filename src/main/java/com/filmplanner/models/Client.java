@@ -41,9 +41,9 @@ public class Client {
     }
 
     public void setCompanyName(String companyName) throws InvalidValuesClientException {
-        if(companyName.length()<2){
-            throw new InvalidValuesClientException("Error : Company Name too short!");
-        }else {
+        if (companyName.length() < 2) {
+            throw new InvalidValuesClientException("Company Name too short!");
+        } else {
             this.companyName = companyName;
         }
     }
@@ -61,12 +61,12 @@ public class Client {
     }
 
     public void setRefereeName(String refereeName) throws InvalidValuesClientException {
-        if (!this.isValidString(refereeName, new InputVerification())){
-            throw new InvalidValuesClientException("Error: Referee name contains special symbol!");
-        } else if (refereeName.length()<2){
-            throw new InvalidValuesClientException("Error: Referee name too short!");
-        } else if (refereeName.length()>30){
-            throw new InvalidValuesClientException("Error: Referee name too long!");
+        if (!this.isValidString(refereeName, new InputVerification())) {
+            throw new InvalidValuesClientException("Referee name contains special symbol!");
+        } else if (refereeName.length() < 2) {
+            throw new InvalidValuesClientException("Referee name too short!");
+        } else if (refereeName.length() > 30) {
+            throw new InvalidValuesClientException("Referee name too long!");
         } else {
             this.refereeName = refereeName;
         }
@@ -76,8 +76,12 @@ public class Client {
         return refereeEmail;
     }
 
-    public void setRefereeEmail(String refereeEmail) {
-        this.refereeEmail = refereeEmail;
+    public void setRefereeEmail(String refereeEmail) throws InvalidValuesClientException {
+        if (!this.isEmail(refereeEmail, new InputVerification())) {
+            throw new InvalidValuesClientException("Referee email is not an email");
+        } else {
+            this.refereeEmail = refereeEmail;
+        }
     }
 
     public String getRefereeTel() {
@@ -85,9 +89,9 @@ public class Client {
     }
 
     public void setRefereeTel(String refereeTel) throws InvalidValuesClientException {
-        if(!this.isPhoneNumber(refereeTel, new InputVerification())){
+        if (!this.isPhoneNumber(refereeTel, new InputVerification())) {
             throw new InvalidValuesClientException("Error: Referee tel is not a phone number");
-        }else {
+        } else {
             this.refereeTel = refereeTel;
         }
     }
@@ -101,12 +105,16 @@ public class Client {
         this.setRefereeTel(refereeTel);
     }
 
-    private boolean isValidString(String str, InputVerification validator){
+    private boolean isValidString(String str, InputVerification validator) {
         return validator.isStringWithoutSpecialSymbol(str);
     }
 
-    private boolean isPhoneNumber(String str, InputVerification validator){
+    private boolean isPhoneNumber(String str, InputVerification validator) {
         return validator.isPhoneNumber(str);
+    }
+
+    private boolean isEmail(String str, InputVerification validator) {
+        return validator.isEmail(str);
     }
 
     @Override
