@@ -14,7 +14,7 @@ public class HomeControllers {
     @FXML
     public void login() throws IOException {
 
-        App.setRoot("views/client/clientView");
+        App.setRoot("views/client/loginView");
 
     }
 }
