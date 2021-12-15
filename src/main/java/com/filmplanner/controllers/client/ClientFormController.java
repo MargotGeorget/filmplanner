@@ -29,7 +29,6 @@ public class ClientFormController {
     @FXML
     private TextArea descriptionInput;
 
-    //Client façade pour gérer lien avec la business logic
     private ClientFacade clientFacade;
 
     public ClientFormController() {
@@ -40,7 +39,7 @@ public class ClientFormController {
     /**
      * Retrieves the information entered by the user and creates the associated client
      * If the creation is completed, display an alert and return to the home page of the client view
-     *
+     * If the information given by the user is wrong, display an alert and stays on this page
      * @throws IOException
      */
     public void createClient() throws IOException {

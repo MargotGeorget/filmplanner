@@ -6,15 +6,41 @@ import java.util.List;
 
 public interface ClientDAO {
 
-    abstract long create(Client newClient);
+    /**
+     * Create a client in the datasource
+     * @param newClient
+     * @return long : new client's id
+     */
+    long create(Client newClient);
 
-    abstract Client findById(long id);
+    /**
+     * Returns the client with the id entered in the datasource
+     * @param id
+     * @return Client : the client find in the data base or null if no client has been found
+     */
+    Client findById(long id);
 
-    abstract List<Client> findAll();
+    /**
+     * Returns all the clients saved in the datasource
+     * @return List<Client>
+     */
+    List<Client> findAll();
 
-    abstract Client update(long id, Client clientUpdated);
+    /**
+     * Modifies a client in the datasource
+     * @param id long : the id of the client to be modified
+     * @param clientUpdated : the modified information of the client
+     * @return boolean : the client with his new information
+     */
+    boolean update(long id, Client clientUpdated);
 
-    abstract boolean delete(long id);
+    /**
+     * Delete a client in the datasource
+     * @param id long : the id of the client to be deleted
+     * @return boolean : true if the client was in the datasource and it has been deleted
+     *                  or false if the client could not be found or could not be removed
+     */
+    boolean delete(long id);
 
 
 }

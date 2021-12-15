@@ -53,6 +53,11 @@ public class ClientInformationController implements Initializable {
         this.refereeTel.setText(client.getRefereeTel());
     }
 
+    /**
+     * Update the current page to allow the user to modify the information of the selected client
+     *
+     * @throws IOException
+     */
     public void editClientAction() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/client/clientFormUpdate.fxml"));
         try {
@@ -64,6 +69,11 @@ public class ClientInformationController implements Initializable {
         }
     }
 
+    /**
+     * Delete the selected client and return to the client view
+     *
+     * @throws IOException
+     */
     public void deleteClientAction() throws IOException {
         this.clientFacade.delete(client.getIdClient());
         //TODO: verif

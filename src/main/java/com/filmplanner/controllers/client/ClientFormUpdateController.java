@@ -56,6 +56,12 @@ public class ClientFormUpdateController implements Initializable {
 
     }
 
+    /**
+     * Retrieves the information entered by the user and updates the associated client
+     * If the modification is completed, display an alert and return to the home page of the client view
+     * If the information given by the user is wrong, display an alert and stays on this page
+     * @throws IOException
+     */
     public void updateAction() throws IOException {
         //Recovery of data entered
         String companyName = this.companyName.getText().trim();
@@ -84,6 +90,11 @@ public class ClientFormUpdateController implements Initializable {
 
 }
 
+    /**
+     * Return to the home page of the client view
+     *
+     * @throws IOException
+     */
     public void cancelAction() throws IOException {
         App.setRoot("views/client/clientView");
         this.stage.close();

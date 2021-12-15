@@ -38,15 +38,15 @@ public class ClientViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO: Récupérer les clients à partir de la base de données avec Facade
-
-
+        //Retrieving clients from database
         List<Client> clients = clientFacade.findAll();
 
+        //Display clients in list
         this.clientsList.setItems(new FilteredList<>(FXCollections.observableList(clients)));
-        this.clientsList.setOnMouseClicked(event -> {
 
-            System.out.println("clicked on " + clientsList.getSelectionModel().getSelectedItem());
+        //Function for displaying the information of a client when is selected by the user
+        this.clientsList.setOnMouseClicked(event -> {
+            //Retrieving selected client
             Client client = clientsList.getSelectionModel().getSelectedItem();
 
             //Client client = clientFacade.findById(clientSelected.getIdClient());
@@ -68,6 +68,11 @@ public class ClientViewController implements Initializable {
         });
     }
 
+    /**
+     * Change the current page to the add client form page
+     *
+     * @throws IOException
+     */
     public void moveToCreateClient() throws IOException {
         App.setRoot("views/client/clientForm");
     }

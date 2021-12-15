@@ -33,12 +33,12 @@ public class PostgreClientDAO implements ClientDAO {
 
             ResultSet rs = stmt.executeQuery();
             //check the affected rows
-            if(rs != null ){
+            if (rs != null) {
                 //get the ID back
-                if(rs.next()){
+                if (rs.next()) {
                     id = rs.getLong(1);
                 }
-            }else {
+            } else {
                 id = -1;
             }
             System.out.println("Operation done successfully");
@@ -72,16 +72,16 @@ public class PostgreClientDAO implements ClientDAO {
             }
             System.out.println(client);
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        } catch(InvalidValuesClientException e) {
+        } catch (InvalidValuesClientException e) {
             System.out.println(e.getMessage());
         }
 
         return client;
-        }
+    }
 
-        @Override
+    @Override
     public List<Client> findAll() {
         //Création de la liste de client
         List<Client> clients = new ArrayList<>();
@@ -93,7 +93,7 @@ public class PostgreClientDAO implements ClientDAO {
             ResultSet rs = stmt.executeQuery();
 
             //boucle pour récupérer tout les clients
-            while(rs.next()){
+            while (rs.next()) {
                 long idClient = rs.getLong("client_id");
                 String companyName = rs.getString("company_name");
                 String refereeName = rs.getString("referee_name");
@@ -108,7 +108,7 @@ public class PostgreClientDAO implements ClientDAO {
             //TODO: est ce qu'il faut fermer statement aussi?
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (InvalidValuesClientException e){
+        } catch (InvalidValuesClientException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Operation done successfully");
@@ -116,7 +116,7 @@ public class PostgreClientDAO implements ClientDAO {
     }
 
     @Override
-    public Client update(long id, Client client) {
+    public boolean update(long id, Client client) {
         //TODO: modifier fonction pour faire update
         String sql = "UPDATE client SET company_name=?, description=?, referee_name=?, referee_email=?, referee_tel=? WHERE client_id=?;";
 
@@ -135,9 +135,9 @@ public class PostgreClientDAO implements ClientDAO {
 
             stmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         }
-        return null;
+        return true;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class PostgreClientDAO implements ClientDAO {
 
             stmt.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
