@@ -19,6 +19,21 @@ public class PostgreProjectDAO implements ProjectDAO {
         this.connection = connection;
     }
 
+    /**
+     * Gets a simple Project instance based on a given ResultSet instance.
+     * The ResultSet must be from a query which finds a project.
+     * This method does not moves the ResultSet's cursor.
+     *
+     * @param resultSet the ResultSet from which the project will be instantiated
+     * @return a basic Project instance (only id, name and description attributes will be set)
+     * @throws SQLException if the ResultSet get methods throws a SQLException
+     */
+    private Project getBasicProjectFromResultSet(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("project_id");
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        return new Project(id, name, description);
+    }
 
     /*
     Methods
@@ -72,54 +87,6 @@ public class PostgreProjectDAO implements ProjectDAO {
         return createdProject;
     }
 
-   /*
-    @Override
-    public Project findById(Long id) {
-        Project foundProject = null;
-        if (id != null) {
-            try {
-                String query = "SELECT " +
-                        "project.project_id AS project_id, " +
-                        "project.name AS project_name, " +
-                        "project.description AS project_description, " +
-                        "fp_user.user_id as user_id, " +
-                        "fp_user.name as user_name, " +
-                        "fp_user.email as user_email, " +
-                        "fp_user.phonenumber as user_phonenumber, " +
-                        "fp_user.password as user_password " +
-                        "FROM project, project_manager, fp_user " +
-                        "WHERE project.project_id=" + id + " " +
-                        "AND project_manager.project_id=" + id + " " +
-                        "AND fp_user.user_id=project_manager.user_id";
-                PreparedStatement statement = this.connection.prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-
-                    if (foundProject == null) {
-                        Long projectId = resultSet.getLong("project_id");
-                        String projectName = resultSet.getString("project_name");
-                        String projectDescription = resultSet.getString("project_description");
-                        //foundProject = new Project(projectId, projectName, projectDescription, new HashSet<>());
-                    }
-
-                    Long userId = resultSet.getLong("user_id");
-                    String userName = resultSet.getString("user_name");
-                    String userEmail = resultSet.getString("user_email");
-                    String userPhoneNumber = resultSet.getString("user_phonenumber");
-                    foundProject.addManager(new User(userId, userName, userEmail, userPhoneNumber));
-                }
-
-                resultSet.close();
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return foundProject;
-    }
-
-    */
-
     /**
      * Gets a Project by its id.
      *
@@ -137,10 +104,7 @@ public class PostgreProjectDAO implements ProjectDAO {
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     // Fills in project's attributes
-                    Long projectId = resultSet.getLong("project_id");
-                    String name = resultSet.getString("name");
-                    String description = resultSet.getString("description");
-                    foundProject = new Project(projectId, name, description);
+                    foundProject = getBasicProjectFromResultSet(resultSet);
                 }
 
                 // TODO find managers (ProjectDAO)
@@ -173,11 +137,15 @@ public class PostgreProjectDAO implements ProjectDAO {
     public Project[] findManyByManager(User manager) {
         try {
             List<Project> projects = new ArrayList<>();
-            String query = "SELECT * FROM project_manager, project WHERE project_id=project_id AND user_id=" + manager.getId();
+            String query = "SELECT * FROM project_manager, project " +
+                    "WHERE project_manager.project_id=project.project_id " +
+                    "AND user_id=" + manager.getId();
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
-
+            while (resultSet.next()) {
+                projects.add(getBasicProjectFromResultSet(resultSet));
+            }
 
             resultSet.close();
             statement.close();
@@ -188,13 +156,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         return null;
     }
 
-    /* findByManager
-
-    retrieve list of manager's project's ids
-
-    for each project id
-        findProjectById // ProjectDAO
-     */
+    // TODO add addManager(Long id)
 
     /**
      * Gets all Projects from the database.
@@ -294,12 +256,16 @@ public class PostgreProjectDAO implements ProjectDAO {
     public static void main(String[] args) {
         AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
         ProjectDAO projectDAO = factory.getProjectDAO();
+        UserDAO userDAO = factory.getUserDAO();
 
-        Project newProject = new Project(null, "JujuRoadtrip", "Roadtrip urbex");
+        //Project newProject = new Project(null, "JujuRoadtrip", "Roadtrip urbex");
         //projectDAO.create(newProject);
 
+        for (Project p : projectDAO.findManyByManager(userDAO.findByEmail("nathan@ndmvisuals.com"))) {
+            System.out.println(p);
+        }
 
-        Project found = projectDAO.findById(28L);
-        System.out.println(found);
+        //Project found = projectDAO.findById(28L);
+        //System.out.println(found);
     }
 }
