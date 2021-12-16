@@ -27,6 +27,10 @@ public class Project {
         this.managers = managers;
     }
 
+    public Project(Long id, String name, String description) {
+        this(id, name, description, new HashSet<>());
+    }
+
     public Project(Long id, String name, String description, Set<User> managers) {
         this(name, description, managers);
         this.id = id;
