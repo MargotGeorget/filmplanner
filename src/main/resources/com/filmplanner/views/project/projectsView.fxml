@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.filmplanner.controllers.ProjectsViewController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.filmplanner.controllers.project.ProjectViewController">
+   <children>
+      <fx:include fx:id="menuBar" source="../menuBar.fxml" />
+      <ListView fx:id="projectList" layoutX="80.0" layoutY="166.0" prefHeight="200.0" prefWidth="645.0" />
+      <Label layoutX="358.0" layoutY="106.0" text="Your projects" />
+   </children>
 </AnchorPane>

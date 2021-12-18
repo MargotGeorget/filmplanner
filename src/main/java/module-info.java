@@ -16,4 +16,6 @@ module com.filmplanner {
     opens com.filmplanner.controllers.client to javafx.fxml;
     exports com.filmplanner.controllers.gear;
     opens com.filmplanner.controllers.gear to javafx.fxml;
+    exports com.filmplanner.controllers.project;
+    opens com.filmplanner.controllers.project to javafx.fxml;
 }
