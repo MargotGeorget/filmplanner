@@ -2,7 +2,7 @@ package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.GearDAO;
 import com.filmplanner.models.Gear;
-import com.filmplanner.models.Shooting;
+import com.filmplanner.models.Shoot;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -66,16 +66,17 @@ public class PostgreGearDAO implements GearDAO {
     }
 
     /**
-     * find a gear list by is shooting
-     * @param shooting a shooting
-     * @return a list of gear which corresponds to a shooting
+     * find a gear list by is shoot
+     * @param shoot a shoot
+     * @return a list of gear which corresponds to a shoot
      */
+
     @Override
-    public ArrayList<Gear> findManyGearByShooting(Shooting shooting) {
+    public ArrayList<Gear> findManyGearByShooting(Shoot shoot) {
         try {
             String sql = "SELECT * FROM public.gear WHERE serialnumber = ? ;";
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-            preparedStatement.setString(1, String.valueOf(shooting));
+            preparedStatement.setString(1, String.valueOf(shoot));
 
             ResultSet res = preparedStatement.executeQuery();
             ArrayList<Gear> gearList = new ArrayList<Gear>();
