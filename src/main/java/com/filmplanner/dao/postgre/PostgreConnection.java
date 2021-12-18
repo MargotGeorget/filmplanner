@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// TODO stop using the Singleton pattern for this class
 public class PostgreConnection {
 
     private Connection connection;

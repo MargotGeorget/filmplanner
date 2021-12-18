@@ -2,6 +2,7 @@ package com.filmplanner.dao.mock;
 
 import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.ClientDAO;
+import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.UserDAO;
 
 public class MockDAOFactory extends AbstractDAOFactory {
@@ -41,6 +42,18 @@ public class MockDAOFactory extends AbstractDAOFactory {
     //TODO : implement method for unitary test
     @Override
     public ClientDAO getClientDAO() {
+        return null;
+    }
+
+    /**
+     * Gets the MockUserDAO instance. This function makes sure only one instance
+     * of MockUserDAO can exist at the same time.
+     *
+     * @return the MockUserDAO instance
+     */
+    @Override
+    public ProjectDAO getProjectDAO() {
+        // TODO implement method
         return null;
     }
 }

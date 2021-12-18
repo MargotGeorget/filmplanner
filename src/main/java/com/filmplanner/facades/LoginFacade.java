@@ -7,8 +7,6 @@ import com.filmplanner.exceptions.InvalidCredentialsException;
 import com.filmplanner.exceptions.UserNotFoundException;
 import com.filmplanner.models.User;
 
-import java.sql.SQLException;
-
 public class LoginFacade {
 
     private static LoginFacade instance;
@@ -44,7 +42,7 @@ public class LoginFacade {
      * @throws InvalidCredentialsException if the password doesn't match the email
      */
     public User login(String email, String password) throws InvalidCredentialsException, UserNotFoundException {
-        User user = this.userDAO.find(email);
+        User user = this.userDAO.findByEmail(email);
         if (user == null) {
             throw new UserNotFoundException("The email " + email + " is not registered");
         }

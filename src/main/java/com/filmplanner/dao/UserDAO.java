@@ -4,9 +4,8 @@ package com.filmplanner.dao;
 import com.filmplanner.models.User;
 
 public interface UserDAO {
-    User find(String email);
 
-    String getPassword(String email);
+    User findByEmail(String email);
 
-    void insert(User user);
+    void create(User user);
 }

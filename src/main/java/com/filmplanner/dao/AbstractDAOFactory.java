@@ -1,7 +1,5 @@
 package com.filmplanner.dao;
 
-import java.sql.SQLException;
-
 public abstract class AbstractDAOFactory {
 
     /**
@@ -12,6 +10,11 @@ public abstract class AbstractDAOFactory {
      */
     abstract public UserDAO getUserDAO();
 
-    //TODO : comment
-    abstract public ClientDAO getClientDAO();
+    /**
+     * Gets the ProjectDAO. This function should maks sure only one instance
+     * of a concrete ProjectDAO can exist at the same time.
+     *
+     * @return a concrete ProjectDAO instance
+     */
+    abstract public ProjectDAO getProjectDAO();
 }
