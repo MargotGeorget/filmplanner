@@ -29,7 +29,7 @@ public class PostgreUserDAO implements UserDAO {
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                newUser = new User(rs.getLong("user_id"), rs.getString("name"), rs.getString("email"), rs.getString("password"));
+                newUser = new User(rs.getLong("user_id"), rs.getString("name"), rs.getString("email"), rs.getString("phonenumber"));
             }
             rs.close();
             statement.close();

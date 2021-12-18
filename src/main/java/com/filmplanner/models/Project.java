@@ -1,43 +1,36 @@
 package com.filmplanner.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Project {
 
     private Long id;
     private String name;
     private String description;
-    private Set<User> managers;
+    private Map<Long, User> managers;
     //private Client client;
     //private Set<Paperwork> paperworks;
     //private Set<Shoot> shoots;
 
 
-    public Project(String name, String description, User manager) {
-        this.name = name;
-        this.description = description;
-        this.managers = new HashSet<>();
-        this.managers.add(manager);
-    }
-
-    public Project(String name, String description, Set<User> managers) {
+    // TODO refactor the constructors
+    public Project(String name, String description, Map<Long, User> managers) {
         this.name = name;
         this.description = description;
         this.managers = managers;
     }
 
     public Project(Long id, String name, String description) {
-        this(id, name, description, new HashSet<>());
+        this(id, name, description, new HashMap<>());
     }
 
-    public Project(Long id, String name, String description, Set<User> managers) {
+    public Project(Long id, String name, String description, Map<Long, User> managers) {
         this(name, description, managers);
         this.id = id;
     }
 
     public Project(Long id, Project project) {
-        this(id, project.getName(), project.getDescription(), project.getManagers());
+        this(id, project.getName(), project.getDescription());
     }
 
 
@@ -53,8 +46,8 @@ public class Project {
         return description;
     }
 
-    public Set<User> getManagers() {
-        return managers;
+    public List<User> getManagers() {
+        return new ArrayList<>(managers.values());
     }
 
     public Long getId() {
@@ -73,10 +66,6 @@ public class Project {
         this.description = description;
     }
 
-    public void setManagers(Set<User> managers) {
-        this.managers = managers;
-    }
-
 
     /*
     Methods
@@ -88,13 +77,22 @@ public class Project {
      * @param manager an instance of User to add as a manager
      */
     public void addManager(User manager) {
-        this.managers.add(manager);
+        this.managers.put(manager.getId(), manager);
+    }
+
+    /**
+     * Removes a manager from the project.
+     *
+     * @param manager an instance of User to remove as a manager
+     */
+    public void removeManager(User manager) {
+        this.managers.remove(manager.getId());
     }
 
     @Override
     public String toString() {
         String result = "id: " + this.id + "\nname: " + this.name + "\ndesc: " + this.description;
-        for (User manager : this.managers) {
+        for (User manager : this.managers.values()) {
             result += "\n" + manager.toString();
         }
         return result;

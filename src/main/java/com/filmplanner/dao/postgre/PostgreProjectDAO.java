@@ -8,8 +8,8 @@ import com.filmplanner.models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PostgreProjectDAO implements ProjectDAO {
 
@@ -17,22 +17,6 @@ public class PostgreProjectDAO implements ProjectDAO {
 
     public PostgreProjectDAO(Connection connection) {
         this.connection = connection;
-    }
-
-    /**
-     * Gets a simple Project instance based on a given ResultSet instance.
-     * The ResultSet must be from a query which finds a project.
-     * This method does not moves the ResultSet's cursor.
-     *
-     * @param resultSet the ResultSet from which the project will be instantiated
-     * @return a basic Project instance (only id, name and description attributes will be set)
-     * @throws SQLException if the ResultSet get methods throws a SQLException
-     */
-    private Project getBasicProjectFromResultSet(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("project_id");
-        String name = resultSet.getString("name");
-        String description = resultSet.getString("description");
-        return new Project(id, name, description);
     }
 
     /*
@@ -60,14 +44,7 @@ public class PostgreProjectDAO implements ProjectDAO {
                 resultSet.next();
                 Long generatedProjectId = resultSet.getLong("project_id");
 
-                for (User manager : project.getManagers()) {
-                    // project manager insertion statement preparation
-                    query = "INSERT INTO project_manager (project_id, user_id) VALUES (?, ?)";
-                    statement = this.connection.prepareStatement(query);
-                    statement.setLong(1, generatedProjectId);
-                    statement.setLong(2, manager.getId());
-                    statement.executeUpdate();
-                }
+                this.addManagers(generatedProjectId, project.getManagers());
 
                 // TODO for each shoot: create shoot based on project id (ShootDAO)
 
@@ -98,7 +75,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         if (id != null) {
             try {
 
-                // Finds the project
+                // Finds project
                 String query = "SELECT project_id, name, description FROM project WHERE project_id = " + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);;
                 ResultSet resultSet = statement.executeQuery();
@@ -107,7 +84,20 @@ public class PostgreProjectDAO implements ProjectDAO {
                     foundProject = getBasicProjectFromResultSet(resultSet);
                 }
 
-                // TODO find managers (ProjectDAO)
+                // Finds project managers
+                query = "SELECT project_id, project_manager.user_id, name, email, phonenumber " +
+                        "FROM project_manager, fp_user " +
+                        "WHERE project_id=" + id + " " +
+                        "AND project_manager.user_id = fp_user.user_id";
+                statement = this.connection.prepareStatement(query);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Long userId = resultSet.getLong("user_id");
+                    String name = resultSet.getString("name");
+                    String email = resultSet.getString("email");
+                    String phone = resultSet.getString("phonenumber");
+                    foundProject.addManager(new User(userId, name, email, phone));
+                }
 
                 // TODO find shoots by project id (ShootDAO)
 
@@ -125,7 +115,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         return foundProject;
     }
 
-    // TODO create findManagersById(Long id)
+    // TODO add method PostgreProjectDAO#findManagersByProjectId(Long id)
 
     /**
      * Gets all Projects of a manager (a User instance).
@@ -158,7 +148,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         return null;
     }
 
-    // TODO add addManager(Long id)
+    // TODO add method PostgreProjectDAO#addManagerToProject(Long id)
 
     /**
      * Gets all Projects from the database.
@@ -202,18 +192,15 @@ public class PostgreProjectDAO implements ProjectDAO {
                         ERROR: cannot delete this project
                  */
 
-                // Deletes proejcts managers from project_manager table
-                String query = "DELETE FROM project_manager WHERE project_id=" + id;
-                PreparedStatement statement = this.connection.prepareStatement(query);
-                statement.executeUpdate();
+                this.deleteManagers(id);
 
                 // TODO delete paperwork by project id (PaperWorkDAO)
 
                 // TODO remove client from project (ClientDAO)
 
                 // Deletes Project from project table
-                query = "DELETE FROM project WHERE project_id=" + id;
-                statement = this.connection.prepareStatement(query);
+                String query = "DELETE FROM project WHERE project_id=" + id;
+                PreparedStatement statement = this.connection.prepareStatement(query);
                 statement.executeUpdate();
 
                 statement.close();
@@ -235,10 +222,19 @@ public class PostgreProjectDAO implements ProjectDAO {
             try {
                 String query = "UPDATE project SET name='" + project.getName() + "', " +
                         "description='" + project.getDescription() + "' " +
-                        //" client_id=" + project.getClient().getId()
                         "WHERE project_id=" + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);
                 statement.executeUpdate();
+
+                this.deleteManagers(id);
+                this.addManagers(id, project.getManagers());
+
+                // TODO update shoots (ShootDAO)
+
+                // TODO update paperworks (PaperworkDAO)
+
+                // TODO update clientId (Project DAO)
+
                 statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -246,27 +242,73 @@ public class PostgreProjectDAO implements ProjectDAO {
         }
     }
 
-    /* updateById
 
-    update project atomic attributes
-
+    /*
+    Private methods
      */
+
+    /**
+     * Deletes the manager's of a project inside the database
+     *
+     * @param id the id of the project the managers will be deleted from
+     * @throws SQLException if the execution of the statement throws a SQLException
+     */
+    private void deleteManagers(Long id) throws SQLException {
+        String query = "DELETE FROM project_manager WHERE project_id=" + id;
+        PreparedStatement statement = this.connection.prepareStatement(query);
+        statement.executeUpdate();
+    }
+
+    /**
+     * Adds managers to a given project in the database.
+     *
+     * @param id the id of the project the managers will be added to
+     * @param managers a set of User containing the managers that will be added
+     * @throws SQLException if the execution of the statement throws a SQLException
+     */
+    private void addManagers(Long id, List<User> managers) throws SQLException {
+        for (User manager : managers) {
+            String query = "INSERT INTO project_manager (project_id, user_id) VALUES (?, ?)";
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.setLong(1, id);
+            statement.setLong(2, manager.getId());
+            statement.executeUpdate();
+        }
+    }
+
+    /**
+     * Gets a simple Project instance based on a given ResultSet instance.
+     * The ResultSet must be from a query which finds a project.
+     * This method does not moves the ResultSet's cursor.
+     *
+     * @param resultSet the ResultSet from which the project will be instantiated
+     * @return a basic Project instance (only id, name and description attributes will be set)
+     * @throws SQLException if the ResultSet get methods throws a SQLException
+     */
+    private Project getBasicProjectFromResultSet(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("project_id");
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        return new Project(id, name, description);
+    }
+
 
     public static void main(String[] args) {
         AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
         ProjectDAO projectDAO = factory.getProjectDAO();
         UserDAO userDAO = factory.getUserDAO();
 
-        //Project newProject = new Project(null, "JujuRoadtrip", "Roadtrip urbex");
-        //projectDAO.create(newProject);
+        User nathan = userDAO.findByEmail("nathan@ndmvisuals.com");
+        User merouan = userDAO.findByEmail("merouan@awi.awi");
 
-        for (Project p : projectDAO.findManyByManager(userDAO.findByEmail("nathan@ndmvisuals.com"))) {
-            System.out.println(p);
-        }
-
-        projectDAO.deleteById(28L);
-
-        //Project found = projectDAO.findById(28L);
-        //System.out.println(found);
+        Project emotion = projectDAO.findById(16L);
+        System.out.println(emotion);
+        System.out.println("===================");
+        //emotion.addManager(nathan);
+        emotion.removeManager(merouan);
+        projectDAO.updateById(emotion.getId(), emotion);
+        //emotion = projectDAO.findById(16L);
+        System.out.println("====================");
+        System.out.println(emotion);
     }
 }
