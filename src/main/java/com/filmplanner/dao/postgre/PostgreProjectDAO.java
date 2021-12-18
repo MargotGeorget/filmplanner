@@ -147,6 +147,8 @@ public class PostgreProjectDAO implements ProjectDAO {
                 projects.add(getBasicProjectFromResultSet(resultSet));
             }
 
+            // TODO find by id en fait
+
             resultSet.close();
             statement.close();
             return projects.toArray(new Project[0]);
@@ -167,12 +169,12 @@ public class PostgreProjectDAO implements ProjectDAO {
     public Project[] findAll() {
         try {
             List<Project> projects = new ArrayList<>(); // ArrayList is faster for storing and accessing data
-            String query = "SELECT * FROM project";
+            String query = "SELECT project_id FROM project";
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                // TODO get managers
-                //projects.add(new Project(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("description")));
+                projects.add(this.findById(resultSet.getLong("project_id")));
+                // TODO faire pareil pour getManyByManager
             }
             resultSet.close();
             statement.close();
@@ -183,14 +185,6 @@ public class PostgreProjectDAO implements ProjectDAO {
         return null;
     }
 
-    /* findAll
-
-    retrieve list of all projects ids
-
-    for each project id
-        findProjectById // ProjectDAO
-     */
-
     /**
      * Deletes a project from the database given its id.
      *
@@ -200,29 +194,34 @@ public class PostgreProjectDAO implements ProjectDAO {
     public void deleteById(Long id) {
         if (id != null) {
             try {
-                String query = "DELETE FROM project WHERE project_id=" + id;
+
+                /*
+                TODO: find shoots by project id (ShootDAO)
+                for each shoot
+                    if shoot.date > currentDate
+                        ERROR: cannot delete this project
+                 */
+
+                // Deletes proejcts managers from project_manager table
+                String query = "DELETE FROM project_manager WHERE project_id=" + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);
                 statement.executeUpdate();
+
+                // TODO delete paperwork by project id (PaperWorkDAO)
+
+                // TODO remove client from project (ClientDAO)
+
+                // Deletes Project from project table
+                query = "DELETE FROM project WHERE project_id=" + id;
+                statement = this.connection.prepareStatement(query);
+                statement.executeUpdate();
+
                 statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-
-    /* deleteById
-
-    find shoots by project id // ShootDAO
-    for each shoot
-        if shoot.date > currentDate
-            ERROR: cannot delete this project
-
-    delete paperwork by project id // PaperWorkDAO
-
-    delete managers in project_manager table // ProjectDAO
-
-    remove client from project // ClientDAO
-     */
 
     /**
      * Updates a project in the database given a Project instance.
@@ -264,6 +263,8 @@ public class PostgreProjectDAO implements ProjectDAO {
         for (Project p : projectDAO.findManyByManager(userDAO.findByEmail("nathan@ndmvisuals.com"))) {
             System.out.println(p);
         }
+
+        projectDAO.deleteById(28L);
 
         //Project found = projectDAO.findById(28L);
         //System.out.println(found);
