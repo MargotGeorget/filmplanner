@@ -17,4 +17,5 @@ public abstract class AbstractDAOFactory {
      * @return a concrete ProjectDAO instance
      */
     abstract public ProjectDAO getProjectDAO();
+    abstract public GearDAO getGearDAO();
 }
