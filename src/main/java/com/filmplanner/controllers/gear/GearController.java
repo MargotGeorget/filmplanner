@@ -1,12 +1,8 @@
 package com.filmplanner.controllers.gear;
 
 import com.filmplanner.App;
-
 import com.filmplanner.facades.GearFacade;
-import com.filmplanner.facades.LoginFacade;
 import com.filmplanner.models.Gear;
-
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,11 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -30,15 +24,15 @@ public class GearController implements Initializable {
     @FXML
     private TableColumn<Gear, Integer> colSerialNumber;
     @FXML
-    private TableColumn<Gear,String> colModel;
+    private TableColumn<Gear, String> colModel;
     @FXML
-    private TableColumn<Gear,String > colCategory;
+    private TableColumn<Gear, String> colCategory;
 
 
-    private GearFacade gearFacade;
+    private final GearFacade gearFacade;
 
     public GearController() {
-        this.gearFacade=GearFacade.getInstance();
+        this.gearFacade = GearFacade.getInstance();
     }
 
     @Override
@@ -50,7 +44,10 @@ public class GearController implements Initializable {
 
         this.gearList.getItems().addAll(this.gearFacade.getAllGear());
     }
-
+    /**
+     * This fonction is execute when the Add boutton is pressed
+     * It goes to the create gear page
+     */
     @FXML
     public void add() throws IOException {
         App.setRoot("views/gear/createGear");
@@ -58,10 +55,11 @@ public class GearController implements Initializable {
     }
 
     /**
-     *
+     * This fonction is execute when the edit boutton is pressed
+     * It updates a gear
      */
     @FXML
-    public void edit(){
+    public void edit() {
         int selectedIndex = gearList.getSelectionModel().getSelectedIndex();
         Gear selectedGear = gearList.getSelectionModel().getSelectedItem();
         if (selectedIndex >= 0) {
@@ -73,7 +71,7 @@ public class GearController implements Initializable {
             try {
                 GearUpdateController controller = new GearUpdateController(selectedGear, stage);
                 fxmlLoader.setController(controller);
-                Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
+                Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight());
                 stage.setScene(scene);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -91,9 +89,12 @@ public class GearController implements Initializable {
         }
     }
 
-
+    /**
+     * This fonction is execute when the delete boutton is pressed
+     * It deletes a gear
+     */
     @FXML
-    public void delete(){
+    public void delete() {
         int selectedIndex = gearList.getSelectionModel().getSelectedIndex();
         Gear gearSelected = gearList.getSelectionModel().getSelectedItem();
         if (selectedIndex >= 0) {

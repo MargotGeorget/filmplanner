@@ -11,8 +11,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GearUpdateController implements Initializable
-{
+public class GearUpdateController implements Initializable {
     @FXML
     private TextField serialNumber;
     @FXML
@@ -27,31 +26,33 @@ public class GearUpdateController implements Initializable
     public GearUpdateController(Gear gear, Stage stage) {
         this.gear = gear;
         this.stage = stage;
-        this.gearFacade=GearFacade.getInstance();
+        this.gearFacade = GearFacade.getInstance();
     }
 
-    public void update(){
+    /**
+     * this fonction is execute when the validate boutton is pressed
+     * It updates a gear
+     */
+    @FXML
+    public void update() {
 
         String serialNumber = this.serialNumber.getText();
         String model = this.model.getText();
         String category = this.category.getText();
 
 
-        if (serialNumber.equals("") ||model.equals("") ||category.equals("")) {
+        if (serialNumber.equals("") || model.equals("") || category.equals("")) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Field error");
             alert.setHeaderText("Not all fields are filled");
             alert.setContentText("Please fill all the fields ");
             alert.show();
-        }else {
+        } else {
 
-            Gear newGear = new Gear(serialNumber, model,category);
-
+            Gear newGear = new Gear(serialNumber, model, category);
             boolean done = gearFacade.update(this.gear.getSerialNumber(), newGear);
 
-
-
-            if(done){
+            if (done) {
                 Alert addedGear = new Alert(Alert.AlertType.INFORMATION);
                 addedGear.setContentText("Operation done successfully\nGear " + newGear.getSerialNumber() + " updated!");
                 addedGear.show();
@@ -66,17 +67,17 @@ public class GearUpdateController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             this.serialNumber.setText(gear.getSerialNumber());
-        } catch(Exception e ) {
+        } catch (Exception e) {
             System.out.println("No field for Serial number");
         }
         try {
             this.model.setText(gear.getModel());
-        } catch(Exception e ) {
+        } catch (Exception e) {
             System.out.println("No field for Model");
         }
         try {
             this.category.setText(gear.getCategory());
-        } catch(Exception e ) {
+        } catch (Exception e) {
             System.out.println("No field for Category");
         }
 

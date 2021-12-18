@@ -22,11 +22,17 @@ public class CreateGearController implements Initializable {
     private GearFacade gearFacade;
 
     public CreateGearController() {
-        this.gearFacade=GearFacade.getInstance();
+        this.gearFacade = GearFacade.getInstance();
     }
 
+    /**
+     * Execute when the creation button is pressed to create a gear
+     * It creates
+     * @throws IOException
+     */
+    @FXML
     public void validateCreation() throws IOException {
-        Gear gear = new Gear(serialNumberfield.getText(),modelfield.getText(),categoryfield.getText());
+        Gear gear = new Gear(serialNumberfield.getText(), modelfield.getText(), categoryfield.getText());
         this.gearFacade.create(gear);
         App.setRoot("views/gearView");
 

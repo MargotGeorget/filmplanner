@@ -41,6 +41,14 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
         }
         return this.userDAO;
     }
+
+    /**
+     * Gets the PostgreGearDAO. This function makes sure only one instance
+     * of PostgreGearDAO can exist at the same time.
+     *
+     * @return the PostgreGearDAO instance
+     */
+    @Override
     public GearDAO getGearDAO() {
         if (gearDAO == null) {
             this.gearDAO = new PostgreGearDAO(PostgreConnection.getInstance().getConnection());

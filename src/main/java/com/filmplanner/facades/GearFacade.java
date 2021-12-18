@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class GearFacade {
     private static GearFacade instance;
     private final AbstractDAOFactory daoFactory;
-    private GearDAO gearDAO;
+    private final GearDAO gearDAO;
 
 
     private GearFacade() {
@@ -18,25 +18,51 @@ public class GearFacade {
         this.gearDAO = this.daoFactory.getGearDAO();
     }
 
-
+    /**
+     * GearFacade is a singleton
+     * Get an instance of GearFacade
+     * @return
+     */
     public static GearFacade getInstance() {
         if (instance == null) {
             instance = new GearFacade();
         }
         return instance;
     }
-    public ArrayList<Gear> getAllGear(){
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Gear> getAllGear() {
         return this.gearDAO.findAllGear();
     }
 
-    public boolean delete(String id){
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public boolean delete(String id) {
         return this.gearDAO.deleteGear(id);
     }
-    public void create(Gear gear){
+
+    /**
+     *
+     * @param gear
+     */
+    public void create(Gear gear) {
         this.gearDAO.createGear(gear);
     }
-    public boolean update(String serialnumber, Gear updateGear){
-        return this.gearDAO.updateGear(serialnumber,updateGear);
+
+    /**
+     *
+     * @param serialnumber
+     * @param updateGear
+     * @return
+     */
+    public boolean update(String serialnumber, Gear updateGear) {
+        return this.gearDAO.updateGear(serialnumber, updateGear);
 
     }
 }

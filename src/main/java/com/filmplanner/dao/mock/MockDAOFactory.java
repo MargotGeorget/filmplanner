@@ -38,6 +38,13 @@ public class MockDAOFactory extends AbstractDAOFactory {
         }
         return this.userDAO;
     }
+    /**
+     * Gets the MockGearDAO instance. This function makes sure only one instance
+     * of MockGearDAO can exist at the same time.
+     *
+     * @return the MockGearDAO instance
+     */
+    @Override
     public GearDAO getGearDAO(){
         if (this.gearDAO == null) {
             //this.gearDAO = new MockGearDAO(); TODO à faire
