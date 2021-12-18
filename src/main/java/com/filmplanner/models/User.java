@@ -15,20 +15,9 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(Long id, String name, String email, String phoneNumber) {
+    public User(Long id, String name, String email, String phoneNumber, String password) {
         this(name, email, phoneNumber);
         this.id = id;
-    }
-
-    /**
-     * Instantiates a User.
-     *
-     * @param name     the user's name
-     * @param email    the user's email
-     * @param password the user's password
-     */
-    public User(String name, String email, String password, String phoneNumber) {
-        this(name, email, phoneNumber);
         this.password = password;
     }
 

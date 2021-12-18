@@ -85,7 +85,7 @@ public class PostgreProjectDAO implements ProjectDAO {
                 }
 
                 // Finds project managers
-                query = "SELECT project_id, project_manager.user_id, name, email, phonenumber " +
+                query = "SELECT project_id, project_manager.user_id, name, email, phonenumber, password " +
                         "FROM project_manager, fp_user " +
                         "WHERE project_id=" + id + " " +
                         "AND project_manager.user_id = fp_user.user_id";
@@ -96,7 +96,8 @@ public class PostgreProjectDAO implements ProjectDAO {
                     String name = resultSet.getString("name");
                     String email = resultSet.getString("email");
                     String phone = resultSet.getString("phonenumber");
-                    foundProject.addManager(new User(userId, name, email, phone));
+                    String password = resultSet.getString("password");
+                    foundProject.addManager(new User(userId, name, email, phone, password));
                 }
 
                 // TODO find shoots by project id (ShootDAO)
@@ -307,7 +308,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         //emotion.addManager(nathan);
         emotion.removeManager(merouan);
         projectDAO.updateById(emotion.getId(), emotion);
-        //emotion = projectDAO.findById(16L);
+        emotion = projectDAO.findById(16L);
         System.out.println("====================");
         System.out.println(emotion);
     }

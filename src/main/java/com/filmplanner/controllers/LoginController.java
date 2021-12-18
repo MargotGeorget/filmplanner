@@ -38,7 +38,7 @@ public class LoginController {
             Alert invalidCredentials = new Alert(Alert.AlertType.INFORMATION);
             invalidCredentials.setContentText("Logged in!\nWelcome " + loggedUser.getName());
             invalidCredentials.show();
-            App.setRoot("views/clientView");
+            App.setRoot("views/client/clientView");
         } catch (InvalidCredentialsException | UserNotFoundException e) {
             Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
             invalidCredentials.setContentText(e.getMessage());

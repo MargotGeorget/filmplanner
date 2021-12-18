@@ -23,20 +23,24 @@ public class PostgreUserDAO implements UserDAO {
      */
     @Override
     public User findByEmail(String email) {
-        User newUser = null;
+        User foundUser = null;
         try {
             String query = "SELECT * FROM fp_user WHERE email='" + email + "'";
             PreparedStatement statement = this.connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                newUser = new User(rs.getLong("user_id"), rs.getString("name"), rs.getString("email"), rs.getString("phonenumber"));
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long userId = resultSet.getLong("user_id");
+                String name = resultSet.getString("name");
+                String phone = resultSet.getString("phonenumber");
+                String password = resultSet.getString("password");
+                foundUser = new User(userId, name, email, phone, password);
             }
-            rs.close();
+            resultSet.close();
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return newUser;
+        return foundUser;
     }
 
 
