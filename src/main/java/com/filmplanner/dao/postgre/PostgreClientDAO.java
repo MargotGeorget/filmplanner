@@ -117,7 +117,6 @@ public class PostgreClientDAO implements ClientDAO {
 
     @Override
     public boolean update(long id, Client client) {
-        //TODO: modifier fonction pour faire update
         String sql = "UPDATE client SET company_name=?, description=?, referee_name=?, referee_email=?, referee_tel=? WHERE client_id=?;";
 
         try {

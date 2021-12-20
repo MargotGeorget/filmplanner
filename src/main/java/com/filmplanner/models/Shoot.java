@@ -1,6 +1,11 @@
 package com.filmplanner.models;
 
-import java.util.*;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Shoot {
     //Attributes:
@@ -14,7 +19,7 @@ public class Shoot {
     private Project project;
 
     //Constructors:
-    public Shoot(String name, String description, Date startDate, Date endDate, Location location, Map<User, String> members, ArrayList<Gear> gears, Project project) {
+    public Shoot(String name, String description, Date startDate, Date endDate, Location location, Map<User, String> members, List<Gear> gears, Project project) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;

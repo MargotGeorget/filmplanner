@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -48,7 +49,7 @@
             </Tab>
         </tabs>
          <GridPane.margin>
-            <Insets bottom="30.0" left="30.0" right="30.0" top="150.0" />
+            <Insets bottom="60.0" left="30.0" right="30.0" top="140.0" />
          </GridPane.margin>
       </TabPane>
       <Label text="{name shoot }" textFill="#1b3b6f" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -79,5 +80,20 @@
             <Insets top="80.0" />
          </GridPane.margin>
       </Label>
+      <Button mnemonicParsing="false" text="Add member" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="30.0" top="100.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Add gear" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="100.0" top="100.0" />
+         </GridPane.margin>
+      </Button>
+      <Button mnemonicParsing="false" text="Update information" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="30.0" top="100.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </GridPane>
