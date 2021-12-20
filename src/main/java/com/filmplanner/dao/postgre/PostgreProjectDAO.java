@@ -1,8 +1,10 @@
 package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.AbstractDAOFactory;
+import com.filmplanner.dao.ClientDAO;
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.UserDAO;
+import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
 
@@ -14,9 +16,11 @@ import java.util.Set;
 public class PostgreProjectDAO implements ProjectDAO {
 
     private Connection connection;
+    private ClientDAO clientDAO;
 
     public PostgreProjectDAO(Connection connection) {
         this.connection = connection;
+        this.clientDAO = PostgreDAOFactory.getInstance().getClientDAO();
     }
 
     /*
@@ -34,10 +38,11 @@ public class PostgreProjectDAO implements ProjectDAO {
         Project createdProject = null;
         try {
             // project insertion statement preparation
-            String query = "INSERT INTO project (name, description) VALUES (?, ?)";
+            String query = "INSERT INTO project (name, description, client) VALUES (?, ?, ?)";
             PreparedStatement statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setString(2, project.getDescription());
+            statement.setLong(3, project.getClient().getIdClient());
 
             if (statement.executeUpdate() > 0) { // if no rows were altered the request did nothing
                 ResultSet resultSet = statement.getGeneratedKeys();
@@ -49,8 +54,6 @@ public class PostgreProjectDAO implements ProjectDAO {
                 // TODO for each shoot: create shoot based on project id (ShootDAO)
 
                 // TODO for each paperwork: create paperwork based on project id (PaperworkDAO)
-
-                // TODO add client to project (ClientDAO)
 
                 createdProject = new Project(generatedProjectId, project);
                 resultSet.close();
@@ -76,7 +79,7 @@ public class PostgreProjectDAO implements ProjectDAO {
             try {
 
                 // Finds project
-                String query = "SELECT project_id, name, description FROM project WHERE project_id = " + id;
+                String query = "SELECT project_id, name, description, client FROM project WHERE project_id = " + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);;
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
@@ -189,8 +192,6 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 // TODO delete paperwork by project id (PaperWorkDAO)
 
-                // TODO remove client from project (ClientDAO)
-
                 // Deletes Project from project table
                 String query = "DELETE FROM project WHERE project_id=" + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);
@@ -214,7 +215,8 @@ public class PostgreProjectDAO implements ProjectDAO {
         if (id != null) {
             try {
                 String query = "UPDATE project SET name='" + project.getName() + "', " +
-                        "description='" + project.getDescription() + "' " +
+                        "description='" + project.getDescription() + "', " +
+                        "client=" + project.getClient().getIdClient() + " " +
                         "WHERE project_id=" + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);
                 statement.executeUpdate();
@@ -225,8 +227,6 @@ public class PostgreProjectDAO implements ProjectDAO {
                 // TODO update shoots (ShootDAO)
 
                 // TODO update paperworks (PaperworkDAO)
-
-                // TODO update clientId (Project DAO)
 
                 statement.close();
             } catch (SQLException e) {
@@ -282,26 +282,7 @@ public class PostgreProjectDAO implements ProjectDAO {
         Long id = resultSet.getLong("project_id");
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
-        return new Project(id, name, description);
-    }
-
-
-    public static void main(String[] args) {
-        AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
-        ProjectDAO projectDAO = factory.getProjectDAO();
-        UserDAO userDAO = factory.getUserDAO();
-
-        User nathan = userDAO.findByEmail("nathan@ndmvisuals.com");
-        User merouan = userDAO.findByEmail("merouan@awi.awi");
-
-        Project emotion = projectDAO.findById(16L);
-        System.out.println(emotion);
-        System.out.println("===================");
-        //emotion.addManager(nathan);
-        emotion.removeManager(merouan);
-        projectDAO.updateById(emotion.getId(), emotion);
-        emotion = projectDAO.findById(16L);
-        System.out.println("====================");
-        System.out.println(emotion);
+        Client client = this.clientDAO.findById(resultSet.getLong("client"));
+        return new Project(id, name, description, client);
     }
 }

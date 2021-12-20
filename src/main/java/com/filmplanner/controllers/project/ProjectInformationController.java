@@ -49,7 +49,7 @@ public class ProjectInformationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.projectName.setText(this.project.getName());
         this.projectDescription.setText(this.project.getDescription());
-        //this.projectClient.setText(this.project);
+        this.projectClient.setText(this.project.getClient().toString());
         this.usersList.setItems(FXCollections.observableList(this.project.getManagers()));
     }
 

@@ -54,7 +54,8 @@ public class ProjectCreationController implements Initializable {
         Map<Long, User> users = new HashMap<>();
         users.put(loggedUser.getId(), loggedUser);
 
-        Project createdProject = new Project(this.projectName.getText(), this.projectDescription.getText(), users);
+        Project createdProject = new Project(this.projectName.getText(), this.projectDescription.getText(),
+                this.client.getSelectionModel().getSelectedItem(), users);
         this.projectFacade.createProject(createdProject);
 
         Alert message = new Alert(Alert.AlertType.INFORMATION);
