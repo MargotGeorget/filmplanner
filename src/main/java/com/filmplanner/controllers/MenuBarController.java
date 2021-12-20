@@ -30,4 +30,10 @@ public class MenuBarController {
     public void viewClientsAction() throws IOException {
         App.setRoot("views/client/clientView");
     }
+    public void addGearAction() throws IOException {
+        App.setRoot("views/gear/createGear");
+    }
+    public void viewGearAction() throws IOException {
+        App.setRoot("views/gear/gearView");
+    }
 }

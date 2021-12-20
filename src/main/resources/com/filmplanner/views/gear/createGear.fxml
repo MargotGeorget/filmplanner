@@ -36,32 +36,44 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="224.0" prefWidth="298.0" spacing="5" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.gear.CreateGearController">
-
-      <children>
-
-
-          <Label alignment="CENTER" layoutX="320.0" layoutY="150.0" text="Create a Gear" textFill="#1b3b6e">
-              <font>
+<GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.gear.CreateGearController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <fx:include fx:id="menuBar" source="../menuBar.fxml" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+      <VBox alignment="CENTER" prefHeight="224.0" prefWidth="298.0" spacing="5" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+         <children>
+            <Label alignment="CENTER" layoutX="320.0" layoutY="150.0" text="Create a Gear" textFill="#1b3b6e">
+               <font>
                   <Font name="Verdana" size="24.0" />
-              </font>
-          </Label>
-          <Label text="Serial Number" textFill="#1b3b6f" />
-          <TextField fx:id="serialNumberfield" style="-fx-max-width: 150;" />
-      <Label text="Model" textFill="#1b3b6f" />
-      <TextField fx:id="modelfield" style="-fx-max-width: 150;" />
-          <Label text="Category" textFill="#1b3b6f" />
-      <TextField fx:id="categoryfield" style="-fx-max-width: 150;" />
-
-          <Button fx:id="validateCreation" alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="273.0" mnemonicParsing="false" onAction="#validateCreation" style="-fx-background-color: #1b3b6f; " text="Validate" textAlignment="CENTER" textFill="#feffff">
-              <font>
+               </font>
+            </Label>
+            <Label text="Serial Number" textFill="#1b3b6f" />
+            <TextField fx:id="serialNumberfield" style="-fx-max-width: 150;" />
+            <Label text="Model" textFill="#1b3b6f" />
+            <TextField fx:id="modelfield" style="-fx-max-width: 150;" />
+            <Label text="Category" textFill="#1b3b6f" />
+            <TextField fx:id="categoryfield" style="-fx-max-width: 150;" />
+            <Button fx:id="validateCreation" alignment="CENTER" contentDisplay="CENTER" layoutX="340.0" layoutY="273.0" mnemonicParsing="false" onAction="#validateCreation" style="-fx-background-color: #1b3b6f; " text="Validate" textAlignment="CENTER" textFill="#feffff">
+               <font>
                   <Font name="System Bold" size="12.0" />
-              </font>
-          </Button>
-          <ImageView fitHeight="61.0" fitWidth="65.0" layoutX="287.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
-      </children>
-
-</VBox>
+               </font>
+            </Button>
+            <ImageView fitHeight="61.0" fitWidth="65.0" layoutX="287.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+   </children>
+</GridPane>
