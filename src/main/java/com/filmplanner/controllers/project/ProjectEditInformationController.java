@@ -3,13 +3,16 @@ package com.filmplanner.controllers.project;
 import com.filmplanner.App;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
+import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.facades.ProjectFacade;
+import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -29,6 +32,9 @@ public class ProjectEditInformationController implements Initializable {
     TextField projectDescription;
 
     @FXML
+    ComboBox<Client> client;
+
+    @FXML
     ListView<User> usersList;
 
     @FXML
@@ -36,11 +42,13 @@ public class ProjectEditInformationController implements Initializable {
 
     // Attributes
     private ProjectFacade projectFacade;
+    private ClientFacade clientFacade;
     private Project project;
     private Stage stage;
 
     public ProjectEditInformationController(Project project, Stage stage) {
         this.projectFacade = ProjectFacade.getInstance();
+        this.clientFacade = ClientFacade.getInstance();
         this.project = project;
         this.stage = stage;
     }
@@ -49,6 +57,8 @@ public class ProjectEditInformationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.projectName.setText(this.project.getName());
         this.projectDescription.setText(this.project.getDescription());
+        this.client.setItems(FXCollections.observableList(this.clientFacade.findAll()));
+        this.client.getSelectionModel().select(this.project.getClient());
 
         this.usersList.setItems(FXCollections.observableList(this.getRemainingUsersFromManagersList(this.project.getManagers())));
         this.usersList.setOnMouseClicked(event -> {
@@ -68,8 +78,9 @@ public class ProjectEditInformationController implements Initializable {
     }
 
     public void validateAction() throws IOException {
-        project.setName(this.projectName.getText());
-        project.setDescription(this.projectDescription.getText());
+        this.project.setName(this.projectName.getText());
+        this.project.setDescription(this.projectDescription.getText());
+        this.project.setClient(this.client.getSelectionModel().getSelectedItem());
         this.projectFacade.updateById(project.getId(), project);
 
         Alert addedClient = new Alert(Alert.AlertType.CONFIRMATION);
