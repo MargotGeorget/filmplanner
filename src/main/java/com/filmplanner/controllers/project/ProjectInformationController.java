@@ -28,6 +28,8 @@ public class ProjectInformationController implements Initializable {
     @FXML
     private Label projectDescription;
 
+    @FXML Label projectClient;
+
     @FXML
     private ListView<User> usersList;
 
@@ -47,6 +49,7 @@ public class ProjectInformationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.projectName.setText(this.project.getName());
         this.projectDescription.setText(this.project.getDescription());
+        //this.projectClient.setText(this.project);
         this.usersList.setItems(FXCollections.observableList(this.project.getManagers()));
     }
 
@@ -55,7 +58,7 @@ public class ProjectInformationController implements Initializable {
     Buttons actions
      */
 
-    public void editProjectAction() throws IOException {
+    public void editProjectAction() {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectEditInformation.fxml"));
         try {
             ProjectEditInformationController controller = new ProjectEditInformationController(project, this.stage);

@@ -8,7 +8,7 @@ public class Project {
     private String name;
     private String description;
     private Map<Long, User> managers;
-    //private Client client;
+    private Client client;
     //private Set<Paperwork> paperworks;
     //private Set<Shoot> shoots;
 

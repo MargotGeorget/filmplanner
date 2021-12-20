@@ -31,6 +31,10 @@ public class MenuBarController {
         App.setRoot("views/client/clientView");
     }
 
+    public void createProjectAction() throws IOException {
+        App.setRoot("views/project/projectCreation");
+    }
+
     public void viewProjectsAction() throws IOException {
         App.setRoot("views/project/projectsView");
     }

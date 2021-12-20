@@ -45,4 +45,8 @@ public class ProjectFacade {
     public void updateById(Long id, Project project) {
         this.postgreProjectDAO.updateById(id, project);
     }
+
+    public Project createProject(Project project) {
+        return this.postgreProjectDAO.create(project);
+    }
 }
