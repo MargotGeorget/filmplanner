@@ -34,7 +34,7 @@ public class CreateGearController implements Initializable {
     public void validateCreation() throws IOException {
         Gear gear = new Gear(serialNumberfield.getText(), modelfield.getText(), categoryfield.getText());
         this.gearFacade.create(gear);
-        App.setRoot("views/gearView");
+        App.setRoot("views/gear/gearView");
 
     }
 
