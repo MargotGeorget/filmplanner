@@ -1,9 +1,12 @@
 package com.filmplanner.dao.postgre;
 
+import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.models.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostgreUserDAO implements UserDAO {
 
@@ -62,5 +65,28 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<User> findAll() {
+        List<User> foundUsers = null;
+        try {
+            foundUsers = new ArrayList<>();
+            String query = "SELECT user_id, name, email, phonenumber, password FROM fp_user";
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long userId = resultSet.getLong("user_id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phonenumber");
+                String password = resultSet.getString("password");
+                foundUsers.add(new User(userId, name, email, phone, password));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return foundUsers;
     }
 }

@@ -2,8 +2,8 @@ package com.filmplanner.facades;
 
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
-import com.filmplanner.dao.postgre.PostgreProjectDAO;
 import com.filmplanner.models.Project;
+import com.filmplanner.models.User;
 
 public class ProjectFacade {
 
@@ -28,5 +28,17 @@ public class ProjectFacade {
 
     public Project[] findAll() {
         return this.postgreProjectDAO.findAll();
+    }
+
+    public Project[] findManyByManager(User manager) {
+        return this.postgreProjectDAO.findManyByManager(manager);
+    }
+
+    public Project findById(Long id) {
+        return this.postgreProjectDAO.findById(id);
+    }
+
+    public void deleteById(Long id) {
+        this.postgreProjectDAO.deleteById(id);
     }
 }

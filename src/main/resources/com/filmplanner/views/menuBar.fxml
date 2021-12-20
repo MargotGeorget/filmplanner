@@ -17,7 +17,7 @@
         <Menu mnemonicParsing="false" text="Project">
             <items>
                 <MenuItem mnemonicParsing="false" text="Create a project" />
-                <MenuItem mnemonicParsing="false" text="View all projects" onAction="#viewProjectsAction"/>
+                <MenuItem mnemonicParsing="false" text="View your projects" onAction="#viewProjectsAction"/>
             </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Client">

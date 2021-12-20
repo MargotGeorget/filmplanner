@@ -128,18 +128,13 @@ public class PostgreProjectDAO implements ProjectDAO {
     public Project[] findManyByManager(User manager) {
         try {
             List<Project> projects = new ArrayList<>();
-            String query = "SELECT * FROM project_manager, project " +
-                    "WHERE project_manager.project_id=project.project_id " +
-                    "AND user_id=" + manager.getId();
+            String query = "SELECT project_id FROM project_manager " +
+                    "WHERE user_id=" + manager.getId();
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
-                projects.add(getBasicProjectFromResultSet(resultSet));
+                projects.add(this.findById(resultSet.getLong("project_id")));
             }
-
-            // TODO find by id en fait
-
             resultSet.close();
             statement.close();
             return projects.toArray(new Project[0]);
@@ -150,6 +145,8 @@ public class PostgreProjectDAO implements ProjectDAO {
     }
 
     // TODO add method PostgreProjectDAO#addManagerToProject(Long id)
+
+    // TODO add method PostgreProjectDAO#removeManagerFromProject(Long id)
 
     /**
      * Gets all Projects from the database.
@@ -165,7 +162,6 @@ public class PostgreProjectDAO implements ProjectDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 projects.add(this.findById(resultSet.getLong("project_id")));
-                // TODO faire pareil pour getManyByManager
             }
             resultSet.close();
             statement.close();
