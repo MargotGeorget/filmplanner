@@ -10,6 +10,7 @@ public class MockDAOFactory extends AbstractDAOFactory {
 
     private static MockDAOFactory instance;
     private UserDAO userDAO;
+    private ProjectDAO projectDAO;
     private GearDAO gearDAO;
 
     private MockDAOFactory() {
@@ -48,15 +49,17 @@ public class MockDAOFactory extends AbstractDAOFactory {
     }
 
     /**
-     * Gets the MockUserDAO instance. This function makes sure only one instance
-     * of MockUserDAO can exist at the same time.
+     * Gets the MockProjectDAO instance. This function makes sure only one instance
+     * of MockProjectDAO can exist at the same time.
      *
-     * @return the MockUserDAO instance
+     * @return the MockProjectDAO instance
      */
     @Override
     public ProjectDAO getProjectDAO() {
-        // TODO implement method
-        return null;
+        if (this.projectDAO == null) {
+            this.projectDAO = new MockProjectDAO();
+        }
+        return this.projectDAO;
     }
     /**
      * Gets the MockGearDAO instance. This function makes sure only one instance
