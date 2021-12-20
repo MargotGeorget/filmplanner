@@ -1,10 +1,6 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.GearDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
@@ -13,6 +9,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private ProjectDAO projectDAO;
     private ClientDAO clientDAO;
     private GearDAO gearDAO;
+    private ShootDAO shootDAO;
 
     private PostgreDAOFactory() {
     }
@@ -62,6 +59,14 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.clientDAO = new PostgreClientDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.clientDAO;
+    }
+
+    @Override
+    public ShootDAO getShootDAO() {
+        if (shootDAO == null) {
+            this.shootDAO = new PostgreShootDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.shootDAO;
     }
 
     /**
