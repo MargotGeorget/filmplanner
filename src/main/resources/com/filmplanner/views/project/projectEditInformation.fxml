@@ -41,7 +41,7 @@
             <Insets top="30.0" />
          </opaqueInsets>
          <children>
-            <Button fx:id="validateButton" mnemonicParsing="false" onAction="#updateProjectAction" style="-fx-background-color: #1B3B6F;" text="Validate" textFill="#fdfdfd">
+            <Button fx:id="validateButton" mnemonicParsing="false" onAction="#validateAction" style="-fx-background-color: #1B3B6F;" text="Validate" textFill="#fdfdfd">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

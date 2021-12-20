@@ -41,4 +41,8 @@ public class ProjectFacade {
     public void deleteById(Long id) {
         this.postgreProjectDAO.deleteById(id);
     }
+
+    public void updateById(Long id, Project project) {
+        this.postgreProjectDAO.updateById(id, project);
+    }
 }

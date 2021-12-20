@@ -56,30 +56,27 @@ public class ProjectInformationController implements Initializable {
      */
 
     public void editProjectAction() throws IOException {
-        // Creates new stage to show project information
-        Stage stage = new Stage();
-        stage.setHeight(280);
-        stage.setWidth(610);
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectInformationUpdate.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectEditInformation.fxml"));
         try {
-            ProjectInformationUpdateController controller = new ProjectInformationUpdateController(project, stage);
+            ProjectEditInformationController controller = new ProjectEditInformationController(project, this.stage);
             fxmlLoader.setController(controller);
-            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
-            stage.setScene(scene);
+            Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(), this.stage.getHeight());
+            this.stage.setScene(scene);
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert message = new Alert(Alert.AlertType.ERROR);
+            message.setContentText("An error occurred while entering edit mode: " + e.getMessage());
+            message.show();
         }
-        stage.show();
     }
 
     public void deleteProjectAction() throws IOException {
         this.projectFacade.deleteById(this.project.getId());
 
         Alert deletedProject = new Alert(Alert.AlertType.CONFIRMATION);
-        deletedProject.setContentText("Project " + this.project.getName() + " successfully deleted!");
+        deletedProject.setContentText("Project \"" + this.project.getName() + "\" successfully deleted!");
         deletedProject.show();
 
-        App.setRoot("views/project/projectsView");
+        App.setRoot("views/project/projectsView"); // reloads the projectView
         this.stage.close();
     }
 }

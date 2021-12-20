@@ -144,10 +144,6 @@ public class PostgreProjectDAO implements ProjectDAO {
         return null;
     }
 
-    // TODO add method PostgreProjectDAO#addManagerToProject(Long id)
-
-    // TODO add method PostgreProjectDAO#removeManagerFromProject(Long id)
-
     /**
      * Gets all Projects from the database.
      *
