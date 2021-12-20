@@ -63,7 +63,7 @@ public class ProjectInformationController implements Initializable {
         try {
             ProjectEditInformationController controller = new ProjectEditInformationController(project, this.stage);
             fxmlLoader.setController(controller);
-            Scene scene = new Scene(fxmlLoader.load());
+            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight() + 200);
             this.stage.setScene(scene);
         } catch (IOException e) {
             Alert message = new Alert(Alert.AlertType.ERROR);

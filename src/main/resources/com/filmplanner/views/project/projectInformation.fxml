@@ -12,19 +12,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="224.0" prefWidth="607.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="projectName" contentDisplay="CENTER" text="{Project name}">
          <font>
             <Font size="19.0" />
          </font>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </Label>
-      <Label fx:id="projectDescription" text="{description}" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <Label fx:id="projectDescription" text="{description}">
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin></Label>
+      <HBox>
          <children>
             <Label text="Client:">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Label>
             <Label fx:id="projectClient" text="{client}" />
@@ -83,6 +89,9 @@
          <padding>
             <Insets right="30.0" />
          </padding>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
       </TilePane>
    </children>
 </VBox>
