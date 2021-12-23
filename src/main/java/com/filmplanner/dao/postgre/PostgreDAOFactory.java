@@ -1,10 +1,6 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.GearDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
@@ -13,6 +9,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private ProjectDAO projectDAO;
     private ClientDAO clientDAO;
     private GearDAO gearDAO;
+    private RoleDAO roleDAO;
 
     private PostgreDAOFactory() {
     }
@@ -63,6 +60,19 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
         }
         return this.clientDAO;
     }
+    /**
+     * Gets the PostgreRoleDAO. This function makes sure only one instance
+     * of PostgreRoleDAO can exist at the same time.
+     *
+     * @return the PostgreRoleDAO instance
+     */
+    @Override
+    public RoleDAO getRoleDAO() {
+        if (roleDAO == null) {
+            this.roleDAO = new PostgreRoleDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.roleDAO;
+    }
 
     /**
      * Gets the PostgreGearDAO. This function makes sure only one instance
@@ -77,4 +87,5 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
         }
         return this.gearDAO;
     }
+
 }
