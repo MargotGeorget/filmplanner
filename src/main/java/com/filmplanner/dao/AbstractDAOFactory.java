@@ -19,4 +19,6 @@ public abstract class AbstractDAOFactory {
     abstract public ProjectDAO getProjectDAO();
     abstract public GearDAO getGearDAO();
     abstract public ClientDAO getClientDAO();
+
+    abstract public RoleDAO getRoleDAO();
 }
