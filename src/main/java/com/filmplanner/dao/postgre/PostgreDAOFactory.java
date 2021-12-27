@@ -10,6 +10,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private ClientDAO clientDAO;
     private GearDAO gearDAO;
     private ShootDAO shootDAO;
+    private LocationDAO locationDAO;
 
     private PostgreDAOFactory() {
     }
@@ -67,6 +68,13 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.shootDAO = new PostgreShootDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.shootDAO;
+    }
+
+    public LocationDAO getLocationDAO(){
+        if (locationDAO == null) {
+            this.locationDAO = new PostgreLocationDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.locationDAO;
     }
 
     /**

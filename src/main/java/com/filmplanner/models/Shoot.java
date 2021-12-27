@@ -9,35 +9,28 @@ import java.util.Map;
 
 public class Shoot {
     //Attributes:
+    private long idShoot;
     private String name;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private String date;
     private Location location;
     private Map<User, String> members; //TODO: Changer string par role
     private List<Gear> gears;
     private Project project;
 
     //Constructors:
-    public Shoot(String name, String description, Date startDate, Date endDate, Location location, Map<User, String> members, List<Gear> gears, Project project) {
+    public Shoot(String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) {
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.date = date;
         this.location = location;
         this.members = members;
         this.gears = gears;
         this.project = project;
     }
 
-    public Shoot(String name, String description, Date startDate, Date endDate, Location location, Project project) {
-        this(name,description,startDate, endDate, location, new HashMap<>(), new ArrayList<>(), project);
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.location = location;
-        this.project = project;
+    public Shoot(String name, String description, String date, Location location, Project project) {
+        this(name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
     }
 
     //Getters and setters:
@@ -57,20 +50,12 @@ public class Shoot {
         this.description = description;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Location getLocation() {
@@ -103,5 +88,13 @@ public class Shoot {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public long getIdShoot() {
+        return idShoot;
+    }
+
+    public void setIdShoot(long idShoot) {
+        this.idShoot = idShoot;
     }
 }

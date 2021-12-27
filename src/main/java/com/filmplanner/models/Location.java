@@ -2,6 +2,7 @@ package com.filmplanner.models;
 
 public class Location {
     //Attributes
+    private long id;
     private int streetNumber;
     private String street;
     private String city;
@@ -16,6 +17,14 @@ public class Location {
     }
 
     //Getters and setters:
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public int getStreetNumber() {
         return streetNumber;
     }
