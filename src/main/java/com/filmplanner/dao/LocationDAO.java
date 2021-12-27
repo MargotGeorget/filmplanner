@@ -10,4 +10,6 @@ public interface LocationDAO {
      * @return long : new location's id
      */
     long create(Location newLocation);
+
+    Location findById(long id);
 }

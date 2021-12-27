@@ -76,18 +76,18 @@ public class ShootFormController {
             //Create shoot variable
             Shoot newShoot = new Shoot(name, description, date, location, project);
 
-            //Sends client to create to facade
+            //Sends shoot to create to facade
             long idClient = shootFacade.createShoot(newShoot);
             newShoot.setIdShoot(idClient);
 
             if (idClient != -1) {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);
-                message.setContentText("Operation done successfully\nClient " + newShoot.getName() + " created!");
+                message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " created!");
                 message.show();
                 App.setRoot("views/client/clientView");
             } else {
                 Alert message = new Alert(Alert.AlertType.ERROR);
-                message.setContentText("Error in client creation\nClient " + newShoot.getName() + "not created!\nError with database");
+                message.setContentText("Error in client creation\nShoot " + newShoot.getName() + "not created!\nError with database");
                 message.show();
             }
         } catch (Exception e) {

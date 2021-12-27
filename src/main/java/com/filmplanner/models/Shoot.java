@@ -19,7 +19,8 @@ public class Shoot {
     private Project project;
 
     //Constructors:
-    public Shoot(String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) {
+    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) {
+        this.setIdShoot(id);
         this.name = name;
         this.description = description;
         this.date = date;
@@ -29,8 +30,12 @@ public class Shoot {
         this.project = project;
     }
 
+    public Shoot(long id, String name, String description, String date, Location location, Project project) {
+        this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
+    }git a
+
     public Shoot(String name, String description, String date, Location location, Project project) {
-        this(name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
+        this(-1, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
     }
 
     //Getters and setters:

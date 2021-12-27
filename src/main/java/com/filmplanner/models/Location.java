@@ -9,11 +9,17 @@ public class Location {
     private String zipCode;
 
     //Constructor:
-    public Location(int streetNumber, String street, String city, String zipCode) {
+    //Constructor:
+    public Location(long id, int streetNumber, String street, String city, String zipCode) {
+        this.setId(id);
         this.setStreetNumber(streetNumber);
         this.setStreet(street);
         this.setCity(city);
         this.setZipCode(zipCode);
+    }
+
+    public Location(int streetNumber, String street, String city, String zipCode) {
+        this(-1, streetNumber, street, city, zipCode);
     }
 
     //Getters and setters:
