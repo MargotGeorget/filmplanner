@@ -27,7 +27,7 @@ public class PostgreShootDAO implements ShootDAO {
     public long create(Shoot shoot) {
         //Creation de la localisation
         long idLoc = this.locationDAO.create(shoot.getLocation());
-        String sql = "INSERT INTO shoot (name, description, start_date, location, project) VaLUES(?,?,?,?,?)";
+        String sql = "INSERT INTO shoot (name, description, date, location, project) VaLUES(?,?,?,?,?)";
         long id = -1;
 
         try {
@@ -39,18 +39,23 @@ public class PostgreShootDAO implements ShootDAO {
             stmt.setLong(4, idLoc);
             stmt.setLong(5,shoot.getProject().getId());
 
-            ResultSet rs = stmt.executeQuery();
+            int affectedRows = stmt.executeUpdate();
 
-            //check the affected rows
-            if (rs != null) {
-                //get the ID back
-                if (rs.next()) {
-                    id = rs.getLong(1);
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getLong("shoot_id");
+                    shoot.setIdShoot(id);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
             System.out.println("Operation done successfully");
 
-            rs.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,6 +78,10 @@ public class PostgreShootDAO implements ShootDAO {
                     shoots.add(this.getBasicShootFromResultSet(rs));
                 }
             }
+            //TODO: récupérer les gears et les members du projet
+            //Faire appel au postgreDAO correspondant :
+            // getAllMembersByShoot()
+            // getAllGearsByShoot()
             System.out.println("Operation done successfully");
             rs.close();
             stmt.close();

@@ -1,17 +1,13 @@
 package com.filmplanner.controllers.shoot;
 
 import com.filmplanner.App;
-import com.filmplanner.exceptions.InvalidValuesClientException;
-import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.facades.LocationFacade;
 import com.filmplanner.facades.ShootFacade;
-import com.filmplanner.models.Client;
 import com.filmplanner.models.Location;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.Shoot;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -20,25 +16,25 @@ import java.io.IOException;
 public class ShootFormController {
 
     @FXML
-    private TextField nameInput;
+    public TextField nameInput;
 
     @FXML
-    private TextField dateInput;
+    public TextField dateInput;
 
     @FXML
-    private TextField numberInput;
+    public TextField numberInput;
 
     @FXML
-    private TextField streetInput;
+    public TextField streetInput;
 
     @FXML
-    private TextField cityInput;
+    public TextField cityInput;
 
     @FXML
-    private TextField zipCodeInput;
+    public TextField zipCodeInput;
 
     @FXML
-    private TextArea descriptionInput;
+    public TextArea descriptionInput;
 
     private ShootFacade shootFacade;
 

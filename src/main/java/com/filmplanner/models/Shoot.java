@@ -32,7 +32,7 @@ public class Shoot {
 
     public Shoot(long id, String name, String description, String date, Location location, Project project) {
         this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
-    }git a
+    }
 
     public Shoot(String name, String description, String date, Location location, Project project) {
         this(-1, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);

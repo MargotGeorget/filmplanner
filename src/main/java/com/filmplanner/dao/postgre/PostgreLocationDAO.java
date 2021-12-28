@@ -14,7 +14,7 @@ public class PostgreLocationDAO implements LocationDAO {
 
     @Override
     public long create(Location location){
-        String sql = "INSERT INTO location (sreetNumber, street, city, zipCode) VaLUES(?,?,?,?)";
+        String sql = "INSERT INTO location (street_number, street, city, zipCode) VaLUES(?,?,?,?)";
         long id = -1;
 
         try {
@@ -25,17 +25,22 @@ public class PostgreLocationDAO implements LocationDAO {
             stmt.setString(3, location.getCity());
             stmt.setString(4, location.getZipCode());
 
-            ResultSet rs = stmt.executeQuery();
+            int affectedRows = stmt.executeUpdate();
+            System.out.println("ok");
 
-            //check the affected rows
-            if (rs != null) {
-                //get the ID back
-                if (rs.next()) {
-                    id = rs.getLong(1);
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getLong("location_id");
+                    location.setId(id);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
             System.out.println("Operation done successfully");
-            rs.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +74,7 @@ public class PostgreLocationDAO implements LocationDAO {
 
     private Location getBasicLocationFromResultSet(ResultSet rs) throws SQLException {
         Long id = rs.getLong("location_id");
-        int streetNumber = rs.getInt("number");
+        int streetNumber = rs.getInt("street_number");
         String street = rs.getString("street");
         String city = rs.getString("city");
         String zipCode = rs.getString("zipcode");
