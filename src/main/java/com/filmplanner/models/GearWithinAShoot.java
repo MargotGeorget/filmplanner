@@ -4,16 +4,16 @@ public class GearWithinAShoot {
     //Attributes:
     private long id;
     private long shootId;
-    private long gearId;
+    private String gearId;
 
     //Constructors:
-    public GearWithinAShoot(long id, long shootId, long gearId) {
+    public GearWithinAShoot(long id, long shootId, String gearId) {
         this.id = id;
         this.shootId = shootId;
         this.gearId = gearId;
     }
 
-    public GearWithinAShoot(long shootId, long gearId) {
+    public GearWithinAShoot(long shootId, String gearId) {
         this(-1, shootId, gearId);
     }
 
@@ -34,11 +34,11 @@ public class GearWithinAShoot {
         this.shootId = shootId;
     }
 
-    public long getGearId() {
+    public String getGearId() {
         return gearId;
     }
 
-    public void setGearId(long gearId) {
+    public void setGearId(String gearId) {
         this.gearId = gearId;
     }
 }

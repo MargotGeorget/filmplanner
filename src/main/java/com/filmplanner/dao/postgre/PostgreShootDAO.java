@@ -1,8 +1,10 @@
 package com.filmplanner.dao.postgre;
 
+import com.filmplanner.dao.GearWithinAShootDAO;
 import com.filmplanner.dao.LocationDAO;
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.ShootDAO;
+import com.filmplanner.models.Gear;
 import com.filmplanner.models.Location;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.Shoot;
@@ -16,11 +18,13 @@ public class PostgreShootDAO implements ShootDAO {
     private Connection connection;
     private LocationDAO locationDAO;
     private ProjectDAO projectDAO;
+    private GearWithinAShootDAO gearWithinAShootDAO;
 
     public PostgreShootDAO(Connection connection) {
         this.connection = connection;
         this.locationDAO = PostgreDAOFactory.getInstance().getLocationDAO();
         this.projectDAO = PostgreDAOFactory.getInstance().getProjectDAO();
+        this.gearWithinAShootDAO = PostgreDAOFactory.getInstance().getGearWithinAShootDAO();
     }
 
     @Override
@@ -73,7 +77,6 @@ public class PostgreShootDAO implements ShootDAO {
 
             //check the affected rows
             if (rs != null) {
-                //get the ID back
                 while (rs.next()) {
                     shoots.add(this.getBasicShootFromResultSet(rs));
                 }
@@ -98,8 +101,10 @@ public class PostgreShootDAO implements ShootDAO {
         String date = rs.getString("date");
         Location location = this.locationDAO.findById(rs.getLong("location"));
         Project project = this.projectDAO.findById(rs.getLong("project"));
+        List<Gear> gears = this.gearWithinAShootDAO.getAllGearsWithinAShoot(id);
+        //TODO: add gears and members
                 //TODO : add verif
-        return new Shoot(id, name, description, date, location, project);
+        return new Shoot(id, name, description, date, location, gears, project);
     }
 
 

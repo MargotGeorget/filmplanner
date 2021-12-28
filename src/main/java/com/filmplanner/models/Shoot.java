@@ -30,6 +30,10 @@ public class Shoot {
         this.project = project;
     }
 
+    public Shoot(long id, String name, String description, String date, Location location, List<Gear> gears, Project project) {
+        this(id, name,description,date, location, new HashMap<>(), gears, project);
+    }
+
     public Shoot(long id, String name, String description, String date, Location location, Project project) {
         this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
     }

@@ -1,8 +1,7 @@
 package com.filmplanner.dao;
 
-import com.filmplanner.models.Client;
+import com.filmplanner.models.Gear;
 import com.filmplanner.models.GearWithinAShoot;
-
 import java.util.List;
 
 public interface GearWithinAShootDAO {
@@ -19,7 +18,7 @@ public interface GearWithinAShootDAO {
      * @param idShoot
      * @return
      */
-    GearWithinAShoot[] getAllGearsWithinAShoot(long idShoot);
+    List<Gear> getAllGearsWithinAShoot(long idShoot);
 
     /**
      * Delete a gearWithinAShoot in the datasource

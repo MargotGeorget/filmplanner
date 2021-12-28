@@ -1,15 +1,21 @@
 package com.filmplanner.dao.postgre;
 
+import com.filmplanner.dao.GearDAO;
 import com.filmplanner.dao.GearWithinAShootDAO;
+import com.filmplanner.models.Gear;
 import com.filmplanner.models.GearWithinAShoot;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
     private Connection connection;
+    private GearDAO gearDAO;
 
     public PostgreGearWithinAShootDAO(Connection connection) {
         this.connection = connection;
+        this.gearDAO = PostgreDAOFactory.getInstance().getGearDAO();
     }
 
 
@@ -21,7 +27,7 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-            stmt.setLong(1, newInstance.getGearId());
+            stmt.setString(1, newInstance.getGearId());
             stmt.setLong(2, newInstance.getShootId());
 
             int affectedRows = stmt.executeUpdate();
@@ -39,8 +45,30 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
     }
 
     @Override
-    public GearWithinAShoot[] getAllGearsWithinAShoot(long idShoot) {
-        return new GearWithinAShoot[0];
+    public List<Gear> getAllGearsWithinAShoot(long idShoot) {
+        List<Gear> gears = new ArrayList<>();
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = "+ idShoot;
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    gears.add(this.gearDAO.findGearById(rs.getString("gear")));
+                }
+            }
+            //TODO: récupérer les gears et les members du projet
+            //Faire appel au postgreDAO correspondant :
+            // getAllMembersByShoot()
+            // getAllGearsByShoot()
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gears;
     }
 
     @Override
