@@ -62,4 +62,12 @@ public class Location {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+
+    //Methods:
+    public boolean eguals(Location inst) {
+        return this.getStreetNumber() == inst.getStreetNumber() &&
+                this.getStreet().equals(inst.getStreet()) &&
+                this.getCity().equals(inst.getCity()) &&
+                this.getZipCode().equals(inst.getZipCode());
+    }
 }

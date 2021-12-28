@@ -19,6 +19,8 @@ public interface ShootDAO {
      */
     Shoot getOneById(long id);
 
+    boolean update(Shoot shoot);
+
     /**
      * Return all the shoot saved in the database for a given project
      * @param idProject

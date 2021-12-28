@@ -32,4 +32,8 @@ public class ShootFacade {
     public List<Shoot> findAllShootInProject(long idProject){
         return shootDAO.findAllShootInProject(idProject);
     }
+
+    public void updateShoot(Shoot shoot){
+        shootDAO.update(shoot);
+    }
 }

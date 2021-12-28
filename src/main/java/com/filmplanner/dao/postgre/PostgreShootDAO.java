@@ -91,6 +91,29 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     @Override
+    public boolean update(Shoot shoot) {
+        String sql = "UPDATE shoot SET name=?, description=?, date=?; project=?; location=? WHERE shoot_id=?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.setString(1, shoot.getName());
+            stmt.setString(2, shoot.getDescription());
+            stmt.setString(3, shoot.getDate());
+            stmt.setLong(4, shoot.getProject().getId());
+            stmt.setLong(5, shoot.getLocation().getId());
+            stmt.setLong(6, shoot.getIdShoot());
+
+            stmt.executeQuery();
+            System.out.println("Operation done successfully");
+
+            stmt.close();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public List<Shoot> findAllShootInProject(long idProject) {
         List<Shoot> shoots = new ArrayList<>();
         String sql = "SELECT * FROM shoot WHERE project = " + idProject;
