@@ -54,7 +54,7 @@ public class PostgreGearDAO implements GearDAO {
 
             ResultSet res = preparedStatement.executeQuery();
             res.next();
-            Gear gear = new Gear(res.getString("SERIALNBUMBER"), res.getString("MODEL"), res.getString("CATEGORY"));
+            Gear gear = new Gear(res.getString("SERIALNUMBER"), res.getString("MODEL"), res.getString("CATEGORY"));
             res.close();
             preparedStatement.close();
             return gear;

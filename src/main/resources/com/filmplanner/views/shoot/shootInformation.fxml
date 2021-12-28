@@ -23,6 +23,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
+       <fx:include fx:id="menuBar" source="../menuBar.fxml" GridPane.columnSpan="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="TOP"></fx:include>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
         <tabs>
           <Tab text="Members">
@@ -36,13 +37,13 @@
                   </TableView>
                </content>
             </Tab>
-          <Tab text="Gears">
+          <Tab text="Gears" >
                <content>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
+                  <TableView prefHeight="200.0" prefWidth="200.0" fx:id="gears">
                     <columns>
-                      <TableColumn prefWidth="130.0" text="Serial number" />
-                      <TableColumn prefWidth="225.0" text="Model" />
-                        <TableColumn prefWidth="185.0" text="Category" />
+                      <TableColumn prefWidth="130.0" text="Serial number" fx:id="colSerialNumber"/>
+                      <TableColumn prefWidth="225.0" text="Model" fx:id="colModel" />
+                        <TableColumn prefWidth="185.0" text="Category" fx:id="colCategory" />
                     </columns>
                   </TableView>
                </content>
@@ -52,7 +53,7 @@
             <Insets bottom="60.0" left="30.0" right="30.0" top="140.0" />
          </GridPane.margin>
       </TabPane>
-      <Label text="{name shoot }" textFill="#1b3b6f" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Label fx:id="name" text="{name shoot }" textFill="#1b3b6f" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <font>
             <Font size="36.0" />
          </font>
@@ -60,17 +61,17 @@
             <Insets top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label text="{description}" textFill="#1b3b6f" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Label fx:id="description" text="{description}" textFill="#1b3b6f" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <padding>
             <Insets top="80.0" />
          </padding>
       </Label>
-      <Label text="{Adress}" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Label fx:id="location" text="{Adress}" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="110.0" />
          </GridPane.margin>
       </Label>
-      <Label text="{startDate}" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Label fx:id="date" text="{startDate}" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="80.0" />
          </GridPane.margin>

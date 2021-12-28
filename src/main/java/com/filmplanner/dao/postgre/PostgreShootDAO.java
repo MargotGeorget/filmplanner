@@ -68,6 +68,29 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     @Override
+    public Shoot getOneById(long id) {
+        Shoot shoot = null;
+        String sql = "SELECT * FROM shoot WHERE shoot_id = " + id;
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    shoot = this.getBasicShootFromResultSet(rs);
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shoot;
+    }
+
+    @Override
     public List<Shoot> findAllShootInProject(long idProject) {
         List<Shoot> shoots = new ArrayList<>();
         String sql = "SELECT * FROM shoot WHERE project = " + idProject;

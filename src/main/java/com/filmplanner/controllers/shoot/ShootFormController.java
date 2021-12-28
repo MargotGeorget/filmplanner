@@ -38,14 +38,11 @@ public class ShootFormController {
 
     private ShootFacade shootFacade;
 
-    private LocationFacade locationFacade;
-
     private Project project;
 
     public ShootFormController(Project project) {
         this.project = project;
         this.shootFacade = ShootFacade.getInstance();
-        this.locationFacade = LocationFacade.getInstance();
     }
 
     /**

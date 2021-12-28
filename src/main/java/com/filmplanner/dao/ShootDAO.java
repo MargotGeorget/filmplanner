@@ -15,6 +15,11 @@ public interface ShootDAO {
     long create(Shoot newShoot);
 
     /**
+     *
+     */
+    Shoot getOneById(long id);
+
+    /**
      * Return all the shoot saved in the database for a given project
      * @param idProject
      * @return List<Shoot>
