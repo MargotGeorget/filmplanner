@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutX="60.0" layoutY="80.0" prefHeight="139.0" prefWidth="367.0" fx:id="gears">
+        <columns>
+          <TableColumn prefWidth="121.33330917358398" text="Serial Number" fx:id="colSerialNumber" />
+          <TableColumn prefWidth="117.33338928222656" text="Model" fx:id="colModel" />
+            <TableColumn prefWidth="127.33331298828125" text="Category" fx:id="colCategory"/>
+        </columns>
+      </TableView>
+      <Button layoutX="366.0" layoutY="232.0" mnemonicParsing="false" text="Add this gear" />
+      <Label layoutX="131.0" layoutY="46.0" text="Select a gear and add it to the shoot">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

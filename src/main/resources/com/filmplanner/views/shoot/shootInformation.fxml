@@ -81,7 +81,7 @@
             <Insets right="30.0" top="100.0" />
          </GridPane.margin>
       </Button>
-      <Button mnemonicParsing="false" text="Add gear" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Button mnemonicParsing="false" text="Add gear" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#addGearToAShootAction">
          <GridPane.margin>
             <Insets left="100.0" top="100.0" />
          </GridPane.margin>

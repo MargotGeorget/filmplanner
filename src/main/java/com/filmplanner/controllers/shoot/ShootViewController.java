@@ -2,6 +2,7 @@ package com.filmplanner.controllers.shoot;
 
 import com.filmplanner.App;
 import com.filmplanner.controllers.client.ClientFormUpdateController;
+import com.filmplanner.controllers.client.ClientInformationController;
 import com.filmplanner.facades.GearWithinAShootFacade;
 import com.filmplanner.facades.ShootFacade;
 import com.filmplanner.models.Gear;
@@ -54,6 +55,7 @@ public class ShootViewController implements Initializable {
     private Stage stage;
 
     public ShootViewController(Shoot shoot, Stage stage) {
+        //TODO: Add verif shoot empty?
         this.shoot = shoot;
         this.shootFacade = ShootFacade.getInstance();
         this.gearWithinAShootFacade = GearWithinAShootFacade.getInstance();
@@ -109,5 +111,21 @@ public class ShootViewController implements Initializable {
         //Reload listView and close update stage
         App.setRoot("views/client/clientView");
         this.stage.close();
+    }
+
+    public void addGearToAShootAction() {
+        Stage stage = new Stage();
+        stage.setHeight(300);
+        stage.setWidth(486);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/addGearToAShoot.fxml"));
+        try {
+            AddGearToAShootController controller = new AddGearToAShootController(this.shoot);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 }

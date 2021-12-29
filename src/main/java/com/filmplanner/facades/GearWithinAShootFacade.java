@@ -5,6 +5,7 @@ import com.filmplanner.dao.GearWithinAShootDAO;
 import com.filmplanner.dao.LocationDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.models.Gear;
+import com.filmplanner.models.GearWithinAShoot;
 
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class GearWithinAShootFacade {
             instance = new GearWithinAShootFacade();
         }
         return instance;
+    }
+
+    public long create(GearWithinAShoot gearWithinAShoot){
+        return this.gearWithinAShootDAO.create(gearWithinAShoot);
     }
 
     public List<Gear> getAllGearsWithinAShoot(long idShoot){
