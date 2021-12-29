@@ -1,10 +1,6 @@
 package com.filmplanner.dao.mock;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.GearDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 
 public class MockDAOFactory extends AbstractDAOFactory {
 
@@ -73,5 +69,10 @@ public class MockDAOFactory extends AbstractDAOFactory {
             //this.gearDAO = new MockGearDAO(); TODO à faire
         }
         return this.gearDAO;
+    }
+
+    @Override
+    public PaperworkDAO getPaperworkDAO() {
+        return null;
     }
 }

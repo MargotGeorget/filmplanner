@@ -150,7 +150,7 @@ public class PostgreProjectDAO implements ProjectDAO {
     /**
      * Gets all Projects from the database.
      *
-     * @return an array containing all Projects present in the database
+     * @return an array containing all Projects present in the database; null if there was a SQLException
      */
     @Override
     public Project[] findAll() {
