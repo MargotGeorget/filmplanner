@@ -86,7 +86,7 @@
             <Insets left="60.0" top="100.0" />
          </GridPane.margin>
       </Button>
-       <Button mnemonicParsing="false" text="Delete gear" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#deleteGearAction">
+       <Button mnemonicParsing="false" text="Delete gear" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#deleteGearWithinAShootAction">
            <GridPane.margin>
                <Insets left="140.0" top="100.0" />
            </GridPane.margin>

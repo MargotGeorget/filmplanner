@@ -6,6 +6,7 @@ import com.filmplanner.controllers.client.ClientInformationController;
 import com.filmplanner.facades.GearWithinAShootFacade;
 import com.filmplanner.facades.ShootFacade;
 import com.filmplanner.models.Gear;
+import com.filmplanner.models.GearWithinAShoot;
 import com.filmplanner.models.Location;
 import com.filmplanner.models.Shoot;
 import javafx.fxml.FXML;
@@ -138,5 +139,21 @@ public class ShootViewController implements Initializable {
         stage.showAndWait();
         System.out.println("yo");
         this.reload();
+    }
+
+    public void deleteGearWithinAShootAction() {
+        Gear gear = gears.getSelectionModel().getSelectedItem();
+        if(gear==null){
+            Alert message = new Alert(Alert.AlertType.ERROR);
+            message.setContentText("Error in delete gear to a shoot\nNo gear selected");
+            message.show();
+        }else{
+            GearWithinAShoot gearWithinAShoot = this.gearWithinAShootFacade.getOne(this.shoot.getIdShoot(), gear.getSerialNumber());
+            this.gearWithinAShootFacade.delete(gearWithinAShoot.getId());
+            Alert message = new Alert(Alert.AlertType.CONFIRMATION);
+            message.setContentText("Operation done successfully\nGear deleted to this shoot");
+            message.show();
+            this.reload();
+        }
     }
 }

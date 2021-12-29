@@ -34,6 +34,10 @@ public class GearWithinAShootFacade {
         return this.gearWithinAShootDAO.create(gearWithinAShoot);
     }
 
+    public GearWithinAShoot getOne(long idShoot, String idGear){
+        return this.gearWithinAShootDAO.getOne(idShoot, idGear);
+    }
+
     public List<Gear> getAllGearsWithinAShoot(long idShoot){
         return this.gearWithinAShootDAO.getAllGearsWithinAShoot(idShoot);
     }

@@ -13,6 +13,8 @@ public interface GearWithinAShootDAO {
      */
     boolean create(GearWithinAShoot newInstance);
 
+    GearWithinAShoot getOne(long idShoot, String idGear);
+
     /**
      * Return all the gears registered in the shoot
      * @param idShoot

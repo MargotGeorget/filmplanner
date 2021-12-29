@@ -2,8 +2,7 @@ package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.GearDAO;
 import com.filmplanner.dao.GearWithinAShootDAO;
-import com.filmplanner.models.Gear;
-import com.filmplanner.models.GearWithinAShoot;
+import com.filmplanner.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,6 +40,33 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public GearWithinAShoot getOne(long idShoot, String idGear) {
+        GearWithinAShoot gearWithinAShoot = null;
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = ? AND gear = ?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.setLong(1, idShoot);
+            stmt.setString(2, idGear);
+
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    gearWithinAShoot = this.getBasicGearWithinAShootFromResultSet(rs);
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gearWithinAShoot;
     }
 
     @Override
@@ -96,5 +122,12 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
             e.printStackTrace();
         }
         return true;
+    }
+
+    private GearWithinAShoot getBasicGearWithinAShootFromResultSet(ResultSet rs) throws SQLException {
+        Long id = rs.getLong("gear_within_a_shoot_id");
+        Long shoot = rs.getLong("shoot");
+        String gear = rs.getString("gear");
+        return new GearWithinAShoot(id, shoot, gear);
     }
 }
