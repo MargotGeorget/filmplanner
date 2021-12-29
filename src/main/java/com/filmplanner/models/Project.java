@@ -8,29 +8,30 @@ public class Project {
     private String name;
     private String description;
     private Map<Long, User> managers;
-    //private Client client;
+    private Client client;
     //private Set<Paperwork> paperworks;
     //private Set<Shoot> shoots;
 
 
     // TODO refactor the constructors
-    public Project(String name, String description, Map<Long, User> managers) {
+    public Project(String name, String description, Client client, Map<Long, User> managers) {
         this.name = name;
         this.description = description;
+        this.client = client;
         this.managers = managers;
     }
 
-    public Project(Long id, String name, String description) {
-        this(id, name, description, new HashMap<>());
+    public Project(Long id, String name, String description, Client client) {
+        this(id, name, description, client, new HashMap<>());
     }
 
-    public Project(Long id, String name, String description, Map<Long, User> managers) {
-        this(name, description, managers);
+    public Project(Long id, String name, String description, Client client, Map<Long, User> managers) {
+        this(name, description, client, managers);
         this.id = id;
     }
 
     public Project(Long id, Project project) {
-        this(id, project.getName(), project.getDescription());
+        this(id, project.getName(), project.getDescription(), project.getClient());
     }
 
 
@@ -44,6 +45,10 @@ public class Project {
 
     public String getDescription() {
         return description;
+    }
+
+    public Client getClient() {
+        return client;
     }
 
     public List<User> getManagers() {
@@ -66,6 +71,9 @@ public class Project {
         this.description = description;
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     /*
     Methods

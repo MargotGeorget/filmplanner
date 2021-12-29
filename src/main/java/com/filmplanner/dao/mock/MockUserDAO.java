@@ -4,6 +4,7 @@ import com.filmplanner.dao.UserDAO;
 import com.filmplanner.models.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class MockUserDAO implements UserDAO {
 
@@ -30,5 +31,10 @@ public class MockUserDAO implements UserDAO {
     @Override
     public void create(User user) {
         this.users.put(user.getEmail(), user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return null;
     }
 }

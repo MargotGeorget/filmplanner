@@ -12,6 +12,7 @@ public class LoginFacade {
     private static LoginFacade instance;
     private final AbstractDAOFactory daoFactory;
     private UserDAO userDAO;
+    private User currentUser;
 
     /**
      * Instantiates a LoginFacade. This facades gives the UI access to the login business logic.
@@ -34,6 +35,15 @@ public class LoginFacade {
     }
 
     /**
+     * Gets the current logged user of the application.
+     *
+     * @return the current user if he is logged in; null otherwise
+     */
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
+    /**
      * Attempts to login with the given credentials.
      *
      * @param email    the user's email
@@ -42,13 +52,14 @@ public class LoginFacade {
      * @throws InvalidCredentialsException if the password doesn't match the email
      */
     public User login(String email, String password) throws InvalidCredentialsException, UserNotFoundException {
-        User user = this.userDAO.findByEmail(email);
-        if (user == null) {
+        this.currentUser = this.userDAO.findByEmail(email);
+        if (this.currentUser == null) {
             throw new UserNotFoundException("The email " + email + " is not registered");
         }
-        if (user.getPassword().equals(password)) {
-            return user;
+        if (this.currentUser.getPassword().equals(password)) {
+            return this.currentUser;
+        } else {
+            throw new InvalidCredentialsException("Incorrect password.");
         }
-        throw new InvalidCredentialsException("Incorrect password.");
     }
 }
