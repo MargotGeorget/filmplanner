@@ -2,14 +2,15 @@ package com.filmplanner.facades;
 
 import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.RoleDAO;
-import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.models.Role;
+
+import java.util.ArrayList;
 
 public class RoleFacade {
     private static RoleFacade instance;
     private final AbstractDAOFactory daoFactory;
-    private RoleDAO roleDAO;
+    private final RoleDAO roleDAO;
 
     /**
      * Instantiates a RoleFacade. This facades gives the UI access to the role business logic.
@@ -30,10 +31,27 @@ public class RoleFacade {
         }
         return instance;
     }
-    public boolean createRole(Role role){
+
+    /**
+     * @param role to create
+     * @return true if it's done else false
+     */
+    public boolean createRole(Role role) {
         return roleDAO.createRole(role);
     }
-    public boolean deleteRole(Role role){
+
+    /**
+     * @param role to delete
+     * @return true if it's done else false
+     */
+    public boolean deleteRole(Role role) {
         return roleDAO.deleteRole(role.getName());
+    }
+
+    /**
+     * @return in a ArrayList all roles created
+     */
+    public ArrayList<Role> findAllRole() {
+        return roleDAO.findAllRole();
     }
 }
