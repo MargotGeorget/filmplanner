@@ -5,9 +5,9 @@ import com.filmplanner.models.Project;
 
 public interface PaperworkDAO {
 
-    Paperwork create(Paperwork paperwork);
+    Paperwork create(Paperwork paperwork, Long projectId);
 
-    Paperwork[] findManyByProjectId(Project project);
+    Paperwork[] findManyByProject(Project project);
 
     void delete(Long id);
 }

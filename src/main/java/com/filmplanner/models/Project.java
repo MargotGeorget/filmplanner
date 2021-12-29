@@ -9,7 +9,7 @@ public class Project {
     private String description;
     private Map<Long, User> managers;
     private Client client;
-    //private Set<Paperwork> paperworks;
+    private Map<Long, Paperwork> paperworks;
     //private Set<Shoot> shoots;
 
 
@@ -19,6 +19,7 @@ public class Project {
         this.description = description;
         this.client = client;
         this.managers = managers;
+        this.paperworks = new HashMap<>();
     }
 
     public Project(Long id, String name, String description, Client client) {
@@ -59,6 +60,10 @@ public class Project {
         return id;
     }
 
+    public List<Paperwork> getPaperworks() {
+        return new ArrayList<>(paperworks.values());
+    }
+
     /*
     Setters
      */
@@ -95,6 +100,14 @@ public class Project {
      */
     public void removeManager(User manager) {
         this.managers.remove(manager.getId());
+    }
+
+    public void addPaperwork(Paperwork paperwork) {
+        this.paperworks.put(paperwork.getId(), paperwork);
+    }
+
+    public void removePaperwork(Paperwork paperwork) {
+        this.paperworks.remove(paperwork.getId());
     }
 
     @Override

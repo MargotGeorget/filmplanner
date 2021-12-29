@@ -6,22 +6,20 @@ public class Paperwork {
     private String fileName;
     private String directoryPath;
     private String description;
-    private Project project;
 
-    public Paperwork(Long id, String fileName, String directoryPath, String description, Project project) {
+    public Paperwork(Long id, String fileName, String directoryPath, String description) {
         this.id = id;
         this.fileName = fileName;
         this.directoryPath = directoryPath;
         this.description = description;
-        this.project = project;
     }
 
     public Paperwork(Long id, Paperwork paperwork) {
-        this(id, paperwork.getFileName(), paperwork.getDirectoryPath(), paperwork.getDescription(), paperwork.getProject());
+        this(id, paperwork.getFileName(), paperwork.getDirectoryPath(), paperwork.getDescription());
     }
 
-    public Paperwork(String fileName, String directoryPath, String description, Project project) {
-        this(null, fileName, directoryPath, description, project);
+    public Paperwork(String fileName, String directoryPath, String description) {
+        this(null, fileName, directoryPath, description);
     }
 
 
@@ -43,10 +41,6 @@ public class Paperwork {
 
     public String getDescription() {
         return description;
-    }
-
-    public Project getProject() {
-        return project;
     }
 
 
@@ -77,7 +71,6 @@ public class Paperwork {
     @Override
     public String toString() {
         return this.directoryPath + "/" + this.fileName +
-                "\n\t- " + this.description +
-                "\n\t(in project " + this.project.getId() + ")";
+                "\n\t- " + this.description;
     }
 }

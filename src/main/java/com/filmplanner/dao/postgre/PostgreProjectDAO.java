@@ -1,12 +1,11 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 import com.filmplanner.models.Client;
+import com.filmplanner.models.Paperwork;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
+import javafx.print.Paper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,10 +16,12 @@ public class PostgreProjectDAO implements ProjectDAO {
 
     private Connection connection;
     private ClientDAO clientDAO;
+    private PaperworkDAO paperworkDAO;
 
     public PostgreProjectDAO(Connection connection) {
         this.connection = connection;
         this.clientDAO = PostgreDAOFactory.getInstance().getClientDAO();
+        this.paperworkDAO = PostgreDAOFactory.getInstance().getPaperworkDAO();
     }
 
     /*
@@ -105,9 +106,10 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 // TODO find shoots by project id (ShootDAO)
 
-                // TODO find paperworks by project id (PaperWorkDAO)
-
-                // TODO find client by id (ClientDAO)
+                Paperwork[] paperworks = this.paperworkDAO.findManyByProject(foundProject);
+                for (Paperwork paperwork : paperworks) {
+                    foundProject.addPaperwork(paperwork);
+                }
 
                 resultSet.close();
                 statement.close();
