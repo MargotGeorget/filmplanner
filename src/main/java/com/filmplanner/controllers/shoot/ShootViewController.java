@@ -77,6 +77,15 @@ public class ShootViewController implements Initializable {
         this.gears.getItems().addAll(this.gearWithinAShootFacade.getAllGearsWithinAShoot(shoot.getIdShoot()));
     }
 
+    public void reload(){
+        this.gears.getItems().clear();
+        colSerialNumber.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
+        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        this.gears.getItems().addAll(this.gearWithinAShootFacade.getAllGearsWithinAShoot(shoot.getIdShoot()));
+    }
+
     /**
      * Update the current page to allow the user to modify the information of the selected shoot
      *
@@ -119,13 +128,15 @@ public class ShootViewController implements Initializable {
         stage.setWidth(486);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/addGearToAShoot.fxml"));
         try {
-            AddGearToAShootController controller = new AddGearToAShootController(this.shoot);
+            AddGearToAShootController controller = new AddGearToAShootController(this.shoot, stage);
             fxmlLoader.setController(controller);
             Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stage.show();
+        stage.showAndWait();
+        System.out.println("yo");
+        this.reload();
     }
 }

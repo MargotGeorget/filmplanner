@@ -20,9 +20,8 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
 
 
     @Override
-    public long create(GearWithinAShoot newInstance) {
+    public boolean create(GearWithinAShoot newInstance) {
         String sql = "INSERT INTO gear_within_a_shoot (gear, shoot) VaLUES(?,?)";
-        long id = -1;
 
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -41,7 +40,7 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        return true;
     }
 
     @Override
@@ -73,7 +72,16 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
 
     @Override
     public boolean delete(long id) {
-        return false;
+        String sql = "DELETE FROM gear_within_a_shoot WHERE gear_within_a_shoot_id=" + id + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override

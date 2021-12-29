@@ -70,10 +70,10 @@ public class ShootFormController {
             Shoot newShoot = new Shoot(name, description, date, location, project);
 
             //Sends shoot to create to facade
-            long idClient = shootFacade.createShoot(newShoot);
-            newShoot.setIdShoot(idClient);
+            long idShoot = shootFacade.createShoot(newShoot);
+            newShoot.setIdShoot(idShoot);
 
-            if (idClient != -1) {
+            if (idShoot != -1) {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);
                 message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " created!");
                 message.show();

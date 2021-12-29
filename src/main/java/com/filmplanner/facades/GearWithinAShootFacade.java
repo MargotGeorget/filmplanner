@@ -30,11 +30,15 @@ public class GearWithinAShootFacade {
         return instance;
     }
 
-    public long create(GearWithinAShoot gearWithinAShoot){
+    public boolean create(GearWithinAShoot gearWithinAShoot){
         return this.gearWithinAShootDAO.create(gearWithinAShoot);
     }
 
     public List<Gear> getAllGearsWithinAShoot(long idShoot){
         return this.gearWithinAShootDAO.getAllGearsWithinAShoot(idShoot);
+    }
+
+    public boolean delete(long id){
+        return this.gearWithinAShootDAO.delete(id);
     }
 }

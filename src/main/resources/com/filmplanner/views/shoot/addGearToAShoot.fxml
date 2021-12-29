@@ -17,7 +17,7 @@
             <TableColumn prefWidth="127.33331298828125" text="Category" fx:id="colCategory"/>
         </columns>
       </TableView>
-      <Button layoutX="366.0" layoutY="232.0" mnemonicParsing="false" text="Add this gear" />
+      <Button layoutX="366.0" layoutY="232.0" mnemonicParsing="false" text="Add this gear" onAction="#addGearToAShoot" />
       <Label layoutX="131.0" layoutY="46.0" text="Select a gear and add it to the shoot">
          <font>
             <Font size="14.0" />

@@ -11,7 +11,7 @@ public interface GearWithinAShootDAO {
      * @param newInstance
      * @return long : new gearWithinAShoot's id
      */
-    long create(GearWithinAShoot newInstance);
+    boolean create(GearWithinAShoot newInstance);
 
     /**
      * Return all the gears registered in the shoot
