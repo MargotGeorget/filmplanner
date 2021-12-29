@@ -27,4 +27,6 @@ public interface GearWithinAShootDAO {
      *                  or false if the gearWithinAShoot could not be found or could not be removed
      */
     boolean delete(long id);
+
+    boolean deleteAllGearWithinAShoot(long id);
 }

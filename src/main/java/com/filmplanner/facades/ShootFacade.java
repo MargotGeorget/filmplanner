@@ -36,4 +36,8 @@ public class ShootFacade {
     public boolean updateShoot(Shoot shoot){
         return shootDAO.update(shoot);
     }
+
+    public boolean delete(long idShoot){
+        return this.shootDAO.delete(idShoot);
+    }
 }

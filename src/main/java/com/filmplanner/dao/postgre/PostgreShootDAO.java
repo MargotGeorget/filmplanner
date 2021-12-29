@@ -144,6 +144,28 @@ public class PostgreShootDAO implements ShootDAO {
         return shoots;
     }
 
+    @Override
+    public boolean delete(long idShoot) {
+        Shoot shoot = this.getOneById(idShoot);
+        //Supprimer tout les gear_within_a_shoot qui le  concerne
+        this.gearWithinAShootDAO.deleteAllGearWithinAShoot(idShoot);
+        //TODO: faire pareil avec les users dans un shoot
+
+        String sql = "DELETE FROM shoot WHERE shoot_id=" + idShoot + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //Supprimer la location correspondant au shoot
+
+        this.locationDAO.delete(shoot.getLocation().getId());
+        return true;
+    }
+
     private Shoot getBasicShootFromResultSet(ResultSet rs) throws SQLException {
         Long id = rs.getLong("shoot_id");
         String name = rs.getString("name");

@@ -75,4 +75,18 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
     public boolean delete(long id) {
         return false;
     }
+
+    @Override
+    public boolean deleteAllGearWithinAShoot(long idShoot) {
+        String sql = "DELETE FROM gear_within_a_shoot WHERE shoot=" + idShoot + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }

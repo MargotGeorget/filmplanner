@@ -98,6 +98,20 @@ public class PostgreLocationDAO implements LocationDAO {
         return true;
     }
 
+    @Override
+    public boolean delete(long id) {
+        String sql = "DELETE FROM location WHERE location_id=" + id + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     private Location getBasicLocationFromResultSet(ResultSet rs) throws SQLException {
         Long id = rs.getLong("location_id");
         int streetNumber = rs.getInt("street_number");

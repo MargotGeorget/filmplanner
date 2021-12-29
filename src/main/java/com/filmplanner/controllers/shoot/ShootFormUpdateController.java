@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,10 +45,14 @@ public class ShootFormUpdateController implements Initializable {
 
     private Shoot shoot;
 
-    public ShootFormUpdateController(Shoot shoot) {
+    private Stage stage;
+
+
+    public ShootFormUpdateController(Shoot shoot, Stage stage) {
         this.shoot = shoot;
         this.shootFacade = ShootFacade.getInstance();
         this.locationFacade = LocationFacade.getInstance();
+        this.stage = stage;
     }
 
     @Override

@@ -45,16 +45,17 @@ public class HomeControllers {
         }
          */
 
-        /* ---- open page view shoot
-        ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();;
-        Shoot shoot = shootDAO.getOneById(9);
+        /* ---- open page view shoot */
+        ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();
+        ;
+        Shoot shoot = shootDAO.getOneById(11);
 
         Stage stage = new Stage();
         stage.setHeight(500);
         stage.setWidth(800);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
         try {
-            ShootViewController controller = new ShootViewController(shoot);
+            ShootViewController controller = new ShootViewController(shoot, stage);
             fxmlLoader.setController(controller);
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
@@ -63,8 +64,8 @@ public class HomeControllers {
         } catch (IOException e) {
             e.printStackTrace();
         }
-         */
 
+        /* ---- open page form update shoot
         ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();;
         Shoot shoot = shootDAO.getOneById(9);
 
@@ -73,7 +74,7 @@ public class HomeControllers {
         stage.setWidth(800);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootFormUpdate.fxml"));
         try {
-            ShootFormUpdateController controller = new ShootFormUpdateController(shoot);
+            ShootFormUpdateController controller = new ShootFormUpdateController(shoot, stage);
             fxmlLoader.setController(controller);
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
@@ -82,6 +83,8 @@ public class HomeControllers {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+ */
 
     }
 }

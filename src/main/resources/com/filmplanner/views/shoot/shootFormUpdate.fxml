@@ -47,7 +47,7 @@
                 <Insets bottom="150.0" left="40.0" top="130.0" />
             </GridPane.margin>
         </TextArea>
-        <Label text="Add a new shoot" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <Label text="Update a shoot" textFill="#1b3b6f" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <font>
                 <Font name="Verdana Pro Bold" size="26.0" />
             </font>

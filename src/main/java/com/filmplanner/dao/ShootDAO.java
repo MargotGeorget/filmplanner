@@ -27,4 +27,6 @@ public interface ShootDAO {
      * @return List<Shoot>
      */
     List<Shoot> findAllShootInProject(long idProject);
+
+    boolean delete(long idShoot);
 }

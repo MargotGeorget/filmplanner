@@ -14,4 +14,6 @@ public interface LocationDAO {
     Location findById(long id);
 
     boolean update(Location location);
+
+    boolean delete(long id);
 }
