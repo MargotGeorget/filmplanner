@@ -33,7 +33,7 @@ public class ShootFacade {
         return shootDAO.findAllShootInProject(idProject);
     }
 
-    public void updateShoot(Shoot shoot){
-        shootDAO.update(shoot);
+    public boolean updateShoot(Shoot shoot){
+        return shootDAO.update(shoot);
     }
 }

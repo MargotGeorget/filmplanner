@@ -3,6 +3,7 @@ package com.filmplanner.controllers;
 import com.filmplanner.App;
 import com.filmplanner.controllers.client.ClientInformationController;
 import com.filmplanner.controllers.shoot.ShootFormController;
+import com.filmplanner.controllers.shoot.ShootFormUpdateController;
 import com.filmplanner.controllers.shoot.ShootViewController;
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.ShootDAO;
@@ -44,6 +45,7 @@ public class HomeControllers {
         }
          */
 
+        /* ---- open page view shoot
         ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();;
         Shoot shoot = shootDAO.getOneById(9);
 
@@ -53,6 +55,25 @@ public class HomeControllers {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
         try {
             ShootViewController controller = new ShootViewController(shoot);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         */
+
+        ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();;
+        Shoot shoot = shootDAO.getOneById(9);
+
+        Stage stage = new Stage();
+        stage.setHeight(500);
+        stage.setWidth(800);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootFormUpdate.fxml"));
+        try {
+            ShootFormUpdateController controller = new ShootFormUpdateController(shoot);
             fxmlLoader.setController(controller);
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);

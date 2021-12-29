@@ -12,4 +12,6 @@ public interface LocationDAO {
     long create(Location newLocation);
 
     Location findById(long id);
+
+    boolean update(Location location);
 }

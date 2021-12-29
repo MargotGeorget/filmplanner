@@ -33,7 +33,10 @@ public class LocationFacade {
      * @return long : new location's id
      */
     public long create(Location newLocation){
-        long idLocation = locationDAO.create(newLocation);
-        return idLocation;
+        return locationDAO.create(newLocation);
+    }
+
+    public boolean update(Location location){
+        return locationDAO.update(location);
     }
 }

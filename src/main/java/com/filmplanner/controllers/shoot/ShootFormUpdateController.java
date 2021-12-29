@@ -85,30 +85,30 @@ public class ShootFormUpdateController implements Initializable {
             Location newLocation = new Location(number, street, city, zipCode);
             if(!currentLocation.eguals(newLocation)) {
                 //il faut créer une nouvelle location
-                long id = this.locationFacade.create(newLocation);
-                newLocation.setId(id);
+                newLocation.setId(currentLocation.getId());
+                this.locationFacade.update(newLocation);
+                currentLocation = newLocation;
             }
             //Create new shoot variable
             //Le project ne peut pas changer
-            Shoot newShoot = new Shoot(name, description, date, newLocation, shoot.getProject());
+            Shoot newShoot = new Shoot(shoot.getIdShoot(), name, description, date, currentLocation, shoot.getProject());
 
             //Sends shoot to create to facade
-            long idClient = shootFacade.createShoot(newShoot);
-            newShoot.setIdShoot(idClient);
+            boolean isUpdated = shootFacade.updateShoot(newShoot);
 
-            if (idClient != -1) {
+            if (isUpdated) {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);
-                message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " created!");
+                message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " updated!");
                 message.show();
                 App.setRoot("views/client/clientView");
             } else {
                 Alert message = new Alert(Alert.AlertType.ERROR);
-                message.setContentText("Error in client creation\nShoot " + newShoot.getName() + "not created!\nError with database");
+                message.setContentText("Error in shoot update\nShoot " + newShoot.getName() + " not updated!\nError with database");
                 message.show();
             }
         } catch (Exception e) {
             Alert message = new Alert(Alert.AlertType.ERROR);
-            message.setContentText("Creation cancelled\nError in client input: " + e.getMessage() + "!");
+            message.setContentText("Creation cancelled\nError in shoot input: " + e.getMessage() + "!");
             message.show();
         }
 
@@ -119,7 +119,7 @@ public class ShootFormUpdateController implements Initializable {
      *
      * @throws IOException
      */
-    public void cancelCreation() throws IOException {
+    public void cancelUpdate() throws IOException {
         App.setRoot("views/client/clientView");
     }
 

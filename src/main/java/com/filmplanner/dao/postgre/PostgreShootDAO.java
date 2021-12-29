@@ -92,7 +92,7 @@ public class PostgreShootDAO implements ShootDAO {
 
     @Override
     public boolean update(Shoot shoot) {
-        String sql = "UPDATE shoot SET name=?, description=?, date=?; project=?; location=? WHERE shoot_id=?";
+        String sql = "UPDATE shoot SET name=?, description=?, date=?, project=?, location=? WHERE shoot_id=?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
 
@@ -103,13 +103,17 @@ public class PostgreShootDAO implements ShootDAO {
             stmt.setLong(5, shoot.getLocation().getId());
             stmt.setLong(6, shoot.getIdShoot());
 
-            stmt.executeQuery();
-            System.out.println("Operation done successfully");
+            int affectedRows = stmt.executeUpdate();
 
+            if (affectedRows == 0) {
+                throw new SQLException("Update shoot failed, no rows affected.");
+            }
             stmt.close();
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
+        System.out.println("Operation done successfully");
         return true;
     }
 

@@ -72,6 +72,32 @@ public class PostgreLocationDAO implements LocationDAO {
         return loc;
     }
 
+    @Override
+    public boolean update(Location location) {
+        String sql = "UPDATE location SET street_number=?, street=?, city=?, zipcode=? WHERE location_id=?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.setInt(1, location.getStreetNumber());
+            stmt.setString(2, location.getStreet());
+            stmt.setString(3, location.getCity());
+            stmt.setString(4, location.getZipCode());
+            stmt.setLong(5, location.getId());
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Update location failed, no rows affected.");
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        System.out.println("Operation done successfully");
+        return true;
+    }
+
     private Location getBasicLocationFromResultSet(ResultSet rs) throws SQLException {
         Long id = rs.getLong("location_id");
         int streetNumber = rs.getInt("street_number");
