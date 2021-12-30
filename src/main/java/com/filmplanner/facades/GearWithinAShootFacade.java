@@ -1,8 +1,7 @@
 package com.filmplanner.facades;
 
 import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.GearWithinAShootDAO;
-import com.filmplanner.dao.LocationDAO;
+import com.filmplanner.dao.ShootDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Gear;
@@ -13,11 +12,11 @@ import java.util.List;
 public class GearWithinAShootFacade {
     private static GearWithinAShootFacade instance;
     private final AbstractDAOFactory daoFactory;
-    private GearWithinAShootDAO gearWithinAShootDAO;
+    private ShootDAO shootDAO;
 
     private GearWithinAShootFacade() {
         this.daoFactory =  PostgreDAOFactory.getInstance();
-        this.gearWithinAShootDAO = this.daoFactory.getGearWithinAShootDAO() ;
+        this.shootDAO = this.daoFactory.getShootDAO() ;
     }
 
     /**
@@ -32,18 +31,18 @@ public class GearWithinAShootFacade {
     }
 
     public boolean create(GearWithinAShoot gearWithinAShoot) throws InvalidInputException {
-        return this.gearWithinAShootDAO.create(gearWithinAShoot);
+        return this.shootDAO.createGearWithinAShoot(gearWithinAShoot);
     }
 
     public GearWithinAShoot getOne(long idShoot, String idGear){
-        return this.gearWithinAShootDAO.getOne(idShoot, idGear);
+        return this.shootDAO.getOneGearsWithinAShoot(idShoot, idGear);
     }
 
     public List<Gear> getAllGearsWithinAShoot(long idShoot){
-        return this.gearWithinAShootDAO.getAllGearsWithinAShoot(idShoot);
+        return this.shootDAO.getAllGearsWithinAShoot(idShoot);
     }
 
     public boolean delete(long id){
-        return this.gearWithinAShootDAO.delete(id);
+        return this.shootDAO.deleteGearWithinAShoot(id);
     }
 }

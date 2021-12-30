@@ -1,14 +1,8 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.GearWithinAShootDAO;
-import com.filmplanner.dao.LocationDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.ShootDAO;
+import com.filmplanner.dao.*;
 import com.filmplanner.exceptions.InvalidInputException;
-import com.filmplanner.models.Gear;
-import com.filmplanner.models.Location;
-import com.filmplanner.models.Project;
-import com.filmplanner.models.Shoot;
+import com.filmplanner.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,13 +13,13 @@ public class PostgreShootDAO implements ShootDAO {
     private Connection connection;
     private LocationDAO locationDAO;
     private ProjectDAO projectDAO;
-    private GearWithinAShootDAO gearWithinAShootDAO;
+    private GearDAO gearDAO;
 
     public PostgreShootDAO(Connection connection) {
         this.connection = connection;
         this.locationDAO = PostgreDAOFactory.getInstance().getLocationDAO();
         this.projectDAO = PostgreDAOFactory.getInstance().getProjectDAO();
-        this.gearWithinAShootDAO = PostgreDAOFactory.getInstance().getGearWithinAShootDAO();
+        this.gearDAO = PostgreDAOFactory.getInstance().getGearDAO();
     }
 
     @Override
@@ -149,7 +143,7 @@ public class PostgreShootDAO implements ShootDAO {
     public boolean delete(long idShoot) {
         Shoot shoot = this.getOneById(idShoot);
         //Supprimer tout les gear_within_a_shoot qui le  concerne
-        this.gearWithinAShootDAO.deleteAllGearWithinAShoot(idShoot);
+        this.deleteAllGearWithinAShoot(idShoot);
         //TODO: faire pareil avec les users dans un shoot
 
         String sql = "DELETE FROM shoot WHERE shoot_id=" + idShoot + ";";
@@ -176,7 +170,7 @@ public class PostgreShootDAO implements ShootDAO {
             String date = rs.getString("date");
             Location location = this.locationDAO.findById(rs.getLong("location"));
             Project project = this.projectDAO.findById(rs.getLong("project"));
-            List<Gear> gears = this.gearWithinAShootDAO.getAllGearsWithinAShoot(id);
+            List<Gear> gears = this.getAllGearsWithinAShoot(id);
             //TODO: add gears and members
             //TODO : add verif
             shoot = new Shoot(id, name, description, date, location, gears, project);
@@ -184,6 +178,175 @@ public class PostgreShootDAO implements ShootDAO {
             System.out.println(e.getMessage());
         }
         return shoot;
+    }
+
+    /*
+    -------------------- Management gear within a shoot --------------------
+     */
+    @Override
+    public boolean createGearWithinAShoot(GearWithinAShoot newInstance) throws InvalidInputException {
+        if(isPresent(newInstance.getShootId(), newInstance.getGearId())){
+            throw new InvalidInputException("This gear is already present in this shoot!");
+        }
+        if(isUsedAtThisDate(newInstance.getShootId(), newInstance.getGearId())){
+            throw new InvalidInputException("This gear is already used in a shoot at the same date!");
+        }
+        String sql = "INSERT INTO gear_within_a_shoot (gear, shoot) VaLUES(?,?)";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.setString(1, newInstance.getGearId());
+            stmt.setLong(2, newInstance.getShootId());
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating gearWithinAProject failed, no rows affected.");
+            }
+
+            System.out.println("Operation done successfully");
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public GearWithinAShoot getOneGearsWithinAShoot(long idShoot, String idGear) {
+        GearWithinAShoot gearWithinAShoot = null;
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = ? AND gear = ?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            stmt.setLong(1, idShoot);
+            stmt.setString(2, idGear);
+
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    gearWithinAShoot = this.getBasicGearWithinAShootFromResultSet(rs);
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gearWithinAShoot;
+    }
+
+    @Override
+    public List<Gear> getAllGearsWithinAShoot(long idShoot) {
+        List<Gear> gears = new ArrayList<>();
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = "+ idShoot;
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    gears.add(this.gearDAO.findGearById(rs.getString("gear")));
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gears;
+    }
+
+    @Override
+    public List<Shoot> getAllShootUsingAGear(String idGear) {
+        List<Shoot> shoots = new ArrayList<>();
+        String sql = "SELECT * FROM gear_within_a_shoot WHERE gear =? ";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.setString(1, idGear);
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    shoots.add(this.getOneById(rs.getLong("shoot")));
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shoots;
+    }
+
+    @Override
+    public boolean deleteGearWithinAShoot(long id) {
+        String sql = "DELETE FROM gear_within_a_shoot WHERE gear_within_a_shoot_id=" + id + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteAllGearWithinAShoot(long idShoot) {
+        String sql = "DELETE FROM gear_within_a_shoot WHERE shoot=" + idShoot + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private GearWithinAShoot getBasicGearWithinAShootFromResultSet(ResultSet rs) throws SQLException {
+        Long id = rs.getLong("gear_within_a_shoot_id");
+        Long shoot = rs.getLong("shoot");
+        String gear = rs.getString("gear");
+        return new GearWithinAShoot(id, shoot, gear);
+    }
+
+    private boolean isPresent(long idShoot, String idGear) {
+        List<Gear> gears = this.getAllGearsWithinAShoot(idShoot);
+        boolean isPresent = false;
+        int i = 0;
+        while(i<gears.size() && !isPresent){
+            if(gears.get(i).getSerialNumber().equals(idGear)){
+                isPresent = true;
+            }
+            i++;
+        }
+        return isPresent;
+    }
+
+    private boolean isUsedAtThisDate(long idShoot, String idGear){
+        Shoot shoot = this.getOneById(idShoot);
+        List<Shoot> shoots = this.getAllShootUsingAGear(idGear);
+        boolean isUsedAtThisDate = false;
+        int i = 0;
+        while(i<shoots.size() && !isUsedAtThisDate){
+            if(shoots.get(i).getDate().equals(shoot.getDate())){
+                isUsedAtThisDate = true;
+            }
+            i++;
+        }
+        return isUsedAtThisDate;
     }
 
 

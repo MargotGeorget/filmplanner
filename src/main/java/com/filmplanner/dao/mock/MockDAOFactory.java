@@ -54,11 +54,6 @@ public class MockDAOFactory extends AbstractDAOFactory {
         return null;
     }
 
-    @Override
-    public GearWithinAShootDAO getGearWithinAShootDAO() {
-        return null;
-    }
-
     /**
      * Gets the MockUserDAO instance. This function makes sure only one instance
      * of MockUserDAO can exist at the same time.
