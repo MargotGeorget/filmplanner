@@ -48,7 +48,7 @@ public class HomeControllers {
         /* ---- open page view shoot */
         ShootDAO shootDAO = PostgreDAOFactory.getInstance().getShootDAO();
         ;
-        Shoot shoot = shootDAO.getOneById(12);
+        Shoot shoot = shootDAO.getOneById(13);
 
         Stage stage = new Stage();
         stage.setHeight(500);

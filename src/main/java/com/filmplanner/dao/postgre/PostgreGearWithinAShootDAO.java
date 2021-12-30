@@ -2,6 +2,7 @@ package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.GearDAO;
 import com.filmplanner.dao.GearWithinAShootDAO;
+import com.filmplanner.dao.ShootDAO;
 import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.*;
 
@@ -12,10 +13,12 @@ import java.util.List;
 public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
     private Connection connection;
     private GearDAO gearDAO;
+    private ShootDAO shootDAO;
 
     public PostgreGearWithinAShootDAO(Connection connection) {
         this.connection = connection;
         this.gearDAO = PostgreDAOFactory.getInstance().getGearDAO();
+        this.shootDAO = PostgreDAOFactory.getInstance().getShootDAO();;
     }
 
 
@@ -87,10 +90,6 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
                     gears.add(this.gearDAO.findGearById(rs.getString("gear")));
                 }
             }
-            //TODO: récupérer les gears et les members du projet
-            //Faire appel au postgreDAO correspondant :
-            // getAllMembersByShoot()
-            // getAllGearsByShoot()
             System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
@@ -98,6 +97,29 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
             e.printStackTrace();
         }
         return gears;
+    }
+
+    @Override
+    public List<Shoot> getAllShootUsingAGear(String idGear) {
+        List<Shoot> shoots = new ArrayList<>();
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE gear = "+ idGear;
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            //check the affected rows
+            if (rs != null) {
+                while (rs.next()) {
+                    shoots.add(this.shootDAO.getOneById(rs.getLong("shoot")));
+                }
+            }
+            System.out.println("Operation done successfully");
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return shoots;
     }
 
     @Override
@@ -143,7 +165,22 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
             if(gears.get(i).getSerialNumber().equals(idGear)){
                 isPresent = true;
             }
+            i++;
         }
         return isPresent;
+    }
+
+    private boolean isUsedAtThisDate(long idShoot, String idGear){
+        Shoot shoot = this.shootDAO.getOneById(idShoot);
+        List<Shoot> shoots = this.getAllShootUsingAGear(idGear);
+        boolean isUsedAtThisDate = false;
+        int i = 0;
+        while(i<shoots.size() && !isUsedAtThisDate){
+            if(shoots.get(i).getDate().equals(shoot.getDate())){
+                isUsedAtThisDate = true;
+            }
+            i++;
+        }
+        return isUsedAtThisDate;
     }
 }

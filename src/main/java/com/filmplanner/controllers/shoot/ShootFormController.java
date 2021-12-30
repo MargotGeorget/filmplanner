@@ -58,9 +58,9 @@ public class ShootFormController {
         String name = nameInput.getText().trim();
         String date = dateInput.getText().trim();
         int number = Integer.parseInt(numberInput.getText());
-        String street = streetInput.getText();
-        String city = cityInput.getText();
-        String zipCode = zipCodeInput.getText();
+        String street = streetInput.getText().trim();
+        String city = cityInput.getText().trim();
+        String zipCode = zipCodeInput.getText().trim();
         String description = descriptionInput.getText();
 
         try {

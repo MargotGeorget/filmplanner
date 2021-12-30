@@ -42,7 +42,7 @@ public class ValidationUtils {
     }
 
     public static boolean isDate(String str){
-        String regex = "^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$";
+        String regex = "^(0[1-9]|[12][0-9]|3[01])[\\/\\-](0[1-9]|1[012])[\\/\\-]\\d{4}$";
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher = pattern.matcher(str);
@@ -63,8 +63,10 @@ public class ValidationUtils {
         System.out.println(ValidationUtils.isDate("34/12/2023"));
         System.out.println(ValidationUtils.isDate("12/12/2023"));
         System.out.println(ValidationUtils.isDate("344/12/2023"));
-        System.out.println(ValidationUtils.isDate("34/2/2023"));
+        System.out.println(ValidationUtils.isDate("31/2/2023"));
         System.out.println(ValidationUtils.isDate("4/12/2023"));
+        System.out.println(ValidationUtils.isDate("31/02/2023"));
+        System.out.println(ValidationUtils.isDate("04/12/2023"));
     }
 }
 

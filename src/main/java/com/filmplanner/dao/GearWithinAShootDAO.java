@@ -3,6 +3,8 @@ package com.filmplanner.dao;
 import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Gear;
 import com.filmplanner.models.GearWithinAShoot;
+import com.filmplanner.models.Shoot;
+
 import java.util.List;
 
 public interface GearWithinAShootDAO {
@@ -22,6 +24,8 @@ public interface GearWithinAShootDAO {
      * @return
      */
     List<Gear> getAllGearsWithinAShoot(long idShoot);
+
+    List<Shoot> getAllShootUsingAGear(String idGear);
 
     /**
      * Delete a gearWithinAShoot in the datasource
