@@ -61,6 +61,8 @@ public class LoginFacade {
         if (this.currentUser.getPassword().equals(password)) {
             return this.currentUser;
         } else {
+            System.out.println(this.currentUser.getPassword());
+            System.out.println(password);
             throw new InvalidCredentialsException("Incorrect password.");
         }
     }

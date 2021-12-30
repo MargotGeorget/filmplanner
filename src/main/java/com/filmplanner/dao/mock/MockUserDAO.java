@@ -29,7 +29,7 @@ public class MockUserDAO implements UserDAO {
     }
 
     @Override
-    public long update(int id, User updatedUser) {
+    public int update(Long id, User updatedUser) {
         return -1;
     }
 
@@ -39,17 +39,15 @@ public class MockUserDAO implements UserDAO {
     }
 
     @Override
-    public User findById(int id) {
+    public User findById(Long id) {
         return null;
     }
 
     @Override
-    public int create(User newUser) {
-        return 0;
-    }
+    public Long create(User newUser) {return new Long(0);}
 
     @Override
-    public int deleteById(int id) {
+    public int deleteById(Long id) {
         return 0;
     }
 }

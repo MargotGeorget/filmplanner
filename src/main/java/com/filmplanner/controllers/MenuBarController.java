@@ -50,12 +50,26 @@ public class MenuBarController {
         }
         else {
             Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
-            invalidCredentials.setContentText("Il faut être administrateur pour y accéeder");
+            invalidCredentials.setContentText("You have to be admin");
             invalidCredentials.show();
         }
     }
 
     public void viewGearAction() throws IOException {
         App.setRoot("views/gear/gearView");
+    }
+    public void addUserAction() throws IOException {
+        if(this.loginFacade.getCurrentUser().isAdmin()) {
+            App.setRoot("views/gear/createGear");
+        }
+        else {
+            Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
+            invalidCredentials.setContentText("You have to be admin");
+            invalidCredentials.show();
+        }
+    }
+
+    public void viewUserAction() throws IOException {
+        App.setRoot("views/user/userView");
     }
 }

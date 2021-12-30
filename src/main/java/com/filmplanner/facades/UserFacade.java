@@ -10,7 +10,7 @@ import java.util.List;
 public class UserFacade {
     private static UserFacade instance;
     private final AbstractDAOFactory daoFactory;
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     private UserFacade() {
         this.daoFactory =  PostgreDAOFactory.getInstance();
@@ -43,7 +43,7 @@ public class UserFacade {
      * @param id
      * @return user with the id provided
      */
-    public User findById(int id){
+    public User findById(Long id){
         User user = userDAO.findById(id);
         return user;
     }
@@ -61,7 +61,7 @@ public class UserFacade {
      * @param userUpdated, id of the user to update
      * @return 1 if successfull, 0 if not
      */
-    public long update(int id, User userUpdated){
+    public long update(Long id, User userUpdated){
         try {
             userDAO.update(id, userUpdated);
             return 1;
@@ -75,7 +75,7 @@ public class UserFacade {
      * @param id of the user to delete
      * @return 1 if successful, 0 if not
      */
-    public long delete(int id){
+    public long delete(Long id){
         return userDAO.deleteById(id);
     }
 }

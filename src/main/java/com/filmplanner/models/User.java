@@ -1,16 +1,14 @@
 package com.filmplanner.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class User {
     private StringProperty name;
     private StringProperty email;
     private StringProperty password;
     private StringProperty phoneNumber;
-    private IntegerProperty id;
+    private LongProperty id;
+    private boolean isAdmin;
 
     /**
      * Instantiates a User.
@@ -35,9 +33,10 @@ public class User {
         this(name, email, phoneNumber);
         this.password = new SimpleStringProperty(password);
     }
-    public User(String name, String email, String password, String phoneNumber, int id) {
-        this(name, email, phoneNumber);
-        this.id = new SimpleIntegerProperty(id);
+    public User(Long id,String name, String email, String password, String phoneNumber) {
+        this(name, email,password, phoneNumber);
+        this.id = new SimpleLongProperty(id);
+
     }
 
 
@@ -61,10 +60,13 @@ public class User {
         return phoneNumber.get();
     }
 
-    public int getId() {
+    public Long getId() {
         return id.get();
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
     /*
     Setters
      */
@@ -85,7 +87,7 @@ public class User {
         this.phoneNumber.set(phoneNumber);
     }
 
-    public void setId(int id) {this.id.set(id);}
+    public void setId(long id) {this.id.set(id);}
 
     /*
     Property objects (useful with Tableview)
@@ -118,8 +120,11 @@ public class User {
     /**
      * @return IntegerProperty object
      */
-    public IntegerProperty getIDProperty() { return id;}
+    public LongProperty getIDProperty() { return id;}
 
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     /*
     Methods

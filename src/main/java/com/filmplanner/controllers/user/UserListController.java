@@ -1,6 +1,7 @@
 package com.filmplanner.controllers.user;
 
 import com.filmplanner.App;
+import com.filmplanner.facades.LoginFacade;
 import com.filmplanner.facades.UserFacade;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
@@ -33,18 +34,21 @@ public class UserListController implements Initializable {
     @FXML
     private TableColumn<User, String> EmailColumn;
     @FXML
-    private TableColumn<User, Integer> IDColumn;
+    private TableColumn<User, Long> IDColumn;
     @FXML
     private TableColumn<User, String> PhoneColumn;
 
 
     private UserFacade userFacade;
 
+    private final LoginFacade loginFacade;
+
     /**
      * Gets the facade instance and assigns it to a variable
      */
     public UserListController() {
         this.userFacade = UserFacade.getInstance();
+        this.loginFacade = LoginFacade.getInstance();
     }
     private ObservableList<User> usersData = FXCollections.observableArrayList();
 
@@ -68,7 +72,15 @@ public class UserListController implements Initializable {
     }
 
     public void CreateUser() throws IOException {
-        App.setRoot("views/user/userCreationForm");
+        if(this.loginFacade.getCurrentUser().isAdmin()) {
+            App.setRoot("views/user/userCreationForm");
+        }
+        else {
+            Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
+            invalidCredentials.setContentText("You have to be admin");
+            invalidCredentials.show();
+        }
+
     }
 
     /**
@@ -78,24 +90,31 @@ public class UserListController implements Initializable {
     @FXML
 
     private void DeleteUser() {
-        int selectedIndex = userTable.getSelectionModel().getSelectedIndex();
-        User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        if (selectedIndex >= 0) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete User");
-            alert.setHeaderText("Are you sure want to delete this user?");
-            Optional<ButtonType> option = alert.showAndWait();
-            if (option.get() == ButtonType.OK) {
-                userFacade.delete(selectedUser.getId());
-                userTable.getItems().remove(selectedIndex);
+        if(this.loginFacade.getCurrentUser().isAdmin()) {
+            int selectedIndex = userTable.getSelectionModel().getSelectedIndex();
+            User selectedUser = userTable.getSelectionModel().getSelectedItem();
+            if (selectedIndex >= 0) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete User");
+                alert.setHeaderText("Are you sure want to delete this user?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get() == ButtonType.OK) {
+                    userFacade.delete(selectedUser.getId());
+                    userTable.getItems().remove(selectedIndex);
+                }
+            } else {
+                // Nothing selected.
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("No Selection");
+                alert.setHeaderText("No User Selected");
+                alert.setContentText("Please select a user in the table.");
+                alert.show();
             }
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No User Selected");
-            alert.setContentText("Please select a user in the table.");
-            alert.show();
+        }
+        else {
+            Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
+            invalidCredentials.setContentText("You have to be admin");
+            invalidCredentials.show();
         }
 
     }
@@ -106,40 +125,48 @@ public class UserListController implements Initializable {
     @FXML
 
     private void EditUser() {
-        int selectedIndex = userTable.getSelectionModel().getSelectedIndex();
-        User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        if (selectedIndex >= 0) {
-            //Create new stage to edit client
+        if(this.loginFacade.getCurrentUser().isAdmin()) {
+            int selectedIndex = userTable.getSelectionModel().getSelectedIndex();
+            User selectedUser = userTable.getSelectionModel().getSelectedItem();
+            if (selectedIndex >= 0) {
+                //Create new stage to edit client
 
-            Stage stage = new Stage();
-            stage.setHeight(400);
-            stage.setWidth(610);
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/user/userUpdateForm.fxml"));
-            try {
-                UserUpdateFormController controller = new UserUpdateFormController(selectedUser, stage);
-                fxmlLoader.setController(controller);
-                Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
-                stage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
+                Stage stage = new Stage();
+                stage.setHeight(400);
+                stage.setWidth(610);
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/user/userUpdateForm.fxml"));
+                try {
+                    UserUpdateFormController controller = new UserUpdateFormController(selectedUser, stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.showAndWait();
+                this.usersData = FXCollections.observableArrayList(userFacade.findAll());
+                //Add values to the table
+                this.userTable.setItems(usersData);
+                NameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+                EmailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
+                PhoneColumn.setCellValueFactory(cellData -> cellData.getValue().getPhoneNumberProperty());
+                IDColumn.setCellValueFactory(cellData -> cellData.getValue().getIDProperty().asObject());
+
+            } else {
+                // Nothing selected.
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("No Selection");
+                alert.setHeaderText("No User Selected");
+                alert.setContentText("Please select a user in the table.");
+                alert.show();
             }
-            stage.showAndWait();
-            this.usersData = FXCollections.observableArrayList(userFacade.findAll());
-            //Add values to the table
-            this.userTable.setItems(usersData);
-            NameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-            EmailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
-            PhoneColumn.setCellValueFactory(cellData -> cellData.getValue().getPhoneNumberProperty());
-            IDColumn.setCellValueFactory(cellData -> cellData.getValue().getIDProperty().asObject());
-
-        } else {
-            // Nothing selected.
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No User Selected");
-            alert.setContentText("Please select a user in the table.");
-            alert.show();
         }
+        else {
+            Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
+            invalidCredentials.setContentText("You have to be admin");
+            invalidCredentials.show();
+        }
+
     }
 
 

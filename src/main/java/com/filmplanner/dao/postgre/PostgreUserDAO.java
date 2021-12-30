@@ -11,7 +11,7 @@ import java.util.List;
 public class PostgreUserDAO implements UserDAO {
 
 
-    private Connection connection;
+    private final Connection connection;
     private Statement stmt;
 
     // The constructor must be package-private so only the PostgreDAOFactory can create a new instance.
@@ -39,7 +39,7 @@ public class PostgreUserDAO implements UserDAO {
                 String name = resultSet.getString("name");
                 String phone = resultSet.getString("phonenumber");
                 String password = resultSet.getString("password");
-                foundUser = new User(userId, name, email, phone, password);
+                foundUser = new User(userId,name, email, password, phone);
             }
             resultSet.close();
             statement.close();
@@ -55,7 +55,7 @@ public class PostgreUserDAO implements UserDAO {
      *
      * @param user the user to insert
      */
-    public void create(User user) {
+    public Long create(User user) {
         try {
             String query = "INSERT INTO fp_user (email, password, name, phonenumber) VALUES (?, ?, ?, ?);";
             PreparedStatement statement = this.connection.prepareStatement(query);
@@ -68,6 +68,7 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return new Long(0);
     }
 
     /**
@@ -78,7 +79,7 @@ public class PostgreUserDAO implements UserDAO {
      * @return User the updated user object
      */
     @Override
-    public long update(int id, User updatedUser) {
+    public int update(Long id, User updatedUser) {
 
         //TODO: modifier fonction pour faire update
         String sql = "UPDATE fp_user SET email=?, password=?, name=?, phonenumber=? WHERE user_id=?;";
@@ -89,7 +90,7 @@ public class PostgreUserDAO implements UserDAO {
             preparedStatement.setString(2, updatedUser.getPassword());
             preparedStatement.setString(3, updatedUser.getName());
             preparedStatement.setString(4, updatedUser.getPhoneNumber());
-            preparedStatement.setInt(5, id);
+            preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -110,7 +111,7 @@ public class PostgreUserDAO implements UserDAO {
             PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM fp_user;");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"), rs.getInt("user_id"));
+                User user = new User(rs.getLong("user_id"),rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"));
                 users.add(user);
             }
             rs.close();
@@ -119,6 +120,51 @@ public class PostgreUserDAO implements UserDAO {
         }
         System.out.println("All users returned successfully");
         return users;
+    }
+    /**
+     * delete a user by its id
+     * @param userId
+     * @return int 1 if success, 0 otherwise
+     */
+    @Override
+    public int deleteById(Long userId) {
+
+        try {
+            this.stmt = this.connection.createStatement();
+            this.stmt.executeUpdate("DELETE FROM fp_user WHERE user_id ='" + userId + "';");
+
+            this.stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        System.out.println("Operation done successfully");
+        return 1;
+
+
+    }
+    /**
+     * Finds a user based on its id.
+     *
+     * @param id the user's id
+     * @return the user if the user exists; null otherwise
+     */
+    @Override
+    public User findById(Long id) {
+        User newUser = null;
+        try {
+            this.stmt = this.connection.createStatement();
+            ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.fp_user WHERE USER_ID='" + id + "';");
+            rs.next();
+            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER")); //TODO : Gérer l'erreur quand le login est pas bon
+            rs.close();
+            this.stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Operation done successfully");
+        return newUser;
+
     }
 }
 

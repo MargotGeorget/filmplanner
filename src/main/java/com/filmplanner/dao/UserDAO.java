@@ -8,18 +8,18 @@ import java.util.List;
 public interface UserDAO {
     User findByEmail(String email);
 
-    long update(int id, User updatedUser);
+    int update(Long id, User updatedUser);
 
     List<User> findAll();
 
-    User findById(int id);
+    User findById(Long id);
 
     /**
      * @param newUser
      * @return 1 if successful, 0 if not
      * creates user in the database
      */
-    int create(User newUser);
+    Long create(User newUser);
 
-    int deleteById(int id);
+    int deleteById(Long id);
 }

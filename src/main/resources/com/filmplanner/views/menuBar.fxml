@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+
 
 <MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" style="-fx-background-color: #9EB3C2;"
          xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.MenuBarController" >
@@ -30,6 +28,12 @@
             <items>
                 <MenuItem mnemonicParsing="false" text="Add a gear" onAction="#addGearAction"/>
                 <MenuItem mnemonicParsing="false" text="View all gears" onAction="#viewGearAction" />
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="User">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Add a user" onAction="#addUserAction"/>
+                <MenuItem mnemonicParsing="false" text="View all user" onAction="#viewUserAction" />
             </items>
         </Menu>
     </menus>
