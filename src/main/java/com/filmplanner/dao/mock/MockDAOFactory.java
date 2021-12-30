@@ -44,6 +44,17 @@ public class MockDAOFactory extends AbstractDAOFactory {
         return null;
     }
 
+    @Override
+    public ShootDAO getShootDAO() {
+        //TODO : implement method
+        return null;
+    }
+
+    @Override
+    public LocationDAO getLocationDAO() {
+        return null;
+    }
+
     /**
      * Gets the MockProjectDAO instance. This function makes sure only one instance
      * of MockProjectDAO can exist at the same time.

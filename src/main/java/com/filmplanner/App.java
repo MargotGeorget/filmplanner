@@ -57,4 +57,8 @@ public class App extends Application {
         System.out.println("Application fermée!");
         PostgreConnection.getInstance().getConnection().close();
     }
+
+    public static void setScene(Scene sc){
+        scene = sc;
+    }
 }
