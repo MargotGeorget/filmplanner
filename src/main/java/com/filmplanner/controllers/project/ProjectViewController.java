@@ -49,8 +49,6 @@ public class ProjectViewController implements Initializable {
 
             // Creates new stage to show project information
             Stage stage = new Stage();
-            stage.setHeight(280);
-            stage.setWidth(610);
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectInformation.fxml"));
             try {
                 ProjectInformationController controller = new ProjectInformationController(project, stage);

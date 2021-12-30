@@ -2,6 +2,7 @@ package com.filmplanner.controllers.project;
 
 import com.filmplanner.App;
 import com.filmplanner.facades.ProjectFacade;
+import com.filmplanner.models.Paperwork;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
@@ -33,6 +34,9 @@ public class ProjectInformationController implements Initializable {
     @FXML
     private ListView<User> usersList;
 
+    @FXML
+    private ListView<Paperwork> paperworksList;
+
 
     // Attributes
     private ProjectFacade projectFacade;
@@ -51,6 +55,8 @@ public class ProjectInformationController implements Initializable {
         this.projectDescription.setText(this.project.getDescription());
         this.projectClient.setText(this.project.getClient().toString());
         this.usersList.setItems(FXCollections.observableList(this.project.getManagers()));
+        this.paperworksList.setItems(FXCollections.observableList(this.project.getPaperworks()));
+        // TODO set mouse clicked event to open file
     }
 
 
@@ -63,12 +69,13 @@ public class ProjectInformationController implements Initializable {
         try {
             ProjectEditInformationController controller = new ProjectEditInformationController(project, this.stage);
             fxmlLoader.setController(controller);
-            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight() + 200);
+            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight());
             this.stage.setScene(scene);
         } catch (IOException e) {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("An error occurred while entering edit mode: " + e.getMessage());
             message.show();
+            e.printStackTrace();
         }
     }
 
@@ -82,4 +89,23 @@ public class ProjectInformationController implements Initializable {
         App.setRoot("views/project/projectsView"); // reloads the projectView
         this.stage.close();
     }
+
+    /* code to open view shoot
+
+        Stage stage = new Stage();
+        stage.setHeight(500);
+        stage.setWidth(800);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
+        try {
+            //TODO: donne rne paramètre de shoot selectionné
+            ShootViewController controller = new ShootViewController(shoot, stage);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     */
 }

@@ -1,7 +1,7 @@
 package com.filmplanner.models;
 
-import com.filmplanner.exceptions.InvalidValuesClientException;
-import utils.InputVerification;
+import com.filmplanner.exceptions.InvalidInputException;
+import utils.ValidationUtils;
 
 public class Client {
 
@@ -14,7 +14,7 @@ public class Client {
     private String refereeTel;
 
     //Constructor:
-    public Client(long idClient, String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidValuesClientException {
+    public Client(long idClient, String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidInputException {
         this.setIdClient(idClient);
         this.setCompanyName(companyName);
         this.setDescription(description);
@@ -23,7 +23,7 @@ public class Client {
         this.setRefereeTel(refereeTel);
     }
 
-    public Client(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidValuesClientException {
+    public Client(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidInputException {
         this(-1, companyName, description, refereeName, refereeEmail, refereeTel);
     }
 
@@ -40,9 +40,9 @@ public class Client {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) throws InvalidValuesClientException {
+    public void setCompanyName(String companyName) throws InvalidInputException {
         if (companyName.length() < 2) {
-            throw new InvalidValuesClientException("Company Name too short!");
+            throw new InvalidInputException("Company Name too short!");
         } else {
             this.companyName = companyName;
         }
@@ -60,13 +60,13 @@ public class Client {
         return refereeName;
     }
 
-    public void setRefereeName(String refereeName) throws InvalidValuesClientException {
-        if (!this.isValidString(refereeName, new InputVerification())) {
-            throw new InvalidValuesClientException("Referee name contains special symbol!");
+    public void setRefereeName(String refereeName) throws InvalidInputException {
+        if (!ValidationUtils.isStringWithoutSpecialSymbol(refereeName)) {
+            throw new InvalidInputException("Referee name contains special symbol!");
         } else if (refereeName.length() < 2) {
-            throw new InvalidValuesClientException("Referee name too short!");
+            throw new InvalidInputException("Referee name too short!");
         } else if (refereeName.length() > 30) {
-            throw new InvalidValuesClientException("Referee name too long!");
+            throw new InvalidInputException("Referee name too long!");
         } else {
             this.refereeName = refereeName;
         }
@@ -76,9 +76,9 @@ public class Client {
         return refereeEmail;
     }
 
-    public void setRefereeEmail(String refereeEmail) throws InvalidValuesClientException {
-        if (!this.isEmail(refereeEmail, new InputVerification())) {
-            throw new InvalidValuesClientException("Referee email is not an email");
+    public void setRefereeEmail(String refereeEmail) throws InvalidInputException {
+        if (!ValidationUtils.isEmail(refereeEmail)) {
+            throw new InvalidInputException("Referee email is not an email");
         } else {
             this.refereeEmail = refereeEmail;
         }
@@ -88,16 +88,16 @@ public class Client {
         return refereeTel;
     }
 
-    public void setRefereeTel(String refereeTel) throws InvalidValuesClientException {
-        if (!this.isPhoneNumber(refereeTel, new InputVerification())) {
-            throw new InvalidValuesClientException("Error: Referee tel is not a phone number");
+    public void setRefereeTel(String refereeTel) throws InvalidInputException {
+        if (!ValidationUtils.isPhoneNumber(refereeTel)) {
+            throw new InvalidInputException("Error: Referee tel is not a phone number");
         } else {
             this.refereeTel = refereeTel;
         }
     }
 
     //Functions:
-    public void setAllInformation(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidValuesClientException {
+    public void setAllInformation(String companyName, String description, String refereeName, String refereeEmail, String refereeTel) throws InvalidInputException {
         this.setCompanyName(companyName);
         this.setDescription(description);
         this.setRefereeName(refereeName);
@@ -105,17 +105,10 @@ public class Client {
         this.setRefereeTel(refereeTel);
     }
 
-    private boolean isValidString(String str, InputVerification validator) {
+    private boolean isValidString(String str, ValidationUtils validator) {
         return validator.isStringWithoutSpecialSymbol(str);
     }
 
-    private boolean isPhoneNumber(String str, InputVerification validator) {
-        return validator.isPhoneNumber(str);
-    }
-
-    private boolean isEmail(String str, InputVerification validator) {
-        return validator.isEmail(str);
-    }
 
     @Override
     public String toString() {

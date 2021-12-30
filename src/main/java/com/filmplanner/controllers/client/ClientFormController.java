@@ -1,7 +1,7 @@
 package com.filmplanner.controllers.client;
 
 import com.filmplanner.App;
-import com.filmplanner.exceptions.InvalidValuesClientException;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
@@ -69,7 +69,7 @@ public class ClientFormController {
                 message.setContentText("Error in client creation\nClient " + newClient.getCompanyName() + "not added!\nError with database");
                 message.show();
             }
-        } catch (InvalidValuesClientException e) {
+        } catch (InvalidInputException e) {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("Creation cancelled\nError in client input: " + e.getMessage() + "!");
             message.show();

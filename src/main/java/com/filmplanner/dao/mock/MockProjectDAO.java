@@ -1,7 +1,7 @@
 package com.filmplanner.dao.mock;
 
 import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.exceptions.InvalidValuesClientException;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
@@ -20,7 +20,7 @@ public class MockProjectDAO implements ProjectDAO {
         try {
             client1 = new Client(1, "Sweep", "App écologique", "Yannick", "yannick@sweep.fr", "1234567890");
             client2 = new Client(2, "AnimoConcept", "Accessoires pour animaux", "Bastien", "bastien@animo.fr", "0987654321");
-        } catch (InvalidValuesClientException e) {
+        } catch (InvalidInputException e) {
             e.printStackTrace();
         }
         this.projects.put(1L, new Project(1L, "Teaser Sweep", "Mise en avant de Sweep", client1));

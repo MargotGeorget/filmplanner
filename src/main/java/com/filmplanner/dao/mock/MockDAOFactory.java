@@ -1,10 +1,6 @@
 package com.filmplanner.dao.mock;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.GearDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 
 public class MockDAOFactory extends AbstractDAOFactory {
 
@@ -48,6 +44,17 @@ public class MockDAOFactory extends AbstractDAOFactory {
         return null;
     }
 
+    @Override
+    public ShootDAO getShootDAO() {
+        //TODO : implement method
+        return null;
+    }
+
+    @Override
+    public LocationDAO getLocationDAO() {
+        return null;
+    }
+
     /**
      * Gets the MockProjectDAO instance. This function makes sure only one instance
      * of MockProjectDAO can exist at the same time.
@@ -73,5 +80,10 @@ public class MockDAOFactory extends AbstractDAOFactory {
             //this.gearDAO = new MockGearDAO(); TODO à faire
         }
         return this.gearDAO;
+    }
+
+    @Override
+    public PaperworkDAO getPaperworkDAO() {
+        return null;
     }
 }

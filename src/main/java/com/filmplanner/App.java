@@ -21,7 +21,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         stage.setWidth(800);
         stage.setHeight(500);
-        scene = new Scene(loadFXML("views/home"), stage.getWidth(), stage.getHeight());
+        scene = new Scene(loadFXML("views/login"), stage.getWidth(), stage.getHeight());
         stage.setScene(scene);
 
         //TODO: Mettre icon
@@ -56,5 +56,9 @@ public class App extends Application {
         launch();
         System.out.println("Application fermée!");
         PostgreConnection.getInstance().getConnection().close();
+    }
+
+    public static void setScene(Scene sc){
+        scene = sc;
     }
 }

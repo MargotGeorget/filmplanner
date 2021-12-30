@@ -1,10 +1,6 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
-import com.filmplanner.dao.ClientDAO;
-import com.filmplanner.dao.ProjectDAO;
-import com.filmplanner.dao.GearDAO;
-import com.filmplanner.dao.UserDAO;
+import com.filmplanner.dao.*;
 
 public class PostgreDAOFactory extends AbstractDAOFactory {
 
@@ -13,9 +9,11 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private ProjectDAO projectDAO;
     private ClientDAO clientDAO;
     private GearDAO gearDAO;
+    private PaperworkDAO paperworkDAO;
+    private ShootDAO shootDAO;
+    private LocationDAO locationDAO;
 
-    private PostgreDAOFactory() {
-    }
+    private PostgreDAOFactory() { }
 
     /**
      * Gets the PostgreDAOFactory single instance.
@@ -28,6 +26,11 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
         }
         return instance;
     }
+
+
+    /*
+    DAO getters
+     */
 
     /**
      * Gets the PostgreUserDAO. This function makes sure only one instance
@@ -45,9 +48,9 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
 
     /**
      * Gets the PostgreProjectDAO. This function makes sure only one instance
-     * of PostgreUserDAO can exist at the same time.
+     * of PostgreProjectDAO can exist at the same time.
      *
-     * @return the PostgreUserDAO instance
+     * @return the PostgreProjectDAO instance
      */
     @Override
     public ProjectDAO getProjectDAO() {
@@ -64,6 +67,21 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
         return this.clientDAO;
     }
 
+    @Override
+    public ShootDAO getShootDAO() {
+        if (shootDAO == null) {
+            this.shootDAO = new PostgreShootDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.shootDAO;
+    }
+
+    public LocationDAO getLocationDAO(){
+        if (locationDAO == null) {
+            this.locationDAO = new PostgreLocationDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.locationDAO;
+    }
+
     /**
      * Gets the PostgreGearDAO. This function makes sure only one instance
      * of PostgreGearDAO can exist at the same time.
@@ -76,5 +94,19 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.gearDAO = new PostgreGearDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.gearDAO;
+    }
+
+    /**
+     * Gets the PostgrePaperworkDAO. This function makes sure only one instance
+     * of PostgrePaperworkDAO can exist at the same time.
+     *
+     * @return the PostgrePaperworkDAO instance
+     */
+    @Override
+    public PaperworkDAO getPaperworkDAO() {
+        if (this.paperworkDAO == null) {
+            this.paperworkDAO = new PostgrePaperworkDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.paperworkDAO;
     }
 }

@@ -1,13 +1,12 @@
 package com.filmplanner.controllers.client;
 
 import com.filmplanner.App;
-import com.filmplanner.exceptions.InvalidValuesClientException;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.models.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -82,7 +81,7 @@ public class ClientFormUpdateController implements Initializable {
             //Reload listView and close update stage
             App.setRoot("views/client/clientView");
             this.stage.close();
-        } catch (InvalidValuesClientException e) {
+        } catch (InvalidInputException e) {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("Modification cancelled\nError in client input: " + e.getMessage() + "!");
             message.show();
