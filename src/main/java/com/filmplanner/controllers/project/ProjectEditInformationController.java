@@ -2,6 +2,7 @@ package com.filmplanner.controllers.project;
 
 import com.filmplanner.App;
 import com.filmplanner.controllers.paperwork.PaperworkEditInformationController;
+import com.filmplanner.controllers.shoot.ShootFormController;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.facades.ClientFacade;
@@ -141,5 +142,24 @@ public class ProjectEditInformationController implements Initializable {
         }
 
         return remainingUsers;
+    }
+
+    public void addAShoot() {
+        Stage stage = new Stage();
+        stage.setHeight(500);
+        stage.setWidth(800);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootForm.fxml"));
+        try {
+            ShootFormController controller = new ShootFormController(this.project);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+            //action après fermeture de la page
+            //TODO : appel fonction reload (voir shootView)
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

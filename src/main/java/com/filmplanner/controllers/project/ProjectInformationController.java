@@ -89,4 +89,23 @@ public class ProjectInformationController implements Initializable {
         App.setRoot("views/project/projectsView"); // reloads the projectView
         this.stage.close();
     }
+
+    /* code to open view shoot
+
+        Stage stage = new Stage();
+        stage.setHeight(500);
+        stage.setWidth(800);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
+        try {
+            //TODO: donne rne paramètre de shoot selectionné
+            ShootViewController controller = new ShootViewController(shoot, stage);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     */
 }
