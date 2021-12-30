@@ -106,7 +106,7 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 // TODO find shoots by project id (ShootDAO)
 
-                Paperwork[] paperworks = this.paperworkDAO.findManyByProject(foundProject);
+                Paperwork[] paperworks = this.paperworkDAO.findManyByProjectId(foundProject.getId());
                 for (Paperwork paperwork : paperworks) {
                     foundProject.addPaperwork(paperwork);
                 }
@@ -192,7 +192,7 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 this.deleteManagers(id);
 
-                // TODO delete paperwork by project id (PaperWorkDAO)
+               this.paperworkDAO.deleteManyByProjectId(id);
 
                 // Deletes Project from project table
                 String query = "DELETE FROM project WHERE project_id=" + id;
@@ -228,7 +228,10 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 // TODO update shoots (ShootDAO)
 
-                // TODO update paperworks (PaperworkDAO)
+                this.paperworkDAO.deleteManyByProjectId(id);
+                for (Paperwork paperwork : project.getPaperworks()) {
+                    this.paperworkDAO.create(paperwork, id);
+                }
 
                 statement.close();
             } catch (SQLException e) {

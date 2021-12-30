@@ -25,8 +25,8 @@ public class PaperworkFacade {
         return this.paperworkDAO.create(paperwork, projectId);
     }
 
-    public Paperwork[] findManyByProjectId(Project project) {
-        return this.paperworkDAO.findManyByProject(project);
+    public Paperwork[] findManyByProjectId(Long projectId) {
+        return this.paperworkDAO.findManyByProjectId(projectId);
     }
 
     public void delete(Long id) {

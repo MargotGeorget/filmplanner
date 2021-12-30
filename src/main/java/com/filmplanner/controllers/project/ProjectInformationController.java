@@ -56,6 +56,7 @@ public class ProjectInformationController implements Initializable {
         this.projectClient.setText(this.project.getClient().toString());
         this.usersList.setItems(FXCollections.observableList(this.project.getManagers()));
         this.paperworksList.setItems(FXCollections.observableList(this.project.getPaperworks()));
+        // TODO set mouse clicked event to open file
     }
 
 
@@ -74,6 +75,7 @@ public class ProjectInformationController implements Initializable {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("An error occurred while entering edit mode: " + e.getMessage());
             message.show();
+            e.printStackTrace();
         }
     }
 

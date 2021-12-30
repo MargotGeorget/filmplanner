@@ -7,7 +7,9 @@ public interface PaperworkDAO {
 
     Paperwork create(Paperwork paperwork, Long projectId);
 
-    Paperwork[] findManyByProject(Project project);
+    Paperwork[] findManyByProjectId(Long projectId);
+
+    void deleteManyByProjectId(Long projectId);
 
     void delete(Long id);
 }

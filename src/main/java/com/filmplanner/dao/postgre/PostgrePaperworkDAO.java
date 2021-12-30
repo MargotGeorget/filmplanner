@@ -1,10 +1,7 @@
 package com.filmplanner.dao.postgre;
 
-import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.PaperworkDAO;
-import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.models.Paperwork;
-import com.filmplanner.models.Project;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -53,16 +50,16 @@ public class PostgrePaperworkDAO implements PaperworkDAO {
     /**
      * Gets all Paperworks of a project.
      *
-     * @param project the project we want the paperworks of
+     * @param projectId the id of the project we want the paperworks of
      * @return an array of Paperwork containing project's paperworks
      */
     @Override
-    public Paperwork[] findManyByProject(Project project) {
+    public Paperwork[] findManyByProjectId(Long projectId) {
         try {
 
             List<Paperwork> paperworks = new ArrayList<>();
             String query = "SELECT paperwork_id, file_name, directory_path, description " +
-                    "FROM paperwork WHERE paperwork.project_id = " + project.getId();
+                    "FROM paperwork WHERE paperwork.project_id = " + projectId;
             PreparedStatement statement = this.connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -85,6 +82,23 @@ public class PostgrePaperworkDAO implements PaperworkDAO {
     }
 
     /**
+     * Deletes all of the paperworks associated to a project.
+     *
+     * @param projectId the id of the project we want to delete the paperworks of
+     */
+    @Override
+    public void deleteManyByProjectId(Long projectId) {
+        try {
+            String query = "DELETE FROM paperwork WHERE project_id = " + projectId;
+            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Deletes a Paperwork from the database.
      *
      * @param id the id of the paperwork to delete
@@ -98,24 +112,6 @@ public class PostgrePaperworkDAO implements PaperworkDAO {
             statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        AbstractDAOFactory factory = PostgreDAOFactory.getInstance();
-        ProjectDAO projectDAO = factory.getProjectDAO();
-        PaperworkDAO paperworkDAO = factory.getPaperworkDAO();
-
-        Project project = projectDAO.findAll()[1];
-
-        //Paperwork test = new Paperwork("Shoot permission", "/path/to/shoot_perm", "You can shoot on monday", project);
-        //Paperwork createdPaperwork = paperworkDAO.create(test);
-        //System.out.println(createdPaperwork);
-
-        paperworkDAO.delete(3L);
-        Paperwork[] paperworks = paperworkDAO.findManyByProject(project);
-        for (Paperwork paperwork : paperworks) {
-            System.out.println(paperwork);
         }
     }
 }
