@@ -101,7 +101,7 @@ public class PostgreProjectDAO implements ProjectDAO {
                     String email = resultSet.getString("email");
                     String phone = resultSet.getString("phonenumber");
                     String password = resultSet.getString("password");
-                    Boolean isAdmin = resultSet.getBoolean("isAdmin");
+                    Boolean isAdmin = resultSet.getBoolean("isadmin");
                     foundProject.addManager(new User(userId, name, email,password, phone,isAdmin));
                 }
 

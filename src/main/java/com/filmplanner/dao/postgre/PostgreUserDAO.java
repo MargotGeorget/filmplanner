@@ -39,7 +39,7 @@ public class PostgreUserDAO implements UserDAO {
                 String name = resultSet.getString("name");
                 String phone = resultSet.getString("phonenumber");
                 String password = resultSet.getString("password");
-                boolean isAdmin = resultSet.getBoolean("isAdmin");
+                boolean isAdmin = resultSet.getBoolean("isadmin");
                 foundUser = new User(userId,name, email, password, phone,isAdmin);
             }
             resultSet.close();
@@ -58,7 +58,7 @@ public class PostgreUserDAO implements UserDAO {
      */
     public Long create(User user) {
         try {
-            String query = "INSERT INTO fp_user (email, password, name, phonenumber,isAdmin) VALUES (?, ?, ?, ?,?);";
+            String query = "INSERT INTO fp_user (email, password, name, phonenumber,isadmin) VALUES (?, ?, ?, ?,?);";
             PreparedStatement statement = this.connection.prepareStatement(query);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
@@ -116,7 +116,7 @@ public class PostgreUserDAO implements UserDAO {
             PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM fp_user;");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getLong("user_id"),rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isAdmin"));
+                User user = new User(rs.getLong("user_id"),rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isadmin"));
                 users.add(user);
             }
             rs.close();
@@ -161,7 +161,7 @@ public class PostgreUserDAO implements UserDAO {
             this.stmt = this.connection.createStatement();
             ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.fp_user WHERE USER_ID='" + id + "';");
             rs.next();
-            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isAdmin")); //TODO : Gérer l'erreur quand le login est pas bon
+            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isadmin")); //TODO : Gérer l'erreur quand le login est pas bon
             rs.close();
             this.stmt.close();
         } catch (SQLException e) {
