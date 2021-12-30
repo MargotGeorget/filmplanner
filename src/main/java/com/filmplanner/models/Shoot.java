@@ -1,6 +1,9 @@
 package com.filmplanner.models;
 
 
+import com.filmplanner.exceptions.InvalidInputException;
+import utils.ValidationUtils;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,26 +22,26 @@ public class Shoot {
     private Project project;
 
     //Constructors:
-    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) {
+    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) throws InvalidInputException {
         this.setIdShoot(id);
-        this.name = name;
-        this.description = description;
-        this.date = date;
-        this.location = location;
-        this.members = members;
-        this.gears = gears;
-        this.project = project;
+        this.setName(name);
+        this.setDescription(description);
+        this.setDate(date);
+        this.setLocation(location);
+        this.setMembers(members);
+        this.setGears(gears);
+        this.setProject(project);
     }
 
-    public Shoot(long id, String name, String description, String date, Location location, List<Gear> gears, Project project) {
+    public Shoot(long id, String name, String description, String date, Location location, List<Gear> gears, Project project) throws InvalidInputException {
         this(id, name,description,date, location, new HashMap<>(), gears, project);
     }
 
-    public Shoot(long id, String name, String description, String date, Location location, Project project) {
+    public Shoot(long id, String name, String description, String date, Location location, Project project) throws InvalidInputException {
         this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
     }
 
-    public Shoot(String name, String description, String date, Location location, Project project) {
+    public Shoot(String name, String description, String date, Location location, Project project) throws InvalidInputException {
         this(-1, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
     }
 
@@ -63,7 +66,10 @@ public class Shoot {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(String date) throws InvalidInputException {
+        if(!ValidationUtils.isDate(date)){
+            throw new InvalidInputException("The date must be in xx/xx/xxx format");
+        }
         this.date = date;
     }
 

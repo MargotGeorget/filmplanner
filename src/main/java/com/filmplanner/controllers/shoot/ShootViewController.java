@@ -1,8 +1,6 @@
 package com.filmplanner.controllers.shoot;
 
 import com.filmplanner.App;
-import com.filmplanner.controllers.client.ClientFormUpdateController;
-import com.filmplanner.controllers.client.ClientInformationController;
 import com.filmplanner.facades.GearWithinAShootFacade;
 import com.filmplanner.facades.ShootFacade;
 import com.filmplanner.models.Gear;

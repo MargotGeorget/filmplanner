@@ -1,6 +1,7 @@
 package com.filmplanner.controllers.shoot;
 
 import com.filmplanner.App;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.facades.LocationFacade;
 import com.filmplanner.facades.ShootFacade;
 import com.filmplanner.models.Location;
@@ -83,7 +84,7 @@ public class ShootFormController {
                 message.setContentText("Error in client creation\nShoot " + newShoot.getName() + "not created!\nError with database");
                 message.show();
             }
-        } catch (Exception e) {
+        } catch (InvalidInputException e) {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("Creation cancelled\nError in client input: " + e.getMessage() + "!");
             message.show();

@@ -4,6 +4,7 @@ import com.filmplanner.dao.GearWithinAShootDAO;
 import com.filmplanner.dao.LocationDAO;
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.ShootDAO;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Gear;
 import com.filmplanner.models.Location;
 import com.filmplanner.models.Project;
@@ -167,16 +168,22 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     private Shoot getBasicShootFromResultSet(ResultSet rs) throws SQLException {
-        Long id = rs.getLong("shoot_id");
-        String name = rs.getString("name");
-        String description = rs.getString("description");
-        String date = rs.getString("date");
-        Location location = this.locationDAO.findById(rs.getLong("location"));
-        Project project = this.projectDAO.findById(rs.getLong("project"));
-        List<Gear> gears = this.gearWithinAShootDAO.getAllGearsWithinAShoot(id);
-        //TODO: add gears and members
-                //TODO : add verif
-        return new Shoot(id, name, description, date, location, gears, project);
+        Shoot shoot = null;
+        try {
+            Long id = rs.getLong("shoot_id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            String date = rs.getString("date");
+            Location location = this.locationDAO.findById(rs.getLong("location"));
+            Project project = this.projectDAO.findById(rs.getLong("project"));
+            List<Gear> gears = this.gearWithinAShootDAO.getAllGearsWithinAShoot(id);
+            //TODO: add gears and members
+            //TODO : add verif
+            shoot = new Shoot(id, name, description, date, location, gears, project);
+        } catch (InvalidInputException e){
+            System.out.println(e.getMessage());
+        }
+        return shoot;
     }
 
 
