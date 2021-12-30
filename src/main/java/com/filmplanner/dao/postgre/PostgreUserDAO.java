@@ -39,7 +39,8 @@ public class PostgreUserDAO implements UserDAO {
                 String name = resultSet.getString("name");
                 String phone = resultSet.getString("phonenumber");
                 String password = resultSet.getString("password");
-                foundUser = new User(userId,name, email, password, phone);
+                boolean isAdmin = resultSet.getBoolean("isAdmin");
+                foundUser = new User(userId,name, email, password, phone,isAdmin);
             }
             resultSet.close();
             statement.close();
@@ -57,18 +58,21 @@ public class PostgreUserDAO implements UserDAO {
      */
     public Long create(User user) {
         try {
-            String query = "INSERT INTO fp_user (email, password, name, phonenumber) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO fp_user (email, password, name, phonenumber,isAdmin) VALUES (?, ?, ?, ?,?);";
             PreparedStatement statement = this.connection.prepareStatement(query);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getName());
             statement.setString(4, user.getPhoneNumber());
+            statement.setBoolean(5, user.isAdmin());
             statement.executeUpdate();
             statement.close();
+            return new Long(1);
         } catch (SQLException e) {
             e.printStackTrace();
+            return new Long(0);
         }
-        return new Long(0);
+
     }
 
     /**
@@ -82,7 +86,7 @@ public class PostgreUserDAO implements UserDAO {
     public int update(Long id, User updatedUser) {
 
         //TODO: modifier fonction pour faire update
-        String sql = "UPDATE fp_user SET email=?, password=?, name=?, phonenumber=? WHERE user_id=?;";
+        String sql = "UPDATE fp_user SET email = ?, password = ?, name = ?, phonenumber = ? ,isadmin = ? WHERE user_id=?;";
 
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -90,7 +94,8 @@ public class PostgreUserDAO implements UserDAO {
             preparedStatement.setString(2, updatedUser.getPassword());
             preparedStatement.setString(3, updatedUser.getName());
             preparedStatement.setString(4, updatedUser.getPhoneNumber());
-            preparedStatement.setLong(5, id);
+            preparedStatement.setBoolean(5, updatedUser.isAdmin());
+            preparedStatement.setLong(6, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -111,7 +116,7 @@ public class PostgreUserDAO implements UserDAO {
             PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM fp_user;");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getLong("user_id"),rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"));
+                User user = new User(rs.getLong("user_id"),rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isAdmin"));
                 users.add(user);
             }
             rs.close();
@@ -156,7 +161,7 @@ public class PostgreUserDAO implements UserDAO {
             this.stmt = this.connection.createStatement();
             ResultSet rs = this.stmt.executeQuery("SELECT * FROM public.fp_user WHERE USER_ID='" + id + "';");
             rs.next();
-            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER")); //TODO : Gérer l'erreur quand le login est pas bon
+            newUser = new User(rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"),rs.getBoolean("isAdmin")); //TODO : Gérer l'erreur quand le login est pas bon
             rs.close();
             this.stmt.close();
         } catch (SQLException e) {

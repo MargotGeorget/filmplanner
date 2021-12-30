@@ -4,7 +4,9 @@ import com.filmplanner.facades.UserFacade;
 import com.filmplanner.models.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxListCell;
 
 import java.io.IOException;
 public class UserCreationFormController {
@@ -20,6 +22,8 @@ public class UserCreationFormController {
 
     @FXML
     private TextField userPasswordInput;
+    @FXML
+    private CheckBox isAdminInput;
 
 
 
@@ -36,6 +40,7 @@ public class UserCreationFormController {
         String userEmail = userEmailInput.getText().trim();
         String userPhone = userPhoneInput.getText();
         String userPassword = userPasswordInput.getText();
+        Boolean isAdmin = isAdminInput.isSelected();
         if (userName.equals("") ||userEmail.equals("") ||userPassword.equals("")) {
 // Nothing selected.
             //TODO create verif
@@ -47,8 +52,8 @@ public class UserCreationFormController {
         }else {
 
             //User  variable creation
-            User newUser = new User(userName, userEmail, userPassword, userPhone);
-            System.out.println(newUser.getName() + " - " + newUser.getEmail() + " - " + newUser.getPhoneNumber() + " - " + newUser.getPassword());
+            User newUser = new User(userName, userEmail, userPassword, userPhone,isAdmin);
+            System.out.println(newUser.getName() + " - " + newUser.getEmail() + " - " + newUser.getPhoneNumber() + " - " + newUser.getPassword()+ " - " + newUser.isAdmin());
             //Calls the facade to insert in database
             long idUser = userFacade.create(newUser);
 

@@ -60,7 +60,7 @@ public class MenuBarController {
     }
     public void addUserAction() throws IOException {
         if(this.loginFacade.getCurrentUser().isAdmin()) {
-            App.setRoot("views/gear/createGear");
+            App.setRoot("views/user/userCreationForm");
         }
         else {
             Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);

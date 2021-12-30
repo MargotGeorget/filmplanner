@@ -100,7 +100,8 @@ public class PostgreProjectDAO implements ProjectDAO {
                     String email = resultSet.getString("email");
                     String phone = resultSet.getString("phonenumber");
                     String password = resultSet.getString("password");
-                    foundProject.addManager(new User(userId, name, email, phone, password));
+                    Boolean isAdmin = resultSet.getBoolean("isAdmin");
+                    foundProject.addManager(new User(userId, name, email,password, phone,isAdmin));
                 }
 
                 // TODO find shoots by project id (ShootDAO)

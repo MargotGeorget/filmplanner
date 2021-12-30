@@ -8,7 +8,7 @@ public class User {
     private StringProperty password;
     private StringProperty phoneNumber;
     private LongProperty id;
-    private boolean isAdmin;
+    private BooleanProperty isAdmin;
 
     /**
      * Instantiates a User.
@@ -29,12 +29,14 @@ public class User {
      * @param email    the user's email
      * @param password the user's password
      */
-    public User(String name, String email, String password, String phoneNumber) {
+    public User(String name, String email, String password, String phoneNumber,boolean isAdmin) {
         this(name, email, phoneNumber);
         this.password = new SimpleStringProperty(password);
+        this.isAdmin =new SimpleBooleanProperty(isAdmin);
     }
-    public User(Long id,String name, String email, String password, String phoneNumber) {
-        this(name, email,password, phoneNumber);
+
+    public User(Long id,String name, String email, String password, String phoneNumber,boolean isAdmin) {
+        this(name, email,password, phoneNumber,isAdmin);
         this.id = new SimpleLongProperty(id);
 
     }
@@ -65,7 +67,7 @@ public class User {
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return isAdmin.get();
     }
     /*
     Setters
@@ -88,6 +90,9 @@ public class User {
     }
 
     public void setId(long id) {this.id.set(id);}
+    public void setAdmin(boolean admin) {
+        this.isAdmin.set(admin);
+    }
 
     /*
     Property objects (useful with Tableview)
@@ -118,13 +123,15 @@ public class User {
         return phoneNumber;
     }
     /**
-     * @return IntegerProperty object
+     * @return LongProperty object
      */
     public LongProperty getIDProperty() { return id;}
+    /**
+     * @return BooleanProperty object
+     */
+    public BooleanProperty getIsAdminProperty() { return isAdmin;}
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
+
 
     /*
     Methods

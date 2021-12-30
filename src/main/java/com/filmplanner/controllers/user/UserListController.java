@@ -3,6 +3,7 @@ package com.filmplanner.controllers.user;
 import com.filmplanner.App;
 import com.filmplanner.facades.LoginFacade;
 import com.filmplanner.facades.UserFacade;
+import com.filmplanner.models.Gear;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import javafx.stage.Stage;
@@ -37,6 +39,8 @@ public class UserListController implements Initializable {
     private TableColumn<User, Long> IDColumn;
     @FXML
     private TableColumn<User, String> PhoneColumn;
+    @FXML
+    private TableColumn<User, Boolean> AdminColumn;
 
 
     private UserFacade userFacade;
@@ -67,6 +71,7 @@ public class UserListController implements Initializable {
         EmailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
         PhoneColumn.setCellValueFactory(cellData -> cellData.getValue().getPhoneNumberProperty());
         IDColumn.setCellValueFactory(cellData -> cellData.getValue().getIDProperty().asObject());
+        AdminColumn.setCellValueFactory(cellData -> cellData.getValue().getIsAdminProperty().asObject());
 
 
     }
