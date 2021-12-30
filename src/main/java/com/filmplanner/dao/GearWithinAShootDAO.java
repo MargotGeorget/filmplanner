@@ -1,5 +1,6 @@
 package com.filmplanner.dao;
 
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Gear;
 import com.filmplanner.models.GearWithinAShoot;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface GearWithinAShootDAO {
      * @param newInstance
      * @return long : new gearWithinAShoot's id
      */
-    boolean create(GearWithinAShoot newInstance);
+    boolean create(GearWithinAShoot newInstance) throws InvalidInputException;
 
     GearWithinAShoot getOne(long idShoot, String idGear);
 

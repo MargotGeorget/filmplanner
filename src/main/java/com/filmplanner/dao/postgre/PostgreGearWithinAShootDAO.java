@@ -2,6 +2,7 @@ package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.GearDAO;
 import com.filmplanner.dao.GearWithinAShootDAO;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.*;
 
 import java.sql.*;
@@ -19,7 +20,10 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
 
 
     @Override
-    public boolean create(GearWithinAShoot newInstance) {
+    public boolean create(GearWithinAShoot newInstance) throws InvalidInputException {
+        if(isPresent(newInstance.getShootId(), newInstance.getGearId())){
+            throw new InvalidInputException("This gear is already present in this shoot!");
+        }
         String sql = "INSERT INTO gear_within_a_shoot (gear, shoot) VaLUES(?,?)";
 
         try {
@@ -129,5 +133,17 @@ public class PostgreGearWithinAShootDAO implements GearWithinAShootDAO {
         Long shoot = rs.getLong("shoot");
         String gear = rs.getString("gear");
         return new GearWithinAShoot(id, shoot, gear);
+    }
+
+    private boolean isPresent(long idShoot, String idGear) {
+        List<Gear> gears = this.getAllGearsWithinAShoot(idShoot);
+        boolean isPresent = false;
+        int i = 0;
+        while(i<gears.size() && !isPresent){
+            if(gears.get(i).getSerialNumber().equals(idGear)){
+                isPresent = true;
+            }
+        }
+        return isPresent;
     }
 }

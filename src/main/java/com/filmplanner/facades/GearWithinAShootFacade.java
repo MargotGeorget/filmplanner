@@ -4,6 +4,7 @@ import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.GearWithinAShootDAO;
 import com.filmplanner.dao.LocationDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Gear;
 import com.filmplanner.models.GearWithinAShoot;
 
@@ -30,7 +31,7 @@ public class GearWithinAShootFacade {
         return instance;
     }
 
-    public boolean create(GearWithinAShoot gearWithinAShoot){
+    public boolean create(GearWithinAShoot gearWithinAShoot) throws InvalidInputException {
         return this.gearWithinAShootDAO.create(gearWithinAShoot);
     }
 

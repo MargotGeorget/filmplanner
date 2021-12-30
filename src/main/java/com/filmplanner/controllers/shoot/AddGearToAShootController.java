@@ -2,6 +2,7 @@ package com.filmplanner.controllers.shoot;
 
 import com.filmplanner.App;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.facades.GearFacade;
 import com.filmplanner.facades.GearWithinAShootFacade;
 import com.filmplanner.facades.LocationFacade;
@@ -65,16 +66,22 @@ public class AddGearToAShootController implements Initializable {
             message.setContentText("Error in added gear to a shoot\nNo gear selected");
             message.show();
         }else{
-            GearWithinAShoot gearWithinAShoot = new GearWithinAShoot(this.shoot.getIdShoot(), gear.getSerialNumber());
-            boolean isCreated = this.gearWithinAShootFacade.create(gearWithinAShoot);
-            if (isCreated) {
-                Alert message = new Alert(Alert.AlertType.CONFIRMATION);
-                message.setContentText("Operation done successfully\n Gear " + gear.getModel() + " added to the shoot!");
-                message.show();
-                this.stage.close();
-            } else {
+            try {
+                GearWithinAShoot gearWithinAShoot = new GearWithinAShoot(this.shoot.getIdShoot(), gear.getSerialNumber());
+                boolean isCreated = this.gearWithinAShootFacade.create(gearWithinAShoot);
+                if (isCreated) {
+                    Alert message = new Alert(Alert.AlertType.CONFIRMATION);
+                    message.setContentText("Operation done successfully\n Gear " + gear.getModel() + " added to the shoot!");
+                    message.show();
+                    this.stage.close();
+                } else {
+                    Alert message = new Alert(Alert.AlertType.ERROR);
+                    message.setContentText("Error in added gear to a shoot\nGear " + gear.getModel() + "not added to the shoot!\nError with database");
+                    message.show();
+                }
+            }catch (InvalidInputException e){
                 Alert message = new Alert(Alert.AlertType.ERROR);
-                message.setContentText("Error in added gear to a shoot\nGear " + gear.getModel() + "not added to the shoot!\nError with database");
+                message.setContentText("Error in added gear to a shoot\n"+e.getMessage());
                 message.show();
             }
         }
