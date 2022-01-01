@@ -89,7 +89,7 @@ public class PostgreProjectDAO implements ProjectDAO {
                 }
 
                 // Finds project managers
-                query = "SELECT project_id, project_manager.user_id, name, email, phonenumber, password " +
+                query = "SELECT project_id, project_manager.user_id, name, email, phonenumber, password, isadmin " +
                         "FROM project_manager, fp_user " +
                         "WHERE project_id=" + id + " " +
                         "AND project_manager.user_id = fp_user.user_id";
