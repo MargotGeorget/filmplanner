@@ -139,6 +139,6 @@ public class User {
 
     @Override
     public String toString() {
-        return this.id + ": " + this.email + " " + this.name + " " + this.phoneNumber;
+        return this.getId() + ": " + this.getEmail() + " " + this.getName() + " " + this.getPhoneNumber();
     }
 }

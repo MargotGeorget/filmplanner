@@ -3,10 +3,7 @@ package com.filmplanner.controllers.shoot;
 import com.filmplanner.App;
 import com.filmplanner.facades.GearWithinAShootFacade;
 import com.filmplanner.facades.ShootFacade;
-import com.filmplanner.models.Gear;
-import com.filmplanner.models.GearWithinAShoot;
-import com.filmplanner.models.Location;
-import com.filmplanner.models.Shoot;
+import com.filmplanner.models.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,6 +42,14 @@ public class ShootViewController implements Initializable {
     private TableColumn<Gear, String> colModel;
     @FXML
     private TableColumn<Gear, String> colCategory;
+    @FXML
+    private TableView<UserRole> memberTable;
+    @FXML
+    private TableColumn<UserRole, String> colName;
+    @FXML
+    private TableColumn<UserRole, String> colAdress;
+    @FXML
+    private TableColumn<UserRole, String> colRole;
 
     private ShootFacade shootFacade;
 
@@ -72,16 +78,25 @@ public class ShootViewController implements Initializable {
         colSerialNumber.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAdress.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         this.gears.getItems().addAll(this.gearWithinAShootFacade.getAllGearsWithinAShoot(shoot.getIdShoot()));
+        this.memberTable.getItems().addAll(this.shootFacade.allUserInAShoot(shoot));
     }
 
     public void reload(){
         this.gears.getItems().clear();
+        this.memberTable.getItems().clear();
+
         colSerialNumber.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAdress.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        this.memberTable.getItems().addAll(this.shootFacade.allUserInAShoot(shoot));
         this.gears.getItems().addAll(this.gearWithinAShootFacade.getAllGearsWithinAShoot(shoot.getIdShoot()));
     }
 
@@ -150,6 +165,38 @@ public class ShootViewController implements Initializable {
             this.gearWithinAShootFacade.delete(gearWithinAShoot.getId());
             Alert message = new Alert(Alert.AlertType.CONFIRMATION);
             message.setContentText("Operation done successfully\nGear deleted to this shoot");
+            message.show();
+            this.reload();
+        }
+    }
+
+    public void addMemberToAShootAction() {
+        Stage stage = new Stage();
+        stage.setHeight(300);
+        stage.setWidth(486);
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/addMemberToAShoot.fxml"));
+        try {
+            AddMemberToAShootController controller = new AddMemberToAShootController(stage, this.shoot);
+            fxmlLoader.setController(controller);
+            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.showAndWait();
+        this.reload();
+    }
+
+    public void deleteMemberWithinAShootAction() {
+        UserRole member = memberTable.getSelectionModel().getSelectedItem();
+        if (member == null) {
+            Alert message = new Alert(Alert.AlertType.ERROR);
+            message.setContentText("Error in delete member to a shoot\nNo member selected");
+            message.show();
+        } else {
+            this.shootFacade.deleteUserInAShoot(this.shoot, member.getUser());
+            Alert message = new Alert(Alert.AlertType.CONFIRMATION);
+            message.setContentText("Operation done successfully\nMember deleted to this shoot");
             message.show();
             this.reload();
         }

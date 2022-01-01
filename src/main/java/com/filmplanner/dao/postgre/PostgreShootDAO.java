@@ -6,6 +6,7 @@ import com.filmplanner.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PostgreShootDAO implements ShootDAO {
@@ -36,7 +37,7 @@ public class PostgreShootDAO implements ShootDAO {
             stmt.setString(2, shoot.getDescription());
             stmt.setString(3, shoot.getDate());
             stmt.setLong(4, idLoc);
-            stmt.setLong(5,shoot.getProject().getId());
+            stmt.setLong(5, shoot.getProject().getId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -48,8 +49,7 @@ public class PostgreShootDAO implements ShootDAO {
                 if (generatedKeys.next()) {
                     id = generatedKeys.getLong("shoot_id");
                     shoot.setIdShoot(id);
-                }
-                else {
+                } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
@@ -174,7 +174,7 @@ public class PostgreShootDAO implements ShootDAO {
             //TODO: add gears and members
             //TODO : add verif
             shoot = new Shoot(id, name, description, date, location, gears, project);
-        } catch (InvalidInputException e){
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
         }
         return shoot;
@@ -185,10 +185,10 @@ public class PostgreShootDAO implements ShootDAO {
      */
     @Override
     public boolean createGearWithinAShoot(GearWithinAShoot newInstance) throws InvalidInputException {
-        if(isPresent(newInstance.getShootId(), newInstance.getGearId())){
+        if (isPresent(newInstance.getShootId(), newInstance.getGearId())) {
             throw new InvalidInputException("This gear is already present in this shoot!");
         }
-        if(isUsedAtThisDate(newInstance.getShootId(), newInstance.getGearId())){
+        if (isUsedAtThisDate(newInstance.getShootId(), newInstance.getGearId())) {
             throw new InvalidInputException("This gear is already used in a shoot at the same date!");
         }
         String sql = "INSERT INTO gear_within_a_shoot (gear, shoot) VaLUES(?,?)";
@@ -243,7 +243,7 @@ public class PostgreShootDAO implements ShootDAO {
     @Override
     public List<Gear> getAllGearsWithinAShoot(long idShoot) {
         List<Gear> gears = new ArrayList<>();
-        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = "+ idShoot;
+        String sql = "SELECT * FROM  gear_within_a_shoot WHERE shoot = " + idShoot;
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -326,8 +326,8 @@ public class PostgreShootDAO implements ShootDAO {
         List<Gear> gears = this.getAllGearsWithinAShoot(idShoot);
         boolean isPresent = false;
         int i = 0;
-        while(i<gears.size() && !isPresent){
-            if(gears.get(i).getSerialNumber().equals(idGear)){
+        while (i < gears.size() && !isPresent) {
+            if (gears.get(i).getSerialNumber().equals(idGear)) {
                 isPresent = true;
             }
             i++;
@@ -335,18 +335,75 @@ public class PostgreShootDAO implements ShootDAO {
         return isPresent;
     }
 
-    private boolean isUsedAtThisDate(long idShoot, String idGear){
+    private boolean isUsedAtThisDate(long idShoot, String idGear) {
         Shoot shoot = this.getOneById(idShoot);
         List<Shoot> shoots = this.getAllShootUsingAGear(idGear);
         boolean isUsedAtThisDate = false;
         int i = 0;
-        while(i<shoots.size() && !isUsedAtThisDate){
-            if(shoots.get(i).getDate().equals(shoot.getDate())){
+        while (i < shoots.size() && !isUsedAtThisDate) {
+            if (shoots.get(i).getDate().equals(shoot.getDate())) {
                 isUsedAtThisDate = true;
             }
             i++;
         }
         return isUsedAtThisDate;
+    }
+
+    @Override
+    public HashMap<User, Role> allUserInAShoot(Shoot shoot) {
+        HashMap<User, Role> member = new HashMap<>();
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement("SELECT user_id,user.NAME,EMAIL,PASSWORD,PHONENUMBER,isadmin,role FROM fp_user JOIN member_within_a_shoot ON user_id=member where shoot = ?;");
+            stmt.setLong(1, shoot.getIdShoot());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User(rs.getLong("user_id"), rs.getString("NAME"), rs.getString("EMAIL"), rs.getString("PASSWORD"), rs.getString("PHONENUMBER"), rs.getBoolean("isadmin"));
+                Role role = new Role(rs.getString("role"));
+                member.put(user, role);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("All users returned successfully");
+        return member;
+
+    }
+
+    @Override
+    public boolean addUserInAShoot(Shoot shoot, User user, Role role) {
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement("insert into member_within_a_shoot (member, role, shoot) VALUES (?,?,?);  ");
+            stmt.setLong(1, user.getId());
+            stmt.setString(2, role.getName());
+            stmt.setLong(3, shoot.getIdShoot());
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+    @Override
+    public boolean deleteUserInAShoot(Shoot shoot, User user) {
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement("DELETE FROM member_within_a_shoot where member= ? AND shoot = ?;");
+
+            stmt.setLong(1, user.getId());
+            stmt.setLong(2,shoot.getIdShoot());
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 
