@@ -29,4 +29,6 @@ public abstract class AbstractDAOFactory {
     abstract public ShootDAO getShootDAO();
 
     abstract public LocationDAO getLocationDAO();
+
+    abstract public RoleDAO getRoleDAO();
 }

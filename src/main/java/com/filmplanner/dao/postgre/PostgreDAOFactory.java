@@ -12,6 +12,7 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
     private PaperworkDAO paperworkDAO;
     private ShootDAO shootDAO;
     private LocationDAO locationDAO;
+    private RoleDAO roleDAO;
 
     private PostgreDAOFactory() { }
 
@@ -65,6 +66,19 @@ public class PostgreDAOFactory extends AbstractDAOFactory {
             this.clientDAO = new PostgreClientDAO(PostgreConnection.getInstance().getConnection());
         }
         return this.clientDAO;
+    }
+    /**
+     * Gets the PostgreRoleDAO. This function makes sure only one instance
+     * of PostgreRoleDAO can exist at the same time.
+     *
+     * @return the PostgreRoleDAO instance
+     */
+    @Override
+    public RoleDAO getRoleDAO() {
+        if (roleDAO == null) {
+            this.roleDAO = new PostgreRoleDAO(PostgreConnection.getInstance().getConnection());
+        }
+        return this.roleDAO;
     }
 
     @Override

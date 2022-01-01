@@ -8,6 +8,7 @@ public class MockDAOFactory extends AbstractDAOFactory {
     private UserDAO userDAO;
     private ProjectDAO projectDAO;
     private GearDAO gearDAO;
+    private RoleDAO roleDAO;
 
     private MockDAOFactory() {
     }
@@ -53,6 +54,21 @@ public class MockDAOFactory extends AbstractDAOFactory {
     @Override
     public LocationDAO getLocationDAO() {
         return null;
+    }
+
+    /**
+     * Gets the MockRoleDAO instance. This function makes sure only one instance
+     * of MockRoleDAO can exist at the same time.
+     *
+     * @return the MockRoleDAO instance
+     */
+
+    @Override
+    public RoleDAO getRoleDAO() {
+        if (this.roleDAO == null) {
+            this.roleDAO = new MockRoleDAO();
+        }
+        return this.roleDAO;
     }
 
     /**
