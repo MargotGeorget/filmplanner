@@ -1,14 +1,12 @@
 package com.filmplanner.controllers.project;
 
 import com.filmplanner.App;
-import com.filmplanner.controllers.paperwork.PaperworkEditInformationController;
 import com.filmplanner.controllers.shoot.ShootFormController;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.facades.ProjectFacade;
 import com.filmplanner.models.Client;
-import com.filmplanner.models.Paperwork;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
@@ -45,9 +43,6 @@ public class ProjectEditInformationController implements Initializable {
     @FXML
     ListView<User> managersList;
 
-    @FXML
-    ListView<Paperwork> paperworksList;
-
     // Attributes
     private ProjectFacade projectFacade;
     private ClientFacade clientFacade;
@@ -82,23 +77,6 @@ public class ProjectEditInformationController implements Initializable {
             this.usersList.getItems().add(clickedUser);
             this.managersList.getItems().remove(clickedUser);
             this.project.removeManager(clickedUser);
-        });
-
-        this.paperworksList.setItems(FXCollections.observableList(this.project.getPaperworks()));
-        this.paperworksList.setOnMouseClicked(event -> {
-            Paperwork clickedPaperwork = this.paperworksList.getSelectionModel().getSelectedItem();
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/paperwork/paperworkEditInformation.fxml"));
-            try {
-                PaperworkEditInformationController controller = new PaperworkEditInformationController(clickedPaperwork, this.stage);
-                fxmlLoader.setController(controller);
-                Scene scene = new Scene(fxmlLoader.load());
-                this.stage.setScene(scene);
-            } catch (IOException e) {
-                Alert message = new Alert(Alert.AlertType.ERROR);
-                message.setContentText("An error occurred while entering edit mode: " + e.getMessage());
-                message.show();
-                e.printStackTrace();
-            }
         });
     }
 

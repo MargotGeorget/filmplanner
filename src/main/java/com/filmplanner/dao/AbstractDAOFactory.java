@@ -1,7 +1,5 @@
 package com.filmplanner.dao;
 
-import com.filmplanner.facades.ShootFacade;
-
 public abstract class AbstractDAOFactory {
 
     /**
@@ -23,8 +21,6 @@ public abstract class AbstractDAOFactory {
     abstract public GearDAO getGearDAO();
 
     abstract public ClientDAO getClientDAO();
-
-    abstract public PaperworkDAO getPaperworkDAO();
 
     abstract public ShootDAO getShootDAO();
 

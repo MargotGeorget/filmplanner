@@ -13,85 +13,76 @@
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label fx:id="projectName" contentDisplay="CENTER" text="{Project name}">
-         <font>
-            <Font size="19.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" right="10.0" top="10.0" />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="projectDescription" text="{description}">
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin></Label>
-      <HBox>
-         <children>
-            <Label text="Client:">
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="projectClient" text="{client}" />
-         </children>
-      </HBox>
-      <TabPane prefHeight="300.0" prefWidth="607.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Managers">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="usersList" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Shoots">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label text="TODO" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Paperworks">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="paperworksList" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-      <TilePane alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="438.0">
-         <opaqueInsets>
-            <Insets top="30.0" />
-         </opaqueInsets>
-         <children>
-            <Button mnemonicParsing="false" onAction="#editProjectAction" style="-fx-background-color: #1B3B6F;" text="Edit" textFill="WHITE">
-               <TilePane.margin>
-                  <Insets right="10.0" />
-               </TilePane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#deleteProjectAction" style="-fx-background-color: #1B3B6F;" text="Delete" textFill="#fdfdfd">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-         <padding>
-            <Insets right="30.0" />
-         </padding>
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </TilePane>
-   </children>
+    <children>
+        <Label fx:id="projectName" contentDisplay="CENTER" text="{Project name}">
+            <font>
+                <Font size="19.0" />
+            </font>
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" top="10.0" />
+            </VBox.margin>
+        </Label>
+        <Label fx:id="projectDescription" text="{description}">
+            <VBox.margin>
+                <Insets left="10.0" />
+            </VBox.margin></Label>
+        <HBox>
+            <children>
+                <Label text="Client:">
+                    <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Label fx:id="projectClient" text="{client}" />
+            </children>
+        </HBox>
+        <TabPane prefHeight="300.0" prefWidth="607.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Managers">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <ListView fx:id="usersList" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Shoots">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label text="TODO" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <TilePane alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="438.0">
+            <opaqueInsets>
+                <Insets top="30.0" />
+            </opaqueInsets>
+            <children>
+                <Button mnemonicParsing="false" onAction="#editProjectAction" style="-fx-background-color: #1B3B6F;" text="Edit" textFill="WHITE">
+                    <TilePane.margin>
+                        <Insets right="10.0" />
+                    </TilePane.margin>
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#deleteProjectAction" style="-fx-background-color: #1B3B6F;" text="Delete" textFill="#fdfdfd">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+            <padding>
+                <Insets right="30.0" />
+            </padding>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </TilePane>
+    </children>
 </VBox>
