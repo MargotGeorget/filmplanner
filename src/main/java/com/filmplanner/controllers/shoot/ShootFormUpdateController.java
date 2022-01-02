@@ -97,7 +97,7 @@ public class ShootFormUpdateController implements Initializable {
             }
             //Create new shoot variable
             //Le project ne peut pas changer
-            Shoot newShoot = new Shoot(shoot.getIdShoot(), name, description, date, currentLocation, shoot.getProject());
+            Shoot newShoot = new Shoot(shoot.getIdShoot(), name, description, date, currentLocation, shoot.getProjectId());
 
             //Sends shoot to create to facade
             boolean isUpdated = shootFacade.updateShoot(newShoot);

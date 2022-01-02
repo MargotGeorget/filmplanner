@@ -12,13 +12,11 @@ public class PostgreShootDAO implements ShootDAO {
 
     private Connection connection;
     private LocationDAO locationDAO;
-    private ProjectDAO projectDAO;
     private GearDAO gearDAO;
 
     public PostgreShootDAO(Connection connection) {
         this.connection = connection;
         this.locationDAO = PostgreDAOFactory.getInstance().getLocationDAO();
-        this.projectDAO = PostgreDAOFactory.getInstance().getProjectDAO();
         this.gearDAO = PostgreDAOFactory.getInstance().getGearDAO();
     }
 
@@ -36,7 +34,7 @@ public class PostgreShootDAO implements ShootDAO {
             stmt.setString(2, shoot.getDescription());
             stmt.setString(3, shoot.getDate());
             stmt.setLong(4, idLoc);
-            stmt.setLong(5,shoot.getProject().getId());
+            stmt.setLong(5,shoot.getProjectId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -94,7 +92,7 @@ public class PostgreShootDAO implements ShootDAO {
             stmt.setString(1, shoot.getName());
             stmt.setString(2, shoot.getDescription());
             stmt.setString(3, shoot.getDate());
-            stmt.setLong(4, shoot.getProject().getId());
+            stmt.setLong(4, shoot.getProjectId());
             stmt.setLong(5, shoot.getLocation().getId());
             stmt.setLong(6, shoot.getIdShoot());
 
@@ -169,11 +167,11 @@ public class PostgreShootDAO implements ShootDAO {
             String description = rs.getString("description");
             String date = rs.getString("date");
             Location location = this.locationDAO.findById(rs.getLong("location"));
-            Project project = this.projectDAO.findById(rs.getLong("project"));
+            Long projectId = rs.getLong("project");
             List<Gear> gears = this.getAllGearsWithinAShoot(id);
             //TODO: add gears and members
             //TODO : add verif
-            shoot = new Shoot(id, name, description, date, location, gears, project);
+            shoot = new Shoot(id, name, description, date, location, gears, projectId);
         } catch (InvalidInputException e){
             System.out.println(e.getMessage());
         }

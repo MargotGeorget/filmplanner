@@ -68,7 +68,7 @@ public class ShootFormController {
             Location location = new Location(number, street, city, zipCode);
 
             //Create shoot variable
-            Shoot newShoot = new Shoot(name, description, date, location, project);
+            Shoot newShoot = new Shoot(name, description, date, location, project.getId());
 
             //Sends shoot to create to facade
             long idShoot = shootFacade.createShoot(newShoot);

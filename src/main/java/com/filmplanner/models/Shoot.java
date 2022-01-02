@@ -19,10 +19,10 @@ public class Shoot {
     private Location location;
     private Map<User, String> members; //TODO: Changer string par role
     private List<Gear> gears;
-    private Project project;
+    private Long projectId;
 
     //Constructors:
-    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Project project) throws InvalidInputException {
+    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Long projectId) throws InvalidInputException {
         this.setIdShoot(id);
         this.setName(name);
         this.setDescription(description);
@@ -30,19 +30,19 @@ public class Shoot {
         this.setLocation(location);
         this.setMembers(members);
         this.setGears(gears);
-        this.setProject(project);
+        this.setProjectId(projectId);
     }
 
-    public Shoot(long id, String name, String description, String date, Location location, List<Gear> gears, Project project) throws InvalidInputException {
-        this(id, name,description,date, location, new HashMap<>(), gears, project);
+    public Shoot(long id, String name, String description, String date, Location location, List<Gear> gears, Long projectId) throws InvalidInputException {
+        this(id, name,description,date, location, new HashMap<>(), gears, projectId);
     }
 
-    public Shoot(long id, String name, String description, String date, Location location, Project project) throws InvalidInputException {
-        this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
+    public Shoot(long id, String name, String description, String date, Location location, Long projectId) throws InvalidInputException {
+        this(id, name,description,date, location, new HashMap<>(), new ArrayList<>(), projectId);
     }
 
-    public Shoot(String name, String description, String date, Location location, Project project) throws InvalidInputException {
-        this(-1, name,description,date, location, new HashMap<>(), new ArrayList<>(), project);
+    public Shoot(String name, String description, String date, Location location, Long projectId) throws InvalidInputException {
+        this(-1, name,description,date, location, new HashMap<>(), new ArrayList<>(), projectId);
     }
 
     //Getters and setters:
@@ -97,12 +97,12 @@ public class Shoot {
         this.gears = gears;
     }
 
-    public Project getProject() {
-        return project;
+    public Long getProjectId() {
+        return this.projectId;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public long getIdShoot() {

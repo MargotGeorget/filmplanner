@@ -103,12 +103,10 @@ public class PostgreProjectDAO implements ProjectDAO {
                     foundProject.addManager(new User(userId, name, email,password, phone,isAdmin));
                 }
 
-                /*
+
                 for (Shoot foundShoot : this.shootDAO.findAllShootInProject(id)) {
                     foundProject.addShoot(foundShoot);
                 }
-
-                 */
 
                 resultSet.close();
                 statement.close();
