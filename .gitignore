@@ -3,6 +3,9 @@
 *.idea
 target/
 
+# Env files
+.env
+
 # Log file
 *.log
 
