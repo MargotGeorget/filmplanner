@@ -110,10 +110,7 @@ public class Project {
 
     @Override
     public String toString() {
-        String result = "id: " + this.id + "\nname: " + this.name + "\ndesc: " + this.description;
-        for (User manager : this.managers.values()) {
-            result += "\n" + manager.toString();
-        }
+        String result = this.name + "\n\"" + this.description + "\"";
         return result;
     }
 }

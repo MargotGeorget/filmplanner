@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.project.ProjectCreationController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.project.ProjectCreationController">
    <children>
+      <fx:include fx:id="menuBar" source="../menuBar.fxml" />
       <Label text="Project creation" />
       <TextField fx:id="projectName" text="Project name" />
       <TextField fx:id="projectDescription" layoutX="10.0" layoutY="10.0" text="Project description" />

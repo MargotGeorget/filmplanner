@@ -89,7 +89,10 @@ public class User {
         this.phoneNumber.set(phoneNumber);
     }
 
-    public void setId(long id) {this.id.set(id);}
+    public void setId(long id) {
+        this.id.set(id);
+    }
+
     public void setAdmin(boolean admin) {
         this.isAdmin.set(admin);
     }
@@ -139,6 +142,6 @@ public class User {
 
     @Override
     public String toString() {
-        return this.id + ": " + this.email + " " + this.name + " " + this.phoneNumber;
+        return this.getId() + ": " + this.getEmail() + " " + this.getName() + " " + this.getPhoneNumber();
     }
 }
