@@ -3,6 +3,7 @@ package com.filmplanner.dao.postgre;
 import com.filmplanner.dao.*;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
+import com.filmplanner.models.Shoot;
 import com.filmplanner.models.User;
 
 import java.sql.*;
@@ -13,10 +14,12 @@ public class PostgreProjectDAO implements ProjectDAO {
 
     private Connection connection;
     private ClientDAO clientDAO;
+    private ShootDAO shootDAO;
 
     public PostgreProjectDAO(Connection connection) {
         this.connection = connection;
         this.clientDAO = PostgreDAOFactory.getInstance().getClientDAO();
+        this.shootDAO = PostgreDAOFactory.getInstance().getShootDAO();
     }
 
     /*
@@ -100,7 +103,12 @@ public class PostgreProjectDAO implements ProjectDAO {
                     foundProject.addManager(new User(userId, name, email,password, phone,isAdmin));
                 }
 
-                // TODO find shoots by project id (ShootDAO)
+                /*
+                for (Shoot foundShoot : this.shootDAO.findAllShootInProject(id)) {
+                    foundProject.addShoot(foundShoot);
+                }
+
+                 */
 
                 resultSet.close();
                 statement.close();

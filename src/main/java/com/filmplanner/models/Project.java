@@ -7,26 +7,25 @@ public class Project {
     private Long id;
     private String name;
     private String description;
-    private Map<Long, User> managers;
     private Client client;
-    //private Set<Shoot> shoots;
+    private Map<Long, User> managers;
+    private Set<Shoot> shoots;
 
-
-    // TODO refactor the constructors
-    public Project(String name, String description, Client client, Map<Long, User> managers) {
+    public Project(Long id, String name, String description, Client client, Map<Long, User> managers) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.client = client;
         this.managers = managers;
+        this.shoots = new HashSet<>();
+    }
+
+    public Project(String name, String description, Client client, Map<Long, User> managers) {
+        this(null, name, description, client, managers);
     }
 
     public Project(Long id, String name, String description, Client client) {
         this(id, name, description, client, new HashMap<>());
-    }
-
-    public Project(Long id, String name, String description, Client client, Map<Long, User> managers) {
-        this(name, description, client, managers);
-        this.id = id;
     }
 
     public Project(Long id, Project project) {
@@ -52,6 +51,10 @@ public class Project {
 
     public List<User> getManagers() {
         return new ArrayList<>(managers.values());
+    }
+
+    public List<Shoot> getShoots() {
+        return new ArrayList<>(this.shoots);
     }
 
     public Long getId() {
@@ -94,6 +97,14 @@ public class Project {
      */
     public void removeManager(User manager) {
         this.managers.remove(manager.getId());
+    }
+
+    public void addShoot(Shoot shoot) {
+        this.shoots.add(shoot);
+    }
+
+    public void removeShoot(Shoot shoot) {
+        this.shoots.remove(shoot);
     }
 
 
