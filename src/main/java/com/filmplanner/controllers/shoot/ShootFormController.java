@@ -73,6 +73,7 @@ public class ShootFormController {
             //Sends shoot to create to facade
             long idShoot = shootFacade.createShoot(newShoot);
             newShoot.setIdShoot(idShoot);
+            // TODO add shoot to project's shoot list
 
             if (idShoot != -1) {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);

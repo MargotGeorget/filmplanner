@@ -50,9 +50,9 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 this.addManagers(generatedProjectId, project.getManagers());
 
-                // TODO for each shoot: create shoot based on project id (ShootDAO)
-
-                // TODO for each paperwork: create paperwork based on project id (PaperworkDAO)
+                for (Shoot shoot : project.getShoots()) {
+                    this.shootDAO.create(shoot);
+                }
 
                 createdProject = new Project(generatedProjectId, project);
                 resultSet.close();
@@ -118,8 +118,6 @@ public class PostgreProjectDAO implements ProjectDAO {
         return foundProject;
     }
 
-    // TODO add method PostgreProjectDAO#findManagersByProjectId(Long id)
-
     /**
      * Gets all Projects of a manager (a User instance).
      *
@@ -180,12 +178,10 @@ public class PostgreProjectDAO implements ProjectDAO {
         if (id != null) {
             try {
 
-                /*
-                TODO: find shoots by project id (ShootDAO)
-                for each shoot
-                    if shoot.date > currentDate
-                        ERROR: cannot delete this project
-                 */
+                for (Shoot shoot : this.shootDAO.findAllShootInProject(id)) {
+                    // TODO check that shoot date is older than current date
+                    this.shootDAO.delete(shoot.getIdShoot());
+                }
 
                 this.deleteManagers(id);
 
@@ -221,7 +217,16 @@ public class PostgreProjectDAO implements ProjectDAO {
                 this.deleteManagers(id);
                 this.addManagers(id, project.getManagers());
 
-                // TODO update shoots (ShootDAO)
+                // Deletes all old shoot in the database
+                for (Shoot oldShoot : this.shootDAO.findAllShootInProject(id)) {
+                    this.shootDAO.delete(oldShoot.getIdShoot());
+                }
+
+                // Adds all shoots of the project to the database
+                for (Shoot projectShoot : project.getShoots()) {
+                    this.shootDAO.create(projectShoot);
+                }
+
 
                 statement.close();
             } catch (SQLException e) {

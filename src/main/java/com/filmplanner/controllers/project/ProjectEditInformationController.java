@@ -2,12 +2,14 @@ package com.filmplanner.controllers.project;
 
 import com.filmplanner.App;
 import com.filmplanner.controllers.shoot.ShootFormController;
+import com.filmplanner.controllers.shoot.ShootViewController;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.facades.ProjectFacade;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
+import com.filmplanner.models.Shoot;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -42,6 +44,9 @@ public class ProjectEditInformationController implements Initializable {
 
     @FXML
     ListView<User> managersList;
+
+    @FXML
+    ListView<Shoot> shootsList;
 
 
     // Attributes
@@ -78,6 +83,25 @@ public class ProjectEditInformationController implements Initializable {
             this.usersList.getItems().add(clickedUser);
             this.managersList.getItems().remove(clickedUser);
             this.project.removeManager(clickedUser);
+        });
+
+        this.shootsList.setItems(FXCollections.observableList(this.project.getShoots()));
+        this.shootsList.setOnMouseClicked(event -> {
+            Shoot clickedShoot = this.shootsList.getSelectionModel().getSelectedItem();
+            Stage stage = new Stage();
+            stage.setHeight(500);
+            stage.setWidth(800);
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
+            try {
+                ShootViewController controller = new ShootViewController(clickedShoot, stage);
+                fxmlLoader.setController(controller);
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -123,7 +147,7 @@ public class ProjectEditInformationController implements Initializable {
         return remainingUsers;
     }
 
-    public void addAShoot() {
+    public void addShootAction() {
         Stage stage = new Stage();
         stage.setHeight(500);
         stage.setWidth(800);
@@ -134,8 +158,7 @@ public class ProjectEditInformationController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
             stage.showAndWait();
-            //action après fermeture de la page
-            //TODO : reload shoots listview (voir shootView)
+            this.shootsList.setItems(FXCollections.observableList(this.project.getShoots()));
 
         } catch (IOException e) {
             e.printStackTrace();

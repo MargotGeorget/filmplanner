@@ -112,4 +112,9 @@ public class Shoot {
     public void setIdShoot(long idShoot) {
         this.idShoot = idShoot;
     }
+
+    @Override
+    public String toString() {
+        return this.name + "\n->" + this.description;
+    }
 }
