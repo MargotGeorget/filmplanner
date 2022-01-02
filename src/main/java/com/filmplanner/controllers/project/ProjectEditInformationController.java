@@ -43,6 +43,7 @@ public class ProjectEditInformationController implements Initializable {
     @FXML
     ListView<User> managersList;
 
+
     // Attributes
     private ProjectFacade projectFacade;
     private ClientFacade clientFacade;
@@ -134,7 +135,7 @@ public class ProjectEditInformationController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
             //action après fermeture de la page
-            //TODO : appel fonction reload (voir shootView)
+            //TODO : reload shoots listview (voir shootView)
 
         } catch (IOException e) {
             e.printStackTrace();

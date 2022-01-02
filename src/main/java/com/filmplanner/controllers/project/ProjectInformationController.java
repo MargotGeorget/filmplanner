@@ -33,6 +33,7 @@ public class ProjectInformationController implements Initializable {
     @FXML
     private ListView<User> usersList;
 
+
     // Attributes
     private ProjectFacade projectFacade;
     private Stage stage;
