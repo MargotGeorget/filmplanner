@@ -2,26 +2,21 @@ package com.filmplanner.dao.postgre;
 
 import com.filmplanner.dao.*;
 import com.filmplanner.models.Client;
-import com.filmplanner.models.Paperwork;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
-import javafx.print.Paper;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class PostgreProjectDAO implements ProjectDAO {
 
     private Connection connection;
     private ClientDAO clientDAO;
-    private PaperworkDAO paperworkDAO;
 
     public PostgreProjectDAO(Connection connection) {
         this.connection = connection;
         this.clientDAO = PostgreDAOFactory.getInstance().getClientDAO();
-        this.paperworkDAO = PostgreDAOFactory.getInstance().getPaperworkDAO();
     }
 
     /*
@@ -107,11 +102,6 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 // TODO find shoots by project id (ShootDAO)
 
-                Paperwork[] paperworks = this.paperworkDAO.findManyByProjectId(foundProject.getId());
-                for (Paperwork paperwork : paperworks) {
-                    foundProject.addPaperwork(paperwork);
-                }
-
                 resultSet.close();
                 statement.close();
 
@@ -193,8 +183,6 @@ public class PostgreProjectDAO implements ProjectDAO {
 
                 this.deleteManagers(id);
 
-               this.paperworkDAO.deleteManyByProjectId(id);
-
                 // Deletes Project from project table
                 String query = "DELETE FROM project WHERE project_id=" + id;
                 PreparedStatement statement = this.connection.prepareStatement(query);
@@ -228,11 +216,6 @@ public class PostgreProjectDAO implements ProjectDAO {
                 this.addManagers(id, project.getManagers());
 
                 // TODO update shoots (ShootDAO)
-
-                this.paperworkDAO.deleteManyByProjectId(id);
-                for (Paperwork paperwork : project.getPaperworks()) {
-                    this.paperworkDAO.create(paperwork, id);
-                }
 
                 statement.close();
             } catch (SQLException e) {

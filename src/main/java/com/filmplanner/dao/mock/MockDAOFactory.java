@@ -97,9 +97,4 @@ public class MockDAOFactory extends AbstractDAOFactory {
         }
         return this.gearDAO;
     }
-
-    @Override
-    public PaperworkDAO getPaperworkDAO() {
-        return null;
-    }
 }

@@ -2,7 +2,6 @@ package com.filmplanner.controllers.project;
 
 import com.filmplanner.App;
 import com.filmplanner.facades.ProjectFacade;
-import com.filmplanner.models.Paperwork;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.User;
 import javafx.collections.FXCollections;
@@ -34,9 +33,6 @@ public class ProjectInformationController implements Initializable {
     @FXML
     private ListView<User> usersList;
 
-    @FXML
-    private ListView<Paperwork> paperworksList;
-
 
     // Attributes
     private ProjectFacade projectFacade;
@@ -55,7 +51,6 @@ public class ProjectInformationController implements Initializable {
         this.projectDescription.setText(this.project.getDescription());
         this.projectClient.setText(this.project.getClient().toString());
         this.usersList.setItems(FXCollections.observableList(this.project.getManagers()));
-        this.paperworksList.setItems(FXCollections.observableList(this.project.getPaperworks()));
         // TODO set mouse clicked event to open file
     }
 
