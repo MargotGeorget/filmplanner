@@ -38,7 +38,8 @@ public class LoginController {
             Alert invalidCredentials = new Alert(Alert.AlertType.INFORMATION);
             invalidCredentials.setContentText("Logged in!\nWelcome " + loggedUser.getName());
             invalidCredentials.show();
-            App.setRoot("views/gear/gearView");
+            //App.setRoot("views/gear/gearView");
+            App.setRoot("views/calendar");
         } catch (InvalidCredentialsException | UserNotFoundException e) {
             Alert invalidCredentials = new Alert(Alert.AlertType.ERROR);
             invalidCredentials.setContentText(e.getMessage());

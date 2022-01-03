@@ -1,5 +1,6 @@
 package com.filmplanner.controllers.user;
 import com.filmplanner.App;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.facades.UserFacade;
 import com.filmplanner.models.User;
 import javafx.fxml.FXML;
@@ -52,23 +53,30 @@ public class UserCreationFormController {
         }else {
 
             //User  variable creation
-            User newUser = new User(userName, userEmail, userPassword, userPhone,isAdmin);
-            System.out.println(newUser.getName() + " - " + newUser.getEmail() + " - " + newUser.getPhoneNumber() + " - " + newUser.getPassword()+ " - " + newUser.isAdmin());
-            //Calls the facade to insert in database
-            long idUser = userFacade.create(newUser);
+            try {
+                User newUser = new User(userName, userEmail, userPassword, userPhone,isAdmin,true);
+                System.out.println(newUser.getName() + " - " + newUser.getEmail() + " - " + newUser.getPhoneNumber() + " - " + newUser.getPassword()+ " - " + newUser.isAdmin());
+                //Calls the facade to insert in database
+                long idUser = userFacade.create(newUser);
 
-            //feedback
-            if (idUser != 0) {
-                Alert addedUser = new Alert(Alert.AlertType.INFORMATION);
-                addedUser.setContentText("Operation done successfully\nUser " + newUser.getName() + " added!");
-                addedUser.show();
-                App.setRoot("views/user/userView");
-            }else {
-                Alert addedUser = new Alert(Alert.AlertType.WARNING);
-                addedUser.setContentText("Error ! Please verify that the email is not already used");
-                addedUser.show();
+                //feedback
+                if (idUser != 0) {
+                    Alert addedUser = new Alert(Alert.AlertType.INFORMATION);
+                    addedUser.setContentText("Operation done successfully\nUser " + newUser.getName() + " added!");
+                    addedUser.show();
+                    App.setRoot("views/user/userView");
+                }else {
+                    Alert addedUser = new Alert(Alert.AlertType.WARNING);
+                    addedUser.setContentText("Error ! Please verify that the email is not already used");
+                    addedUser.show();
 
+                }
+            } catch (InvalidInputException e) {
+                Alert message = new Alert(Alert.AlertType.ERROR);
+                message.setContentText("Creation cancelled\nError in user input: " + e.getMessage() + "!");
+                message.show();
             }
+
 
         }
     }

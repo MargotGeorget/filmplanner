@@ -1,6 +1,8 @@
 package com.filmplanner.models;
 
+import com.filmplanner.exceptions.InvalidInputException;
 import javafx.beans.property.*;
+import utils.ValidationUtils;
 
 public class User {
     private StringProperty name;
@@ -10,6 +12,7 @@ public class User {
     private LongProperty id;
     private BooleanProperty isAdmin;
 
+    //CONSTRUCTORS WITHOUT VERIFICATION
     /**
      * Instantiates a User.
      *
@@ -39,6 +42,40 @@ public class User {
         this(name, email,password, phoneNumber,isAdmin);
         this.id = new SimpleLongProperty(id);
 
+    }
+
+
+    //CONSTRUCTORS WITH VERIFICATION
+
+    /**
+     * Instantiates a User.
+     *
+     * @param name  the user's name
+     * @param email the user's email
+     */
+    public User(String name, String email, String phoneNumber,Boolean verif) throws InvalidInputException  {
+        this.setName(name);
+        this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
+    }
+
+    /**
+     * Instantiates a User.
+     *
+     * @param name     the user's name
+     * @param email    the user's email
+     * @param password the user's password
+     */
+    public User(String name, String email, String password, String phoneNumber,boolean isAdmin,Boolean verif) throws InvalidInputException  {
+        this(name, email, phoneNumber, true);
+        this.password = new SimpleStringProperty(password);
+        this.isAdmin =new SimpleBooleanProperty(isAdmin);
+    }
+
+
+    public User(Long id,String name, String email, String password, String phoneNumber,boolean isAdmin,Boolean verif) throws InvalidInputException {
+        this(name, email,password, phoneNumber,isAdmin,true);
+        this.id = new SimpleLongProperty(id);
     }
 
 
@@ -73,20 +110,46 @@ public class User {
     Setters
      */
 
-    public void setName(String name) {
-        this.name.set(name);
+    public void setName(String name)  throws InvalidInputException{
+        if (!ValidationUtils.isStringWithoutSpecialSymbol(name)) {
+            throw new InvalidInputException("Referee name contains special symbol!");
+        } else if (name.length() < 2) {
+            throw new InvalidInputException("Referee name too short!");
+        } else if (name.length() > 30) {
+            throw new InvalidInputException("Referee name too long!");
+        } else {
+            this.name.set(name);
+        }
+
     }
 
-    public void setEmail(String email) {
-        this.email.set(email) ;
+    public void setEmail(String email) throws InvalidInputException {
+        if (!ValidationUtils.isEmail(email)) {
+            throw new InvalidInputException("Referee email is not an email");
+        } else {
+            this.email.set(email) ;
+        }
+
     }
 
-    public void setPassword(String password) {
-        this.password.set(password);
+    public void setPassword(String password) throws InvalidInputException {
+        if (password.length() < 3) {
+            throw new InvalidInputException("The password is too short!");
+        } else if (password.length() > 30) {
+            throw new InvalidInputException("The password is too long!");
+        } else {
+            this.password.set(password);
+        }
+
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.set(phoneNumber);
+    public void setPhoneNumber(String phoneNumber)throws InvalidInputException  {
+        if (!ValidationUtils.isPhoneNumber(phoneNumber)) {
+            throw new InvalidInputException("Error: Referee tel is not a phone number");
+        } else {
+            this.phoneNumber.set(phoneNumber);
+        }
+
     }
 
     public void setId(long id) {this.id.set(id);}
