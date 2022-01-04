@@ -2,7 +2,6 @@ package com.filmplanner.dao;
 
 import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.*;
-
 import java.util.HashMap;
 import java.util.List;
 

@@ -2,9 +2,6 @@ package com.filmplanner.dao;
 
 
 import com.filmplanner.models.User;
-
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 public interface UserDAO {
