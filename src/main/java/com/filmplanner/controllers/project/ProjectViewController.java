@@ -47,18 +47,21 @@ public class ProjectViewController implements Initializable {
             // Retrieves the selected project
             Project project = projectList.getSelectionModel().getSelectedItem();
 
-            // Creates new stage to show project information
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectInformation.fxml"));
-            try {
-                ProjectInformationController controller = new ProjectInformationController(project, stage);
-                fxmlLoader.setController(controller);
-                Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight());
-                stage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(project != null) {
+
+                // Creates new stage to show project information
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/project/projectInformation.fxml"));
+                try {
+                    ProjectInformationController controller = new ProjectInformationController(project, stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight());
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stage.show();
             }
-            stage.show();
         });
     }
 }

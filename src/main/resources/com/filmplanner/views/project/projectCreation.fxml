@@ -9,17 +9,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.project.ProjectCreationController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" spacing="15.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.project.ProjectCreationController">
    <children>
       <fx:include fx:id="menuBar" source="../menuBar.fxml" />
       <Label text="Project creation" />
-      <TextField fx:id="projectName" text="Project name" />
-      <TextField fx:id="projectDescription" layoutX="10.0" layoutY="10.0" text="Project description" />
+      <TextField fx:id="projectName" text="Project name">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin></TextField>
+      <TextField fx:id="projectDescription" layoutX="10.0" layoutY="10.0" prefWidth="800.0" text="Project description">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin></TextField>
       <HBox>
          <children>
             <Label text="Client">
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets left="20.0" right="20.0" />
                </HBox.margin>
             </Label>
             <ComboBox fx:id="client" prefWidth="150.0" />
@@ -32,18 +38,18 @@
                   <Font name="System Bold" size="12.0" />
                </font>
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets bottom="20.0" right="10.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="validateButton1" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#validateAction" style="-fx-background-color: #1B3B6F;" text="Validate" textFill="#fdfdfd">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
             </Button>
          </children>
       </HBox>
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
 </VBox>

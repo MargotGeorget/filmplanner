@@ -63,7 +63,9 @@ public class ClientInformationController implements Initializable {
         try {
             ClientFormUpdateController controller = new ClientFormUpdateController(client,this.clientFacade, this.stage);
             fxmlLoader.setController(controller);
-            stage.setScene(new Scene(fxmlLoader.load(), stage.getWidth(),stage.getHeight()));
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.setWidth(610);
+            stage.setHeight(280);
         } catch (IOException e) {
             e.printStackTrace();
         }

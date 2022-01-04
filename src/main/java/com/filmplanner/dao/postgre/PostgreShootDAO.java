@@ -41,7 +41,7 @@ public class PostgreShootDAO implements ShootDAO {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new SQLException("Creating shoot failed, no rows affected.");
             }
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -50,7 +50,7 @@ public class PostgreShootDAO implements ShootDAO {
                     shoot.setIdShoot(id);
                 }
                 else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating shoot failed, no ID obtained.");
                 }
             }
 

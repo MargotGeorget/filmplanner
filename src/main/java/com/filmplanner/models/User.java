@@ -205,6 +205,6 @@ public class User {
 
     @Override
     public String toString() {
-        return this.getId() + ": " + this.getEmail() + " " + this.getName() + " " + this.getPhoneNumber();
+        return "Email : " + this.getEmail() + ", Name : " + this.getName() + " Phone number :" + this.getPhoneNumber();
     }
 }

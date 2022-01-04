@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.project.ProjectViewController">
    <children>
-      <VBox alignment="CENTER">
+      <VBox alignment="TOP_CENTER">
          <children>
             <fx:include fx:id="menuBar" source="../menuBar.fxml" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="Your projects" textAlignment="CENTER" textFill="#1b3b6f">
@@ -20,7 +20,7 @@
                   <Insets bottom="10.0" top="20.0" />
                </VBox.margin>
             </Label>
-            <ListView fx:id="projectList">
+            <ListView fx:id="projectList"  prefHeight="300.0" prefWidth="300.0" >
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>

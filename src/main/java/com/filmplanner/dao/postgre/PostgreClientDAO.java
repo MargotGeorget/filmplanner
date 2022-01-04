@@ -31,18 +31,22 @@ public class PostgreClientDAO implements ClientDAO {
             stmt.setString(4, client.getRefereeEmail());
             stmt.setString(5, client.getRefereeTel());
 
-            ResultSet rs = stmt.executeQuery();
-            //check the affected rows
-            if (rs != null) {
-                //get the ID back
-                if (rs.next()) {
-                    id = rs.getLong(1);
-                }
-            } else {
-                id = -1;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating client failed, no rows affected.");
             }
 
-            rs.close();
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getLong("client_id");
+                    client.setIdClient(id);
+                }
+                else {
+                    throw new SQLException("Creating client failed, no ID obtained.");
+                }
+            }
+
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
