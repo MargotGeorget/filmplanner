@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <GridPane fx:id="gridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-          minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17"
+          minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/13"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.gear.GearController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="352.66668701171875" minWidth="10.0" prefWidth="298.0"/>

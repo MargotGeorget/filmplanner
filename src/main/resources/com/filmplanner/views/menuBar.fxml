@@ -5,7 +5,7 @@
 
 
 <MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="800.0" style="-fx-background-color: #9EB3C2;"
-         xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.MenuBarController" >
+         xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.MenuBarController" >
     <menus>
         <Menu mnemonicParsing="false" text="Accueil" onShowing="#calendar">
             <items>
