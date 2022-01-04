@@ -2,7 +2,6 @@ package com.filmplanner;
 
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.mock.MockDAOFactory;
-import com.filmplanner.exceptions.InvalidValuesClientException;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import org.junit.jupiter.api.Test;
