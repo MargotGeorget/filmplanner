@@ -22,4 +22,6 @@ module com.filmplanner {
     opens com.filmplanner.controllers.project to javafx.fxml;
     exports com.filmplanner.controllers.user;
     opens com.filmplanner.controllers.user to javafx.fxml;
+    exports com.filmplanner.controllers.role;
+    opens com.filmplanner.controllers.role to javafx.fxml;
 }

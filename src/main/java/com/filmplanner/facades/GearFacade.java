@@ -21,7 +21,7 @@ public class GearFacade {
     /**
      * GearFacade is a singleton
      * Get an instance of GearFacade
-     * @return
+     * @return the single GearFacade instance.
      */
     public static GearFacade getInstance() {
         if (instance == null) {
@@ -31,8 +31,7 @@ public class GearFacade {
     }
 
     /**
-     *
-     * @return
+     * @return All Gear in database
      */
     public ArrayList<Gear> getAllGear() {
         return this.gearDAO.findAllGear();
@@ -40,16 +39,15 @@ public class GearFacade {
 
     /**
      *
-     * @param id
-     * @return
+     * @param id of a gear to delete in database
+     * @return true if it's done else false
      */
     public boolean delete(String id) {
         return this.gearDAO.deleteGear(id);
     }
 
     /**
-     *
-     * @param gear
+     * @param gear to create in database
      */
     public void create(Gear gear) {
         this.gearDAO.createGear(gear);
@@ -57,9 +55,9 @@ public class GearFacade {
 
     /**
      *
-     * @param serialnumber
-     * @param updateGear
-     * @return
+     * @param serialnumber of a gear to update in database
+     * @param updateGear the new Gear parameters
+     * @return true if it's done else false
      */
     public boolean update(String serialnumber, Gear updateGear) {
         return this.gearDAO.updateGear(serialnumber, updateGear);

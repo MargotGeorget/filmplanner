@@ -352,7 +352,7 @@ public class PostgreShootDAO implements ShootDAO {
     public HashMap<User, Role> allUserInAShoot(Shoot shoot) {
         HashMap<User, Role> member = new HashMap<>();
         try {
-            PreparedStatement stmt = this.connection.prepareStatement("SELECT user_id,user.NAME,EMAIL,PASSWORD,PHONENUMBER,isadmin,role FROM fp_user JOIN member_within_a_shoot ON user_id=member where shoot = ?;");
+            PreparedStatement stmt = this.connection.prepareStatement("SELECT user_id,fp_user.NAME,EMAIL,PASSWORD,PHONENUMBER,isadmin,role FROM fp_user JOIN member_within_a_shoot ON user_id=member where shoot = ?;");
             stmt.setLong(1, shoot.getIdShoot());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

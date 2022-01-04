@@ -91,20 +91,20 @@ public class AddMemberToAShootController implements Initializable {
 
     @FXML
     void addRole() {
-        Stage stage = new Stage();
-        stage.setHeight(400);
-        stage.setWidth(610);
+        Stage stageAddRole = new Stage();
+        stageAddRole.setHeight(400);
+        stageAddRole.setWidth(610);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/role/roleCreation.fxml"));
         try {
-            RoleController controller = new RoleController(stage);
+            RoleController controller = new RoleController(stageAddRole);
             fxmlLoader.setController(controller);
-            Scene scene = new Scene(fxmlLoader.load(), stage.getWidth(), stage.getHeight());
-            stage.setScene(scene);
+            Scene scene = new Scene(fxmlLoader.load(), stageAddRole.getWidth(), stageAddRole.getHeight());
+            stageAddRole.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stage.showAndWait();
-        this.roleTable.setItems(FXCollections.observableArrayList(roleFacade.findAllRole()));
+        stageAddRole.showAndWait();
+        this.roleTable.setItems(FXCollections.observableArrayList(this.roleFacade.findAllRole()));
     }
 
     @FXML
@@ -139,6 +139,8 @@ public class AddMemberToAShootController implements Initializable {
         RoleColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         this.roleTable.getItems().addAll(this.roleFacade.findAllRole());
+        System.out.println(this.currentShoot.getDate());
+        System.out.println(this.shootFacade.allUserAvailableForDate(this.currentShoot.getDate()));
         this.memberTable.getItems().addAll(this.shootFacade.allUserAvailableForDate(this.currentShoot.getDate()));
 
     }

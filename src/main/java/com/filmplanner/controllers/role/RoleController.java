@@ -17,9 +17,9 @@ public class RoleController {
         this.stage = stage;
         this.roleFacade = RoleFacade.getInstance();
     }
-
+    @FXML
     void add() {
-        String text = roleName.getText();
+        String text = this.roleName.getText();
         if (text == null) {
             Alert message = new Alert(Alert.AlertType.ERROR);
             message.setContentText("No entry\n");

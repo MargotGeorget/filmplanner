@@ -175,7 +175,7 @@ public class PostgreUserDAO implements UserDAO {
     public List<User> allUserAvailableForDate(String date) {
         List<User> users = new ArrayList<>();
         try {
-            PreparedStatement stmt = this.connection.prepareStatement("SELECT user_id,user.NAME,EMAIL,PASSWORD,PHONENUMBER,isadmin  FROM fp_user LEFT JOIN member_within_a_shoot ON user_id=member LEFT JOIN shoot ON shoot_id=shoot where date != ?;");
+            PreparedStatement stmt = this.connection.prepareStatement("SELECT user_id,fp_user.NAME,EMAIL,PASSWORD,PHONENUMBER,isadmin  FROM fp_user LEFT JOIN member_within_a_shoot ON user_id=member LEFT JOIN shoot ON shoot_id=shoot where date != ? or date is null;");
             stmt.setString(1,date);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

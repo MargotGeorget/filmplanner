@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="199.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.filmplanner.controllers.shoot.AddMemberToAShootController">
+<VBox prefHeight="199.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <GridPane prefHeight="261.0" prefWidth="544.0">
         <columnConstraints>
