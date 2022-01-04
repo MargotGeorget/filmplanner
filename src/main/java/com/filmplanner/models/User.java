@@ -112,11 +112,11 @@ public class User {
 
     public void setName(String name)  throws InvalidInputException{
         if (!ValidationUtils.isStringWithoutSpecialSymbol(name)) {
-            throw new InvalidInputException("Referee name contains special symbol!");
+            throw new InvalidInputException("User name contains special symbol!");
         } else if (name.length() < 2) {
-            throw new InvalidInputException("Referee name too short!");
+            throw new InvalidInputException("User name too short!");
         } else if (name.length() > 30) {
-            throw new InvalidInputException("Referee name too long!");
+            throw new InvalidInputException("User name too long!");
         } else {
             this.name.set(name);
         }
@@ -125,7 +125,7 @@ public class User {
 
     public void setEmail(String email) throws InvalidInputException {
         if (!ValidationUtils.isEmail(email)) {
-            throw new InvalidInputException("Referee email is not an email");
+            throw new InvalidInputException("User email is not an email");
         } else {
             this.email.set(email) ;
         }
@@ -145,7 +145,7 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber)throws InvalidInputException  {
         if (!ValidationUtils.isPhoneNumber(phoneNumber)) {
-            throw new InvalidInputException("Error: Referee tel is not a phone number");
+            throw new InvalidInputException("User tel is not a phone number");
         } else {
             this.phoneNumber.set(phoneNumber);
         }

@@ -1,8 +1,5 @@
 package com.filmplanner.models;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class Gear {
     private String model;
     private String category;
