@@ -72,4 +72,8 @@ public class MenuBarController {
     public void viewUserAction() throws IOException {
         App.setRoot("views/user/userView");
     }
+
+    public void calendar() throws IOException {
+        App.setRoot("views/calendar");
+    }
 }
