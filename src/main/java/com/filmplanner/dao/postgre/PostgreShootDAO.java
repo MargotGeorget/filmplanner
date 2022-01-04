@@ -6,6 +6,7 @@ import com.filmplanner.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PostgreShootDAO implements ShootDAO {
