@@ -22,12 +22,12 @@ public class Shoot {
     private String description;
     private String date;
     private Location location;
-    private Map<User, String> members; //TODO: Changer string par role
+    private Map<User, Role> members;
     private List<Gear> gears;
     private Long projectId;
 
     //Constructors:
-    public Shoot(long id, String name, String description, String date, Location location, Map<User, String> members, List<Gear> gears, Long projectId) throws InvalidInputException {
+    public Shoot(long id, String name, String description, String date, Location location, Map<User, Role> members, List<Gear> gears, Long projectId) throws InvalidInputException {
         this.setIdShoot(id);
         this.setName(name);
         this.setDescription(description);
@@ -100,11 +100,11 @@ public class Shoot {
         this.location = location;
     }
 
-    public Map<User, String> getMembers() {
+    public Map<User, Role> getMembers() {
         return members;
     }
 
-    public void setMembers(Map<User, String> members) {
+    public void setMembers(Map<User, Role> members) {
         this.members = members;
     }
 

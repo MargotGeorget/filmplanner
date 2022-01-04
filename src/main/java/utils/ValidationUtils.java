@@ -65,7 +65,6 @@ public class ValidationUtils {
     }
 
     //TODO: Test unitaire pour les fonctions
-
     public static void main(String[] args) {
 
         System.out.println(ValidationUtils.isPhoneNumber("09954323454365"));

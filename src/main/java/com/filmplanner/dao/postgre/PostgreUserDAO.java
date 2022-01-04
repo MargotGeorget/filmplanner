@@ -103,7 +103,6 @@ public class PostgreUserDAO implements UserDAO {
             e.printStackTrace();
             return 0;
         }
-        System.out.println("Update done successfully");
         return 1;
 
 
@@ -123,7 +122,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("All users returned successfully");
         return users;
     }
     /**
@@ -143,7 +141,6 @@ public class PostgreUserDAO implements UserDAO {
             e.printStackTrace();
             return 0;
         }
-        System.out.println("Operation done successfully");
         return 1;
 
 
@@ -167,7 +164,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Operation done successfully");
         return newUser;
 
     }
@@ -186,7 +182,6 @@ public class PostgreUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("All users returned successfully");
         return users;
     }
 

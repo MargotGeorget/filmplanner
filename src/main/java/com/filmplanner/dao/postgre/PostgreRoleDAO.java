@@ -26,7 +26,6 @@ public class PostgreRoleDAO implements RoleDAO {
             PreparedStatement smt = this.connection.prepareStatement(sql);
             smt.setString(1, newRole.getName());
             smt.executeUpdate();
-            System.out.println("Operation done successfully");
             smt.close();
             return true;
 

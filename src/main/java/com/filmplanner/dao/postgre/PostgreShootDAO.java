@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostgreShootDAO implements ShootDAO {
 
@@ -52,7 +53,6 @@ public class PostgreShootDAO implements ShootDAO {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-            System.out.println("Operation done successfully");
 
             stmt.close();
         } catch (SQLException e) {
@@ -75,7 +75,6 @@ public class PostgreShootDAO implements ShootDAO {
                     shoot = this.getBasicShootFromResultSet(rs);
                 }
             }
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -107,7 +106,6 @@ public class PostgreShootDAO implements ShootDAO {
             e.printStackTrace();
             return false;
         }
-        System.out.println("Operation done successfully");
         return true;
     }
 
@@ -125,11 +123,6 @@ public class PostgreShootDAO implements ShootDAO {
                     shoots.add(this.getBasicShootFromResultSet(rs));
                 }
             }
-            //TODO: récupérer les gears et les members du projet
-            //Faire appel au postgreDAO correspondant :
-            // getAllMembersByShoot()
-            // getAllGearsByShoot()
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -155,7 +148,6 @@ public class PostgreShootDAO implements ShootDAO {
             e.printStackTrace();
         }
         //Supprimer la location correspondant au shoot
-
         this.locationDAO.delete(shoot.getLocation().getId());
         return true;
     }
@@ -170,9 +162,10 @@ public class PostgreShootDAO implements ShootDAO {
             Location location = this.locationDAO.findById(rs.getLong("location"));
             Long projectId = rs.getLong("project");
             List<Gear> gears = this.getAllGearsWithinAShoot(id);
-            //TODO: add gears and members
+
             //TODO : add verif
             shoot = new Shoot(id, name, description, date, location, gears, projectId);
+            shoot.setMembers(this.allUserInAShoot(shoot));
         } catch (InvalidInputException e){
             System.out.println(e.getMessage());
         }
@@ -204,7 +197,6 @@ public class PostgreShootDAO implements ShootDAO {
                 throw new SQLException("Creating gearWithinAProject failed, no rows affected.");
             }
 
-            System.out.println("Operation done successfully");
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -230,7 +222,6 @@ public class PostgreShootDAO implements ShootDAO {
                     gearWithinAShoot = this.getBasicGearWithinAShootFromResultSet(rs);
                 }
             }
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -253,7 +244,6 @@ public class PostgreShootDAO implements ShootDAO {
                     gears.add(this.gearDAO.findGearById(rs.getString("gear")));
                 }
             }
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -277,7 +267,6 @@ public class PostgreShootDAO implements ShootDAO {
                     shoots.add(this.getOneById(rs.getLong("shoot")));
                 }
             }
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -367,7 +356,6 @@ public class PostgreShootDAO implements ShootDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("All users returned successfully");
         return member;
 
     }

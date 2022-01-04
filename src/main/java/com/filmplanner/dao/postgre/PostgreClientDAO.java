@@ -41,7 +41,6 @@ public class PostgreClientDAO implements ClientDAO {
             } else {
                 id = -1;
             }
-            System.out.println("Operation done successfully");
 
             rs.close();
             stmt.close();
@@ -70,7 +69,6 @@ public class PostgreClientDAO implements ClientDAO {
 
                 client = new Client(idClient, companyName, description, refereeName, refereeEmail, refereeTel);
             }
-            System.out.println(client);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,7 +109,6 @@ public class PostgreClientDAO implements ClientDAO {
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Operation done successfully");
         return clients;
     }
 
@@ -130,7 +127,6 @@ public class PostgreClientDAO implements ClientDAO {
             stmt.setLong(6, client.getIdClient());
 
             stmt.executeQuery();
-            System.out.println("Operation done successfully");
 
             stmt.close();
         } catch (SQLException e) {

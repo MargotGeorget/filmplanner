@@ -40,7 +40,6 @@ public class PostgreLocationDAO implements LocationDAO {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-            System.out.println("Operation done successfully");
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,7 +62,6 @@ public class PostgreLocationDAO implements LocationDAO {
                     loc = getBasicLocationFromResultSet(rs);
                 }
             }
-            System.out.println("Operation done successfully");
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -94,7 +92,6 @@ public class PostgreLocationDAO implements LocationDAO {
             e.printStackTrace();
             return false;
         }
-        System.out.println("Operation done successfully");
         return true;
     }
 
