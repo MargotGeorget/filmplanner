@@ -348,6 +348,9 @@ public class PostgreShootDAO implements ShootDAO {
         return isUsedAtThisDate;
     }
 
+    /*
+    -------------------- Management gear within a shoot --------------------
+     */
     @Override
     public HashMap<User, Role> allUserInAShoot(Shoot shoot) {
         HashMap<User, Role> member = new HashMap<>();

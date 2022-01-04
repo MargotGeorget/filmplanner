@@ -66,36 +66,6 @@ public class PostgreGearDAO implements GearDAO {
     }
 
     /**
-     * find a gear list by is shoot
-     * @param shoot a shoot
-     * @return a list of gear which corresponds to a shoot
-     */
-
-    @Override
-    public ArrayList<Gear> findManyGearByShooting(Shoot shoot) {
-        try {
-            String sql = "SELECT * FROM public.gear WHERE serialnumber = ? ;";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
-            preparedStatement.setString(1, String.valueOf(shoot));
-
-            ResultSet res = preparedStatement.executeQuery();
-            ArrayList<Gear> gearList = new ArrayList<Gear>();
-
-            while (res.next()) {
-                gearList.add(new Gear(res.getString("SERIALNBUMBER"), res.getString("MODEL"), res.getString("CATEGORY")));
-
-            }
-            res.close();
-            preparedStatement.close();
-            return gearList;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    /**
      * find all gear in database
      * @return a gear list
      */
