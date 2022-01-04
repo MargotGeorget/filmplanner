@@ -4,7 +4,12 @@ package com.filmplanner.models;
 import com.filmplanner.exceptions.InvalidInputException;
 import utils.ValidationUtils;
 
-import java.sql.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +69,20 @@ public class Shoot {
 
     public String getDate() {
         return date;
+    }
+
+    public LocalDate getLocalDate(){
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date newdate =new Date();
+        try {
+            newdate = simpleDateFormat.parse(this.date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Instant.ofEpochMilli(newdate.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
     public void setDate(String date) throws InvalidInputException {

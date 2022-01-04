@@ -3,6 +3,7 @@ module com.filmplanner {
     requires javafx.fxml;
     requires java.sql;
     requires dotenv.java;
+    requires com.calendarfx.view;
 
     opens com.filmplanner to javafx.fxml;
     exports com.filmplanner;
