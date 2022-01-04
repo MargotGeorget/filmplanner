@@ -1,11 +1,9 @@
 package com.filmplanner.dao;
 
 import com.filmplanner.exceptions.InvalidInputException;
-import com.filmplanner.models.Client;
-import com.filmplanner.models.Gear;
-import com.filmplanner.models.GearWithinAShoot;
-import com.filmplanner.models.Shoot;
+import com.filmplanner.models.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ShootDAO {
@@ -61,4 +59,10 @@ public interface ShootDAO {
     boolean deleteGearWithinAShoot(long id);
 
     boolean deleteAllGearWithinAShoot(long id);
+
+    HashMap<User,Role> allUserInAShoot(Shoot shoot);
+
+    boolean addUserInAShoot(Shoot shoot,User user, Role role);
+
+    boolean deleteUserInAShoot(Shoot shoot, User user);
 }

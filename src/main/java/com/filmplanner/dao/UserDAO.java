@@ -3,6 +3,8 @@ package com.filmplanner.dao;
 
 import com.filmplanner.models.User;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserDAO {
@@ -22,4 +24,8 @@ public interface UserDAO {
     Long create(User newUser);
 
     int deleteById(Long id);
+
+    List<User> allUserAvailableForDate(String date);
+
+
 }

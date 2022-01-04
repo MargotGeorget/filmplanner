@@ -50,4 +50,9 @@ public class MockUserDAO implements UserDAO {
     public int deleteById(Long id) {
         return 0;
     }
+
+    @Override
+    public List<User> allUserAvailableForDate(String date) {
+        return null;
+    }
 }
