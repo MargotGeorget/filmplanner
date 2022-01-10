@@ -110,7 +110,7 @@ public class ShootFormUpdateController implements Initializable {
                 message.show();
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
                 try {
-                    ShootViewController controller = new ShootViewController(this.shoot, this.stage);
+                    ShootViewController controller = new ShootViewController(newShoot, this.stage);
                     fxmlLoader.setController(controller);
                     Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(),this.stage.getHeight());
                     this.stage.setScene(scene);

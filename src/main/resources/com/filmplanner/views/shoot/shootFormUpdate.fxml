@@ -24,7 +24,6 @@
         <RowConstraints maxHeight="231.0" minHeight="10.0" prefHeight="231.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <fx:include fx:id="menuBar" source="../menuBar.fxml" GridPane.columnSpan="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="TOP" />
         <VBox prefHeight="200.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <children>
                 <TextField fx:id="nameInput" alignment="TOP_LEFT" />

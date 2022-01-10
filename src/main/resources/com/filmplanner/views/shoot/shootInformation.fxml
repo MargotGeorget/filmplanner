@@ -15,7 +15,6 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <fx:include fx:id="menuBar" source="../menuBar.fxml" />
       <HBox alignment="CENTER">
          <children>
             <Label fx:id="name" text="{name shoot }" textFill="#1b3b6f">
