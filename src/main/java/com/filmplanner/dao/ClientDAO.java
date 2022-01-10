@@ -21,7 +21,7 @@ public interface ClientDAO {
 
     /**
      * Returns all the clients saved in the datasource
-     * @return List<Client>
+     * @return List of client
      */
     List<Client> findAll();
 

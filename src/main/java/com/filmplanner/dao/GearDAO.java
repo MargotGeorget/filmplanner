@@ -22,7 +22,7 @@ public interface GearDAO {
 
     /**
      * Returns all the gears saved in the datasource
-     * @return List<Gear>
+     * @return List of Gear
      */
     ArrayList<Gear> findAllGear();
 

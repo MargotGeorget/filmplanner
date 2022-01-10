@@ -1,0 +1,16 @@
+module:com.filmplanner
+com.filmplanner
+com.filmplanner.controllers
+com.filmplanner.controllers.client
+com.filmplanner.controllers.gear
+com.filmplanner.controllers.project
+com.filmplanner.controllers.role
+com.filmplanner.controllers.shoot
+com.filmplanner.controllers.user
+com.filmplanner.dao
+com.filmplanner.dao.mock
+com.filmplanner.dao.postgre
+com.filmplanner.exceptions
+com.filmplanner.facades
+com.filmplanner.models
+utils

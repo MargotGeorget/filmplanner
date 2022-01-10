@@ -15,7 +15,7 @@ public interface RoleDAO {
 
     /**
      * Returns all the role saved in the datasource
-     * @return List<Role>
+     * @return List of role
      */
     ArrayList<Role> findAllRole();
 

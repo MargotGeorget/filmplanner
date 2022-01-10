@@ -51,7 +51,7 @@ public class ClientFacade {
 
     /**
      * Returns all the clients saved in the datasource
-     * @return List<Client>
+     * @return List of Client
      */
     public List<Client> findAll(){
         List<Client> clients = clientDAO.findAll();

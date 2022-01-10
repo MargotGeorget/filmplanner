@@ -32,7 +32,7 @@ public interface ShootDAO {
     /**
      * Return all the shoots saved in the datasource for a given project
      * @param idProject
-     * @return List<Shoot>
+     * @return List of Shoot
      */
     List<Shoot> findAllShootInProject(long idProject);
 
@@ -66,14 +66,14 @@ public interface ShootDAO {
     /**
      * Return all the gears registered in a shoot
      * @param idShoot long
-     * @return List<Gear>
+     * @return List of Gear
      */
     List<Gear> getAllGearsWithinAShoot(long idShoot);
 
     /**
      * Return all the shoot using a particular gear
      * @param idGear long
-     * @return List<Shoot>
+     * @return List of Shoot
      */
     List<Shoot> getAllShootUsingAGear(String idGear);
 
