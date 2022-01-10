@@ -79,14 +79,20 @@ public class ProjectInformationController implements Initializable {
     }
 
     public void deleteProjectAction() throws IOException {
-        this.projectFacade.deleteById(this.project.getId());
+        boolean deleted = this.projectFacade.deleteById(this.project.getId());
 
-        Alert deletedProject = new Alert(Alert.AlertType.CONFIRMATION);
-        deletedProject.setContentText("Project \"" + this.project.getName() + "\" successfully deleted!");
-        deletedProject.show();
+        if (deleted) {
+            Alert deletedProject = new Alert(Alert.AlertType.CONFIRMATION);
+            deletedProject.setContentText("Project \"" + this.project.getName() + "\" successfully deleted!");
+            deletedProject.show();
 
-        App.setRoot("views/project/projectsView"); // reloads the projectView
-        this.stage.close();
+            App.setRoot("views/project/projectsView"); // reloads the projectView
+            this.stage.close();
+        } else {
+            Alert projectNotDeleted = new Alert(Alert.AlertType.ERROR);
+            projectNotDeleted.setContentText("Project \"" + this.project.getName() + "\" could not be deleted, make sure to remove all shoots.");
+            projectNotDeleted.show();
+        }
     }
 
     /* code to open view shoot

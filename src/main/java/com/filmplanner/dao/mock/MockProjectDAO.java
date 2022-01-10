@@ -66,8 +66,8 @@ public class MockProjectDAO implements ProjectDAO {
     }
 
     @Override
-    public void deleteById(Long id) {
-        this.projects.remove(id);
+    public boolean deleteById(Long id) {
+        return this.projects.remove(id) != null;
     }
 
     @Override

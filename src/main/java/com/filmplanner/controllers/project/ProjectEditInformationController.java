@@ -75,17 +75,21 @@ public class ProjectEditInformationController implements Initializable {
         this.usersList.setItems(FXCollections.observableList(this.getRemainingUsersFromManagersList(this.project.getManagers())));
         this.usersList.setOnMouseClicked(event -> {
             User clickedUser = this.usersList.getSelectionModel().getSelectedItem();
-            this.usersList.getItems().remove(clickedUser);
-            this.managersList.getItems().add(clickedUser);
-            this.project.addManager(clickedUser);
+            if (clickedUser != null) {
+                this.usersList.getItems().remove(clickedUser);
+                this.managersList.getItems().add(clickedUser);
+                this.project.addManager(clickedUser);
+            }
         });
 
         this.managersList.setItems(FXCollections.observableList(this.project.getManagers()));
         this.managersList.setOnMouseClicked(event -> {
             User clickedUser = this.managersList.getSelectionModel().getSelectedItem();
-            this.usersList.getItems().add(clickedUser);
-            this.managersList.getItems().remove(clickedUser);
-            this.project.removeManager(clickedUser);
+            if (clickedUser != null) {
+                this.usersList.getItems().add(clickedUser);
+                this.managersList.getItems().remove(clickedUser);
+                this.project.removeManager(clickedUser);
+            }
         });
 
 
@@ -97,20 +101,22 @@ public class ProjectEditInformationController implements Initializable {
         this.shootsList.setItems(FXCollections.observableList(this.shootFacade.findAllShootInProject(this.project.getId())));
         this.shootsList.setOnMouseClicked(event -> {
             Shoot clickedShoot = this.shootsList.getSelectionModel().getSelectedItem();
-            Stage stage = new Stage();
-            stage.setHeight(500);
-            stage.setWidth(800);
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
-            try {
-                ShootViewController controller = new ShootViewController(clickedShoot, stage);
-                fxmlLoader.setController(controller);
-                Scene scene = new Scene(fxmlLoader.load());
-                stage.setScene(scene);
-                stage.showAndWait();
-                this.initShoots();
+            if (clickedShoot != null) {
+                Stage stage = new Stage();
+                stage.setHeight(500);
+                stage.setWidth(800);
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
+                try {
+                    ShootViewController controller = new ShootViewController(clickedShoot, stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load());
+                    stage.setScene(scene);
+                    stage.showAndWait();
+                    this.initShoots();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -137,14 +143,12 @@ public class ProjectEditInformationController implements Initializable {
      */
     private List<User> getRemainingUsersFromManagersList(List<User> managers) {
 
-        // TODO use the userFacade instead of directly accessing the UserDAO
         PostgreDAOFactory factory = PostgreDAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
         List<User> allUsers = userDAO.findAll();
 
         List<User> remainingUsers = new ArrayList<>(allUsers);
 
-        // TODO improve algorithm
         // Removes all users of managers list to the allUsers list
         for (User user : allUsers) {
             for (User manager : managers) {
