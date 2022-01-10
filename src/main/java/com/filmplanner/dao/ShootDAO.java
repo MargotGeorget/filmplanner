@@ -27,7 +27,7 @@ public interface ShootDAO {
      * @return boolean : true if the shoot was in the datasource and it has been updated
      *                        or false if the shoot could not be found or could not be updated
      */
-    boolean update(Shoot shoot);
+    boolean update(Shoot shoot) throws InvalidInputException;
 
     /**
      * Return all the shoots saved in the datasource for a given project

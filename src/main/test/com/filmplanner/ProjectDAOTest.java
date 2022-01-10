@@ -2,10 +2,11 @@ package com.filmplanner;
 
 import com.filmplanner.dao.ProjectDAO;
 import com.filmplanner.dao.mock.MockDAOFactory;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import org.junit.jupiter.api.Test;
-import com.filmplanner.exceptions.InvalidInputException;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 

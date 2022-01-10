@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -41,7 +42,9 @@ public class ShootFormController {
 
     private Project project;
 
-    public ShootFormController(Project project) {
+    private Stage stage;
+
+    public ShootFormController(Project project, Stage stage) {
         this.project = project;
         this.shootFacade = ShootFacade.getInstance();
     }
@@ -79,7 +82,7 @@ public class ShootFormController {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);
                 message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " created!");
                 message.show();
-                App.setRoot("views/client/clientView");
+                //this.stage.close();
             } else {
                 Alert message = new Alert(Alert.AlertType.ERROR);
                 message.setContentText("Error in client creation\nShoot " + newShoot.getName() + "not created!\nError with database");
