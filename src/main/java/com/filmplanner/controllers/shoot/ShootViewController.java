@@ -132,7 +132,6 @@ public class ShootViewController implements Initializable {
         delatedShoot.show();
 
         //Reload listView and close update stage
-        App.setRoot("views/client/clientView");
         this.stage.close();
     }
 

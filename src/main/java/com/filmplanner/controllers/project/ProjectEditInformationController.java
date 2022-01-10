@@ -7,6 +7,7 @@ import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
 import com.filmplanner.facades.ClientFacade;
 import com.filmplanner.facades.ProjectFacade;
+import com.filmplanner.facades.ShootFacade;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.Shoot;
@@ -52,12 +53,14 @@ public class ProjectEditInformationController implements Initializable {
     // Attributes
     private ProjectFacade projectFacade;
     private ClientFacade clientFacade;
+    private ShootFacade shootFacade;
     private Project project;
     private Stage stage;
 
     public ProjectEditInformationController(Project project, Stage stage) {
         this.projectFacade = ProjectFacade.getInstance();
         this.clientFacade = ClientFacade.getInstance();
+        this.shootFacade = ShootFacade.getInstance();
         this.project = project;
         this.stage = stage;
     }
@@ -85,7 +88,13 @@ public class ProjectEditInformationController implements Initializable {
             this.project.removeManager(clickedUser);
         });
 
-        this.shootsList.setItems(FXCollections.observableList(this.project.getShoots()));
+
+        this.initShoots();
+
+    }
+
+    public void initShoots(){
+        this.shootsList.setItems(FXCollections.observableList(this.shootFacade.findAllShootInProject(this.project.getId())));
         this.shootsList.setOnMouseClicked(event -> {
             Shoot clickedShoot = this.shootsList.getSelectionModel().getSelectedItem();
             Stage stage = new Stage();
@@ -97,7 +106,8 @@ public class ProjectEditInformationController implements Initializable {
                 fxmlLoader.setController(controller);
                 Scene scene = new Scene(fxmlLoader.load());
                 stage.setScene(scene);
-                stage.show();
+                stage.showAndWait();
+                this.initShoots();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -158,7 +168,7 @@ public class ProjectEditInformationController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
             stage.showAndWait();
-            this.shootsList.setItems(FXCollections.observableList(this.project.getShoots()));
+            this.initShoots();
 
         } catch (IOException e) {
             e.printStackTrace();

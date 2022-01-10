@@ -138,13 +138,13 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     @Override
-    public boolean delete(long idShoot) {
-        Shoot shoot = this.getOneById(idShoot);
+    public boolean delete(long shootId) {
+        Shoot shoot = this.getOneById(shootId);
         //Supprimer tout les gear_within_a_shoot qui le  concerne
-        this.deleteAllGearWithinAShoot(idShoot);
-        //TODO: faire pareil avec les users dans un shoot
+        this.deleteAllGearWithinAShoot(shootId);
+        this.deleteAllUsersWithinAShoot(shootId);
 
-        String sql = "DELETE FROM shoot WHERE shoot_id=" + idShoot + ";";
+        String sql = "DELETE FROM shoot WHERE shoot_id=" + shootId + ";";
 
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -399,7 +399,19 @@ public class PostgreShootDAO implements ShootDAO {
             e.printStackTrace();
             return false;
         }
+    }
 
+    public boolean deleteAllUsersWithinAShoot(long idShoot) {
+        String sql = "DELETE FROM member_within_a_shoot WHERE shoot=" + idShoot + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 
