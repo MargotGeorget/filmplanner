@@ -2,20 +2,13 @@ package com.filmplanner.controllers;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
-import com.calendarfx.view.CalendarView;
 import com.calendarfx.view.page.WeekPage;
-
 import com.filmplanner.facades.CalendarFacade;
 import com.filmplanner.facades.LoginFacade;
-import com.filmplanner.models.Shoot;
 import com.filmplanner.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
-
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -26,6 +19,11 @@ public class CalendarController  implements Initializable {
 
     public CalendarController() {this.calendarFacade = CalendarFacade.getInstance();}
 
+    /**
+     * Initialization of the calendar
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         User currentUser = LoginFacade.getInstance().getCurrentUser();

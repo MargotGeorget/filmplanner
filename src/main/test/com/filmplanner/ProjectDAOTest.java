@@ -5,6 +5,7 @@ import com.filmplanner.dao.mock.MockDAOFactory;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import org.junit.jupiter.api.Test;
+import com.filmplanner.exceptions.InvalidInputException;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
@@ -18,7 +19,7 @@ public class ProjectDAOTest {
         Client moana = null;
         try {
             moana = new Client(3L, "Moana yachting", "Yachting agency", "Bernard", "bernard@moana.com", "1212121212");
-        } catch (InvalidValuesClientException e) {
+        } catch (InvalidInputException e) {
             e.printStackTrace();
         }
         Project project = new Project("Motor Yacht E-Motion", "Video to promote the yacth as a charter yacth", moana, new HashMap<>());
