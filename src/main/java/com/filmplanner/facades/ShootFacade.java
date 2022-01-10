@@ -5,6 +5,7 @@ import com.filmplanner.dao.AbstractDAOFactory;
 import com.filmplanner.dao.ShootDAO;
 import com.filmplanner.dao.UserDAO;
 import com.filmplanner.dao.postgre.PostgreDAOFactory;
+import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Role;
 import com.filmplanner.models.Shoot;
 import com.filmplanner.models.User;
@@ -41,7 +42,7 @@ public class ShootFacade {
         return shootDAO.findAllShootInProject(idProject);
     }
 
-    public boolean updateShoot(Shoot shoot){
+    public boolean updateShoot(Shoot shoot) throws InvalidInputException {
         return shootDAO.update(shoot);
     }
 

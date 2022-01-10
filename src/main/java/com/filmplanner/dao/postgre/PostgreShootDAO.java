@@ -84,7 +84,13 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     @Override
-    public boolean update(Shoot shoot) {
+    public boolean update(Shoot shoot) throws InvalidInputException {
+        List<Gear> gears = this.getAllGearsWithinAShoot(shoot.getIdShoot());
+        for(Gear gear: gears) {
+            if (isUsedAtThisDate(shoot.getDate(), gear.getSerialNumber())) {
+                throw new InvalidInputException("This gear is already used in a shoot at the same date!");
+            }
+        }
         String sql = "UPDATE shoot SET name=?, description=?, date=?, project=?, location=? WHERE shoot_id=?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -132,13 +138,13 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     @Override
-    public boolean delete(long idShoot) {
-        Shoot shoot = this.getOneById(idShoot);
+    public boolean delete(long shootId) {
+        Shoot shoot = this.getOneById(shootId);
         //Supprimer tout les gear_within_a_shoot qui le  concerne
-        this.deleteAllGearWithinAShoot(idShoot);
-        //TODO: faire pareil avec les users dans un shoot
+        this.deleteAllGearWithinAShoot(shootId);
+        this.deleteAllUsersWithinAShoot(shootId);
 
-        String sql = "DELETE FROM shoot WHERE shoot_id=" + idShoot + ";";
+        String sql = "DELETE FROM shoot WHERE shoot_id=" + shootId + ";";
 
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -180,7 +186,8 @@ public class PostgreShootDAO implements ShootDAO {
         if(isPresent(newInstance.getShootId(), newInstance.getGearId())){
             throw new InvalidInputException("This gear is already present in this shoot!");
         }
-        if(isUsedAtThisDate(newInstance.getShootId(), newInstance.getGearId())){
+        Shoot shoot = this.getOneById(newInstance.getShootId());
+        if(isUsedAtThisDate(shoot.getDate(), newInstance.getGearId())){
             throw new InvalidInputException("This gear is already used in a shoot at the same date!");
         }
         String sql = "INSERT INTO gear_within_a_shoot (gear, shoot) VaLUES(?,?)";
@@ -323,13 +330,12 @@ public class PostgreShootDAO implements ShootDAO {
         return isPresent;
     }
 
-    private boolean isUsedAtThisDate(long idShoot, String idGear) {
-        Shoot shoot = this.getOneById(idShoot);
+    private boolean isUsedAtThisDate(String date, String idGear) {
         List<Shoot> shoots = this.getAllShootUsingAGear(idGear);
         boolean isUsedAtThisDate = false;
         int i = 0;
         while (i < shoots.size() && !isUsedAtThisDate) {
-            if (shoots.get(i).getDate().equals(shoot.getDate())) {
+            if (shoots.get(i).getDate().equals(date)) {
                 isUsedAtThisDate = true;
             }
             i++;
@@ -338,7 +344,7 @@ public class PostgreShootDAO implements ShootDAO {
     }
 
     /*
-    -------------------- Management gear within a shoot --------------------
+    -------------------- Management member within a shoot --------------------
      */
     @Override
     public HashMap<User, Role> allUserInAShoot(Shoot shoot) {
@@ -393,7 +399,19 @@ public class PostgreShootDAO implements ShootDAO {
             e.printStackTrace();
             return false;
         }
+    }
 
+    public boolean deleteAllUsersWithinAShoot(long idShoot) {
+        String sql = "DELETE FROM member_within_a_shoot WHERE shoot=" + idShoot + ";";
+
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 

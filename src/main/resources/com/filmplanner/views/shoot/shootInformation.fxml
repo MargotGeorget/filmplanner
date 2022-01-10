@@ -88,18 +88,11 @@
       </ButtonBar>
       <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#addGearToAShootAction" text="Add gear" />
-             <Button mnemonicParsing="false" onAction="#deleteGearWithinAShootAction" text="Delete gear" />
-        </buttons>
-      </ButtonBar>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <buttons>
             <Button mnemonicParsing="false" onAction="#deleteMemberWithinAShootAction" text="Delete member" />
             <Button mnemonicParsing="false" onAction="#addMemberToAShootAction" text="Add member" />
+             <Button mnemonicParsing="false" onAction="#deleteGearWithinAShootAction" text="Delete gear" />
+            <Button mnemonicParsing="false" onAction="#addGearToAShootAction" text="Add gear" />
         </buttons>
-         <GridPane.margin>
-            <Insets right="10.0" />
-         </GridPane.margin>
       </ButtonBar>
    </children>
 </GridPane>

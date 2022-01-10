@@ -6,6 +6,7 @@ import com.filmplanner.exceptions.InvalidInputException;
 import com.filmplanner.models.Client;
 import com.filmplanner.models.Project;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 

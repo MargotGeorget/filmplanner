@@ -39,7 +39,11 @@ public class CalendarFacade {
         return shoots;
     }
 
-
+    /**
+     *
+     * @param shoots
+     * @return An hashmap of shoots, with the key being the calendar it belongs to, and the value being a list of entries for this specific calendar
+     */
     private HashMap<String,List<Entry<String>>> getShootsEntriesFromShootsList(HashMap<String,List<Shoot>>  shoots) {
         HashMap<String,List<Entry<String>>> shootEntries = new HashMap<String, List<Entry<String>>>();
 
@@ -56,9 +60,20 @@ public class CalendarFacade {
         }
         return shootEntries;
     }
+
+    /**
+     *
+     * @param manager
+     * @return An hashmap of shoots, with the key being the calendar it belongs to, and the value being a list of entries for this specific calendar, belonging to this manager
+     */
     public HashMap<String,List<Entry<String>>> getShootsEntriesFromManagerId(User manager) {
         return getShootsEntriesFromShootsList(getShootsByManagerID(manager));
     }
+
+    /**
+     * Singleton instance
+     * @return
+     */
     public static CalendarFacade getInstance() {
         if (instance == null) {
             instance = new CalendarFacade();
