@@ -17,9 +17,9 @@ public class CalendarFacade {
     private static CalendarFacade instance;
     private ProjectFacade projectFacade;
     private ShootFacade shootFacade;
+
     /**
      * Gets the single CalendarFacade instance.
-     * @return the single CalendarFacade instance.
      */
     private CalendarFacade() {
         this.projectFacade = ProjectFacade.getInstance();
