@@ -174,13 +174,15 @@ public class PostgreProjectDAO implements ProjectDAO {
      * @param id the id of the Project to delete
      */
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         if (id != null) {
             try {
 
                 for (Shoot shoot : this.shootDAO.findAllShootInProject(id)) {
-                    // TODO check that shoot date is older than current date
-                    this.shootDAO.delete(shoot.getIdShoot());
+                    //this.shootDAO.delete(shoot.getIdShoot());
+                    // A shoot is present in the project, we cannot delete it
+                    System.out.println("Cannot delete project, it contains some shoots.");
+                    return false;
                 }
 
                 this.deleteManagers(id);
@@ -193,7 +195,11 @@ public class PostgreProjectDAO implements ProjectDAO {
                 statement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             }
+            return true;
+        } else {
+            return false;
         }
     }
 

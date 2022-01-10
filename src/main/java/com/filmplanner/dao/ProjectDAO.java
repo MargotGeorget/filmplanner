@@ -13,7 +13,7 @@ public interface ProjectDAO {
 
     Project[] findAll();
 
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 
     void updateById(Long id, Project project);
 }

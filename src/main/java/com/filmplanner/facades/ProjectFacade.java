@@ -38,8 +38,8 @@ public class ProjectFacade {
         return this.postgreProjectDAO.findById(id);
     }
 
-    public void deleteById(Long id) {
-        this.postgreProjectDAO.deleteById(id);
+    public boolean deleteById(Long id) {
+        return this.postgreProjectDAO.deleteById(id);
     }
 
     public void updateById(Long id, Project project) {
