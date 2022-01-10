@@ -8,7 +8,9 @@ import com.filmplanner.models.Location;
 import com.filmplanner.models.Project;
 import com.filmplanner.models.Shoot;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -106,7 +108,16 @@ public class ShootFormUpdateController implements Initializable {
                 Alert message = new Alert(Alert.AlertType.CONFIRMATION);
                 message.setContentText("Operation done successfully\nShoot " + newShoot.getName() + " updated!");
                 message.show();
-                App.setRoot("views/client/clientView");
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootInformation.fxml"));
+                try {
+                    ShootViewController controller = new ShootViewController(this.shoot, this.stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), this.stage.getWidth(),this.stage.getHeight());
+                    this.stage.setScene(scene);
+                    this.stage.centerOnScreen();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Alert message = new Alert(Alert.AlertType.ERROR);
                 message.setContentText("Error in shoot update\nShoot " + newShoot.getName() + " not updated!\nError with database");

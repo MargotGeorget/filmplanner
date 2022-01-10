@@ -153,7 +153,7 @@ public class ProjectEditInformationController implements Initializable {
         stage.setWidth(800);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("views/shoot/shootForm.fxml"));
         try {
-            ShootFormController controller = new ShootFormController(this.project);
+            ShootFormController controller = new ShootFormController(this.project, stage);
             fxmlLoader.setController(controller);
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
